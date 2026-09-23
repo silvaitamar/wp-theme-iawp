@@ -1,0 +1,81 @@
+<!-- wp:html -->
+<a class="skip-link" href="#main-content">Ir para o conteúdo principal</a>
+<!-- /wp:html -->
+
+<!-- wp:template-part {"slug":"header","theme":"iawp","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
+<main id="main-content" class="wp-block-group" style="margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0">
+
+<!-- wp:group {"tagName":"section","align":"full","className":"blog-hero","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|60"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"},"ariaLabel":"Cabeçalho do Blog"} -->
+<section class="wp-block-group alignfull blog-hero" aria-label="Cabeçalho do Blog" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"center","verticalAlignment":"center"}} -->
+<div class="wp-block-group alignwide"><!-- wp:heading {"textAlign":"center","level":1,"className":"blog-hero-title reveal-up"} -->
+<h1 class="wp-block-heading has-text-align-center blog-hero-title reveal-up">ARTIGOS<br><em>IA+WP</em></h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","className":"blog-hero-desc reveal-up"} -->
+<p class="has-text-align-center blog-hero-desc reveal-up">Conteúdo aprofundado sobre inteligência artificial aplicada ao WordPress — para quem quer construir e operar ativos digitais com velocidade e soberania.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","align":"full","className":"blog-grid","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"},"ariaLabel":"Artigo em destaque"} -->
+<section class="wp-block-group alignfull blog-grid" aria-label="Artigo em destaque" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide">
+
+<!-- wp:paragraph {"className":"blog-featured-label reveal-up"} -->
+<p class="blog-featured-label reveal-up">Leitura recomendada</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:query {"queryId":1,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"layout":{"type":"default"}} -->
+<div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"article","className":"post-featured reveal-up","layout":{"type":"default"}} -->
+<article class="wp-block-group post-featured reveal-up"><!-- wp:group {"className":"post-featured__img","layout":{"type":"default"}} -->
+<div class="wp-block-group post-featured__img"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"post-featured__body","layout":{"type":"flex","orientation":"vertical","flexWrap":"nowrap"}} -->
+<div class="wp-block-group post-featured__body"><!-- wp:group {"className":"post-featured__meta","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group post-featured__meta"><!-- wp:post-date {"format":"j M, Y","className":"post-featured__date"} /-->
+<!-- wp:paragraph {"className":"post-featured__dot"} --><p class="post-featured__dot"></p><!-- /wp:paragraph -->
+<!-- wp:post-time-to-read {"displayAsRange":false,"className":"post-featured__read-time"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:post-title {"isLink":true,"className":"post-featured__title"} /-->
+<!-- wp:post-excerpt {"moreText":"","className":"post-featured__excerpt"} /-->
+<!-- wp:read-more {"content":"Ler Artigo Completo","className":"post-featured__cta"} /--></div>
+<!-- /wp:group --></article>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query -->
+
+</div>
+<!-- /wp:group --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","ariaLabel":"Chamada para Ação","align":"full","anchor":"cta","className":"cta-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}},"color":{"background":"var:preset|color|primary","text":"var:preset|color|base"}},"layout":{"type":"constrained"}} -->
+<section aria-label="Chamada para Ação" class="wp-block-group alignfull cta-section has-primary-background-color has-base-color has-text-color has-background" id="cta" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80);color:var(--wp--preset--color--base);background-color:var(--wp--preset--color--primary)">
+
+<!-- wp:group {"align":"wide","className":"cta-inner","style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"center","verticalAlignment":"center"}} -->
+<div class="wp-block-group alignwide cta-inner">
+
+<!-- wp:heading {"level":2,"textAlign":"center","className":"cta-heading reveal-up"} --><h2 class="wp-block-heading has-text-align-center cta-heading reveal-up">Receber novos artigos</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","className":"cta-subheading reveal-up"} --><p class="has-text-align-center cta-subheading reveal-up">Avisos quando sair conteúdo novo no hub.</p><!-- /wp:paragraph -->
+
+<!-- wp:jetpack/contact-form {"jetpackCRM":false,"variationName":"default","lock":{"remove":true,"move":true},"className":"cta-form reveal-up","layout":{"type":"flex","flexWrap":"nowrap","orientation":"horizontal","justifyContent":"center","verticalAlignment":"center"}} -->
+<div class="wp-block-jetpack-contact-form cta-form reveal-up"><!-- wp:jetpack/field-email {"required":true,"placeholder":"Seu melhor e-mail"} --><div><!-- wp:jetpack/label {"label":""} /--><!-- wp:jetpack/input {"placeholder":"Seu melhor e-mail"} /--></div><!-- /wp:jetpack/field-email --><!-- wp:button {"tagName":"button","type":"submit","lock":{"move":false,"remove":true}} --><div class="wp-block-button"><button type="submit" class="wp-block-button__link wp-element-button">Receber novos artigos</button></div><!-- /wp:button --></div>
+<!-- /wp:jetpack/contact-form -->
+
+<!-- wp:paragraph {"align":"center","className":"cta-privacy reveal-up"} --><p class="has-text-align-center cta-privacy reveal-up">Ao se inscrever, você concorda com nossos termos e política de privacidade.</p><!-- /wp:paragraph -->
+
+</div>
+<!-- /wp:group -->
+
+</section>
+<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","theme":"iawp","tagName":"footer"} /-->

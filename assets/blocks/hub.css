@@ -1,0 +1,111 @@
+/* === HUB FRONT PAGE — editorial home (className hub-*) === */
+
+.hub-hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--iawp-header-height, 4.5rem) + var(--wp--preset--spacing--70)) !important;
+}
+.hub-hero::before {
+  content: "";
+  position: absolute;
+  inset: -20% 20% auto -10%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, var(--wp--custom--primary-alpha-10) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.hub-hero .alignwide,
+.hub-hero .hub-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+.hub-brand {
+  font-family: var(--wp--preset--font-family--display) !important;
+  font-size: clamp(2rem, 5vw, 3.5rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+.hub-brand strong,
+.hub-brand span {
+  background: var(--wp--custom--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hub-headline {
+  font-family: var(--wp--preset--font-family--display) !important;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+  margin: 0 !important;
+  text-transform: none !important;
+}
+.hub-lede {
+  color: var(--wp--preset--color--muted) !important;
+  font-size: var(--wp--preset--font-size--lg) !important;
+  max-width: 36rem;
+  margin: 0 !important;
+}
+.hub-actions.wp-block-buttons {
+  gap: 0.75rem !important;
+  margin-top: 0.5rem !important;
+}
+
+.hub-label {
+  font-family: var(--wp--preset--font-family--display) !important;
+  font-size: var(--wp--preset--font-size--2-xs) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: var(--wp--preset--color--dim) !important;
+  margin: 0 0 1rem !important;
+}
+.hub-section-title {
+  font-size: clamp(1.5rem, 3vw, 2rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+  text-transform: none !important;
+  margin: 0 0 0.75rem !important;
+}
+.hub-intro {
+  color: var(--wp--preset--color--muted) !important;
+  max-width: 36rem;
+  margin: 0 0 2rem !important;
+}
+
+.hub-cluster {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  padding: 1.5rem !important;
+  background: var(--wp--preset--color--surface-low) !important;
+  border: 1px solid var(--wp--custom--border-color-subtle) !important;
+  border-radius: var(--wp--custom--radius-card) !important;
+}
+.hub-cluster p {
+  margin: 0 !important;
+  flex: 1 1 16rem;
+  color: var(--wp--preset--color--muted) !important;
+  font-size: var(--wp--preset--font-size--md) !important;
+}
+
+/* Newsletter: reuse cta-section styles but softer editorial tone */
+.newsletter-section .cta-heading {
+  text-transform: none !important;
+  font-size: clamp(1.75rem, 4vw, 2.75rem) !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+}
+.newsletter-section .cta-subheading {
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  font-size: var(--wp--preset--font-size--md) !important;
+  font-weight: 400 !important;
+  color: var(--wp--preset--color--base) !important;
+  opacity: 0.9;
+}

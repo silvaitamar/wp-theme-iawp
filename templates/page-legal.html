@@ -1,0 +1,38 @@
+<!-- wp:html -->
+<a class="skip-link" href="#main-content">Ir para o conteúdo principal</a>
+<!-- /wp:html -->
+
+<!-- wp:template-part {"slug":"header","theme":"iawp","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","anchor":"main-content","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
+<main id="main-content" class="wp-block-group" style="margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0">
+
+<!-- wp:group {"tagName":"article","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
+<article class="wp-block-group" style="margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0">
+
+<!-- wp:group {"tagName":"section","align":"full","className":"legal-header","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"},"ariaLabel":"Cabeçalho da página"} -->
+<section class="wp-block-group alignfull legal-header" aria-label="Cabeçalho da página" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--50)">
+<!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","orientation":"vertical","flexWrap":"nowrap","justifyContent":"center"}} -->
+<div class="wp-block-group alignwide">
+<!-- wp:post-terms {"term":"category","className":"legal-cat","separator":" "} /-->
+<!-- wp:post-title {"level":1,"className":"legal-title"} /-->
+<!-- wp:post-date {"format":"j \\d\\e F, Y","className":"legal-date"} /-->
+</div>
+<!-- /wp:group -->
+</section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","align":"full","className":"legal-content","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"},"ariaLabel":"Conteúdo"} -->
+<section class="wp-block-group alignfull legal-content" aria-label="Conteúdo" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--80)">
+<!-- wp:post-content {"align":"wide","layout":{"type":"constrained","contentSize":"680px"}} /-->
+</section>
+<!-- /wp:group -->
+
+
+</article>
+<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","theme":"iawp","tagName":"footer"} /-->

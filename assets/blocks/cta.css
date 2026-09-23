@@ -1,0 +1,115 @@
+/* === CTA SECTION + JETPACK FORM CTA ===
+   Carregado sob demanda via render_block_core/group
+   quando className="cta-section" está na página.
+   ======================================================== */
+
+.cta-section { overflow: hidden !important; }
+.cta-inner.wp-block-group {
+  align-items: center !important;
+  width: 100% !important;
+  text-align: center;
+}
+.cta-heading {
+  font-size: clamp(2rem,6vw,6rem) !important; /* Stitch: clamp(2rem,6vw,6rem) — mínimo era 1.75rem */
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  line-height: 0.92 !important; /* Stitch: implícito ~1 — 0.88 era apertado demais */
+  text-transform: uppercase;
+  color: var(--wp--preset--color--base) !important;
+  margin: 0 !important;
+}
+.cta-heading .cta-white { color: var(--wp--preset--color--contrast); }
+.cta-subheading {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.4em !important;
+  text-transform: uppercase !important;
+  color: var(--wp--preset--color--base) !important;
+  margin: 0 !important;
+}
+
+/* --- Jetpack form CTA --- */
+.cta-form.wp-block-jetpack-contact-form {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 0 !important;
+  max-width: 768px;
+  width: 100%;
+  margin: 0 auto !important;
+  border-bottom: 1px solid var(--wp--custom--base-alpha-25);
+  align-items: flex-end;
+  padding-bottom: 0.75rem;
+}
+.cta-form label { display: none !important; }
+.cta-form .grunion-field-wrap { flex: 1; margin: 0 !important; }
+.cta-form input[type=email] {
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.75rem 0 !important;
+  font-family: var(--wp--preset--font-family--body) !important; /* Inter — alinhado com hero-form */
+  font-size: clamp(1.25rem,3vw,1.75rem) !important;
+  font-weight: 400 !important;
+  color: var(--wp--preset--color--base) !important;
+  outline: none !important;
+}
+.cta-form input[type=email]::placeholder { color: var(--wp--custom--base-alpha-38) !important; }
+.cta-form .wp-block-button { flex-shrink: 0; margin: 0 !important; }
+.cta-form .wp-block-button__link,
+.cta-form button[type=submit] {
+  background: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0.75rem 0 0.75rem 1.5rem !important;
+  font-size: 0.75rem !important;  /* Stitch: text-xs = 0.75rem; token xs = 0.6875rem */
+  font-weight: 600 !important;    /* alinhado com hero-form */
+  letter-spacing: 0.4em !important; /* Stitch: tracking-[0.4em] */
+  text-transform: uppercase !important;
+  color: var(--wp--preset--color--base) !important;
+  cursor: pointer;
+  white-space: nowrap !important;
+  transition: opacity 0.2s !important;
+}
+.cta-form .wp-block-button__link:hover,
+.cta-form button[type=submit]:hover { opacity: 0.6 !important; }
+.cta-privacy {
+  font-size: var(--wp--preset--font-size--2-xs) !important; /* 0.625rem = text-[10px] ✓ */
+  letter-spacing: 0.1em !important; /* Stitch: tracking-[0.1em] */
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.60) !important; /* Stitch: opacity-60 sobre texto branco */
+  margin: 0 !important;
+}
+
+@media (max-width: 640px) {
+  .cta-form.wp-block-jetpack-contact-form { flex-direction: column !important; border-bottom: none !important; }
+  .cta-form input[type=email] { border-bottom: 1px solid var(--wp--custom--base-alpha-25) !important; }
+  .cta-form .wp-block-button__link { padding: 0.75rem 0 !important; text-align: center !important; }
+}
+
+/* Success message dentro da seção CTA — sem fundo, sem borda, centralizado */
+.jetpack-contact-form-container:has(.cta-form) .contact-form-submission {
+  background: transparent !important;
+  border: none !important;
+  align-items: center;
+  text-align: center;
+}
+.jetpack-contact-form-container:has(.cta-form) .contact-form-submission > p {
+  color: rgba(255,255,255,0.70) !important;
+}
+.jetpack-contact-form-container:has(.cta-form) .contact-form-submission .go-back-message a {
+  color: rgba(255,255,255,0.45) !important;
+}
+.jetpack-contact-form-container:has(.cta-form) .contact-form-submission .go-back-message a:hover {
+  color: rgba(255,255,255,0.80) !important;
+}
+
+@media (max-width: 640px) {
+  .cta-section.wp-block-group {
+    padding-top: var(--wp--preset--spacing--60) !important;
+    padding-bottom: var(--wp--preset--spacing--60) !important;
+  }
+  .cta-heading.wp-block-heading {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+  }
+}

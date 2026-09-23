@@ -1,0 +1,34 @@
+# Dependencies / build
+node_modules/
+vendor/
+npm-debug.log*
+yarn-error.log*
+composer.lock
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+*.code-workspace
+
+# WordPress noise (if theme is ever scanned from a full install)
+*.log
+*.sql
+*.sqlite
+.ht.sqlite
+
+# Release artifacts
+*.zip
+dist/
+build/
+
+# Secrets / local only
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+
+# Proto / internal paths must never be committed as copies with client data

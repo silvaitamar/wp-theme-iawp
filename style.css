@@ -1,0 +1,358 @@
+/*
+Theme Name: IA+WP
+Theme URI: https://github.com/silvaitamar/iawp
+Author: Itamar Silva
+Author URI: https://itamarsilva.dev.br
+Description: Block theme for the IA+WP editorial hub — AI, modern WordPress, and digital sovereignty. Dark, editorial, agent-friendly.
+Requires at least: 6.7
+Tested up to: 6.9
+Requires PHP: 8.0
+Version: 0.1.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: iawp
+Tags: full-site-editing, block-patterns, block-styles, wide-blocks, accessibility-ready, blog, news
+*/
+
+/*
+ * CSS architecture — IA+WP
+ * ─────────────────────────────────────────────────────────────────
+ * style.css = global only (skip link, chrome header/footer, icons, reveal)
+ * assets/blocks/*.css = on-demand by template (hub, blog, single, author, cta, legal, hero)
+ * Enqueue: conditional tags in functions.php + add_editor_style for canvas parity
+ * Source of visual truth until Phase 5 port: Downloads/iawp-hub-proto/ (approved)
+ * ─────────────────────────────────────────────────────────────────
+ */
+
+/* === EDITOR OVERRIDES ===
+   .editor-styles-wrapper é o body dentro do iframe do editor.
+   position:fixed no header o torna invisível no canvas — sobrescrever.
+   ============================================================ */
+.editor-styles-wrapper .site-header.alignfull {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* === SKIP LINK ===
+   Visível apenas no focus — WCAG 2.4.1 Level A.
+   Deve estar em style.css: é injetado antes de qualquer bloco
+   via core/html no topo do page.html.
+   ============================================================ */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--wp--preset--spacing--40);
+  z-index: 10000;
+  padding: 0.75rem 1.5rem;
+  background: var(--wp--preset--color--primary);
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--display);
+  font-size: var(--wp--preset--font-size--xs);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--wp--custom--radius-btn);
+  transition: top 0.15s;
+  white-space: nowrap;
+}
+.skip-link:focus {
+  top: var(--wp--preset--spacing--20);
+  outline: 2px solid var(--wp--preset--color--contrast);
+  outline-offset: 2px;
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; }
+/* overflow-x: clip em vez de hidden — evita scroll horizontal sem criar stacking context,
+   o que permitia que position:sticky nos filhos funcionasse corretamente. */
+html { overflow-x: clip; }
+body { -webkit-font-smoothing: antialiased; overflow-x: clip; max-width: 100%; }
+img, video { max-width: 100%; height: auto; display: block; }
+h1, h2, h3, h4, h5, h6 { max-width: 100%; overflow-wrap: break-word; }
+
+/* === ICONS (SVG inline) ===
+   Material Symbols substituído por SVGs locais em assets/icons/.
+   Convertidos via ob_start em functions.php: <span class="icon">nome</span>
+   → <svg class="icon" aria-hidden="true">...</svg>.
+   Deve ficar em style.css pois os ícones aparecem no header,
+   footer e em qualquer seção — sempre presente.
+   ============================================================ */
+svg.icon,
+svg.bento-icon,
+svg.author-avatar,
+svg.author-avatar-label {
+  display: block;
+  flex-shrink: 0;
+}
+svg.icon { width: 1.25em; height: 1.25em; fill: url(#grad-brand); }
+svg.bento-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 0 0 2rem 0;
+}
+svg.author-avatar {
+  width: var(--wp--preset--font-size--hero);
+  height: var(--wp--preset--font-size--hero);
+  fill: url(#grad-brand);
+  margin: 0 !important;
+}
+
+/* ============================================================
+   HEADER
+   Presente em todas as páginas via template-part → global.
+   alignfull + constrained → alignwide bar (logo | nav | cta)
+   ============================================================ */
+:root {
+  --iawp-header-height: 96px; /* h-24 do Stitch = 6rem = 96px */
+}
+.site-header.alignfull {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--wp--custom--border-color-subtle);
+}
+/* backdrop-filter no ::before evita stacking context no header
+   que aprisionaria o overlay do menu mobile (z-index: 100000) */
+.site-header.alignfull::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--wp--custom--base-alpha-82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: -1;
+  pointer-events: none;
+}
+.site-header__bar {
+  min-height: 96px;
+  align-items: center !important;
+}
+.site-header__logo {
+  margin: 0 !important;
+  line-height: 1 !important;
+  flex-shrink: 0;
+}
+.site-header__logo a {
+  font-size: var(--wp--preset--font-size--lg);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--wp--preset--color--contrast);
+  text-decoration: none;
+}
+.site-header__logo a strong { color: var(--wp--preset--color--primary); }
+.site-header__nav.wp-block-navigation { flex-shrink: 0; }
+.site-header__nav .wp-block-navigation__container {
+  gap: var(--wp--preset--spacing--40) !important;
+}
+.site-header__nav .wp-block-navigation-item__content {
+  font-size: var(--wp--preset--font-size--xs) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: var(--wp--preset--color--muted) !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  transition: color 0.2s;
+}
+.site-header__nav .wp-block-navigation-item__content:hover {
+  color: var(--wp--preset--color--primary) !important;
+}
+.site-header__cta { flex-shrink: 0; }
+.btn-nav .wp-block-button__link,
+.btn-nav.wp-block-button .wp-block-button__link {
+  font-size: var(--wp--preset--font-size--xs) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: var(--wp--preset--color--contrast) !important;
+  background: transparent !important;
+  border: 1px solid var(--wp--custom--border-color-mid) !important;
+  border-radius: var(--wp--custom--radius-btn) !important;
+  padding: 0.75rem 2rem !important;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  line-height: 1 !important;
+}
+.btn-nav .wp-block-button__link:hover {
+  background: var(--wp--preset--color--contrast) !important;
+  border-color: var(--wp--preset--color--contrast) !important;
+  color: var(--wp--preset--color--base) !important;
+}
+@media (max-width: 768px) {
+  .site-header__bar {
+    min-height: 72px;
+    flex-wrap: wrap !important;
+    gap: var(--wp--preset--spacing--30) 0;
+    padding-block: var(--wp--preset--spacing--30);
+  }
+  /* Linha 1: logo (esquerda) + botão (direita) */
+  .site-header__logo { order: 0; }
+  .site-header__cta  { order: 1; margin-left: auto; }
+  /* Linha 2: nav ocupa largura total */
+  .site-header__nav.wp-block-navigation {
+    order: 2;
+    width: 100%;
+    flex-shrink: 1;
+  }
+  .site-header__nav .wp-block-navigation__container {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40) !important;
+  }
+}
+
+/* ============================================================
+   FOOTER
+   Presente em todas as páginas via template-part → global.
+   alignfull + constrained → alignwide (brand | nav | icons)
+   ============================================================ */
+.site-footer {
+  border-top: 1px solid var(--wp--custom--border-color-subtle);
+}
+footer.wp-block-template-part {
+  margin-block-start: 0 !important;
+}
+.footer-brand {
+  font-size: var(--wp--preset--font-size--lg) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+  color: var(--wp--preset--color--contrast) !important;
+  margin: 0 !important;
+}
+.footer-brand a {
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: opacity 0.2s;
+}
+.footer-brand a:hover { opacity: 0.7; }
+.footer-brand span { color: var(--wp--preset--color--primary); }
+.footer-copy {
+  font-size: var(--wp--preset--font-size--2-xs) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wp--custom--muted-alpha-35) !important;
+  margin: 0.5rem 0 0 0 !important;
+}
+.footer-nav .wp-block-navigation__container {
+  gap: var(--wp--preset--spacing--40) !important;
+}
+.footer-nav .wp-block-navigation a,
+.footer-nav .wp-block-navigation-item__content {
+  font-size: var(--wp--preset--font-size--2-xs) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: var(--wp--preset--color--muted) !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  transition: color 0.2s;
+}
+.footer-nav .wp-block-navigation a:hover,
+.footer-nav .wp-block-navigation-item__content:hover {
+  color: var(--wp--preset--color--primary) !important;
+}
+.footer-icons {
+  margin: 0 !important;
+  display: flex !important;
+  gap: var(--wp--preset--spacing--30) !important;
+  align-items: center;
+}
+.footer-icons .icon {
+  font-size: var(--wp--preset--font-size--md);
+  color: var(--wp--preset--color--muted);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.footer-icons .icon:hover { color: var(--wp--preset--color--primary); }
+
+.footer-nav-group {
+  gap: var(--wp--preset--spacing--40) !important;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Email de contato limpo no footer */
+.footer-email {
+  font-size: var(--wp--preset--font-size--2-xs) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.15em !important;
+  text-transform: lowercase !important;
+  margin: 0 !important;
+}
+.footer-email a {
+  color: var(--wp--preset--color--muted) !important;
+  text-decoration: none !important;
+  transition: color 0.2s;
+}
+.footer-email a:hover {
+  color: var(--wp--preset--color--primary) !important;
+}
+
+/* ============================================================
+   REVEAL ANIMATIONS (progressive enhancement)
+   Presente em todas as seções → global.
+   CSS define estado final visível por padrão (sem JS).
+   JS adiciona .is-hidden e depois .is-visible via IntersectionObserver.
+   ============================================================ */
+.reveal-up { opacity: 1; transform: translateY(0); }
+.reveal-up.is-hidden {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(1.6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal-up.is-hidden { opacity: 1 !important; transform: none !important; }
+}
+
+/* === JETPACK FORM SUCCESS MESSAGE
+   Aplicado globalmente — cobre hero, cta e sidebar forms.
+   Estrutura: .contact-form-submission > .go-back-message + h4 + p
+   ============================================================ */
+.contact-form-submission {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--20);
+  padding: 0.75rem var(--wp--preset--spacing--30);
+  margin: 0 !important;
+  border: 1px solid var(--wp--custom--border-color-mid);
+}
+.contact-form-submission .go-back-message {
+  margin: 0 !important;
+  order: 2; /* move para baixo do heading e mensagem */
+}
+.contact-form-submission .go-back-message a {
+  font-size: var(--wp--preset--font-size--xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--dim) !important;
+  text-decoration: none !important;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.contact-form-submission .go-back-message a:hover { opacity: 1; }
+/* h4 padrão do Jetpack oculto — usamos só o customThankyouMessage */
+.contact-form-submission h4[id*="contact-form-success-header"] {
+  display: none !important;
+}
+/* customThankyouMessage — parágrafo imediatamente após o h4 */
+.contact-form-submission > p {
+  margin: 0 !important;
+  font-size: var(--wp--preset--font-size--sm) !important;
+  color: var(--wp--preset--color--muted) !important;
+  order: 1;
+}

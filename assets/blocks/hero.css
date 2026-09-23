@@ -1,0 +1,238 @@
+/* === HERO SECTION + JETPACK FORM HERO ===
+   Carregado sob demanda via render_block_core/group
+   quando className="hero-section" está na página.
+   ======================================================== */
+
+/* --- Layout da seção --- */
+.hero-section {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding-top: 128px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+.hero-bg-wrap {
+  position: absolute !important;
+  top: 0 !important; bottom: 0 !important;
+  left: 0 !important; right: 0 !important;
+  width: auto !important; height: auto !important;
+  max-width: none !important;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-bg-img {
+  position: absolute;
+  right: -96px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 75% !important;
+  max-width: none !important;
+  height: auto !important;
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  display: block;
+}
+.hero-section .wp-block-group.alignwide {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* --- Conteúdo --- */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--wp--custom--primary-alpha-40);
+  border-radius: var(--wp--custom--radius-btn);
+  font-size: var(--wp--preset--font-size--2-xs);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--primary);
+  margin: 0 !important;
+}
+.hero-title {
+  font-size: var(--wp--preset--font-size--hero) !important;
+  margin: 0 !important;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.hero-title em {
+  font-style: italic !important;
+  font-weight: 300 !important;
+  color: var(--wp--preset--color--primary) !important;
+}
+.hero-cols.wp-block-columns {
+  max-width: 896px !important;
+  width: 100%;
+  border-top: 1px solid var(--wp--custom--border-color-subtle);
+  padding-top: var(--wp--preset--spacing--40);
+  margin: 0 !important;
+}
+.hero-desc {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--lg);
+  line-height: 1.65;
+}
+.hero-list.wp-block-list { list-style: none !important; padding: 0 !important; }
+.hero-list.wp-block-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--20);
+  font-size: var(--wp--preset--font-size--sm);
+  letter-spacing: 0.04em;
+  color: var(--wp--preset--color--contrast);
+  margin-top: var(--wp--preset--spacing--20) !important;
+}
+.hero-list.wp-block-list li::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--wp--preset--color--primary);
+  flex-shrink: 0;
+}
+
+/* --- Jetpack form ---
+   DOM real:
+   .hero-form (is-layout-flex is-nowrap)
+     ├─ .grunion-field-wrap          ← flex:1 1 100% do grunion.css; row-reverse
+     │    ├─ .grunion-field (input)    ← padding via --jetpack--contact-form--input-padding-left
+     │    └─ label                     ← oculto
+     └─ .wp-block-button             ← flex:0 0 auto do jetpack-forms-layout.css
+
+   Stitch original:
+   .form (flex, gap-0, border border-subtle, max-w-2xl, overflow-hidden)
+     ├─ input (flex-grow, bg-transparent, px-8 py-6)
+     └─ button (bg-primary, px-10 py-6, text-xs, tracking-[0.2em], font-black)
+   ================================================================= */
+/* O Jetpack envolve o form num .jetpack-contact-form-container sem width.
+   Como o pai flex tem align-items:flex-start, esse container encolhe para
+   o conteúdo. Precisa de width explícito para que o hero-form possa crescer. */
+.jetpack-contact-form-container:has(.hero-form) {
+  width: min(42rem, 100%);
+}
+
+.hero-form.wp-block-jetpack-contact-form {
+  /* Stitch: max-w-2xl overflow-hidden border border-subtle flex gap-0
+     width:100% aqui funciona pois o pai (.jetpack-contact-form-container)
+     já tem width:min(42rem,100%) definido acima. */
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 0 !important;
+  border: 1px solid var(--wp--custom--border-color-subtle) !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  transition: border-color 0.3s;
+  /* Anula custom property Jetpack que injeta padding extra no input */
+  --jetpack--contact-form--input-padding-left: 0px;
+}
+.hero-form:focus-within {
+  border-color: var(--wp--preset--color--primary) !important;
+}
+/* grunion-field-wrap: flex:1 para ocupar todo espaço restante — !important vence grunion.css */
+.hero-form .grunion-field-wrap {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  /* row-reverse do grunion não afeta visualmente pois label está oculto */
+}
+.hero-form label,
+.hero-form .grunion-label-required {
+  display: none !important;
+}
+/* Input: seletor com class grunion-field para vencer o padding via custom property */
+.hero-form .grunion-field.email,
+.hero-form input[type=email] {
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  /* Stitch: px-8 py-6 = 2rem / 1.5rem */
+  padding: 1.5rem 2rem !important;
+  /* Stitch: herda body sem font-size explícito — Inter lg = 1.125rem */
+  font-family: var(--wp--preset--font-family--body) !important;
+  font-size: var(--wp--preset--font-size--lg) !important;
+  font-weight: 400 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  color: var(--wp--preset--color--contrast) !important;
+  outline: none !important;
+  height: auto !important;
+}
+.hero-form .grunion-field.email::placeholder,
+.hero-form input[type=email]::placeholder {
+  /* Stitch: placeholder:text-on-surface-variant/40 — muted a 40% */
+  color: rgba(194, 198, 214, 0.40) !important;
+}
+/* Botão: align-self:stretch para preencher a altura do form sem height:100% */
+.hero-form .wp-block-button {
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  flex: 0 0 auto !important;
+  align-self: stretch !important;
+  display: flex !important;
+}
+.hero-form .wp-block-button__link,
+.hero-form button[type=submit] {
+  /* Stitch: bg-primary px-10 py-6 text-xs tracking-[0.2em] font-black
+     font-family não é display no Stitch — usa Inter como o resto do form */
+  background: var(--wp--preset--color--primary) !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+  /* Stitch: botão não declara font-family — herda sans-serif padrão do Tailwind.
+     No nosso tema o equivalente visual mais fiel é Geist (display),
+     que é o que o global do tema já define para .wp-element-button.
+     Removemos o override de font-family para herdar o global corretamente. */
+  /* Stitch: px-10 py-6 = 2.5rem / 1.5rem */
+  padding: 1.5rem 2.5rem !important;
+  /* Stitch: text-xs Tailwind = 0.75rem */
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  transition: background 0.2s !important;
+  /* Preenche a altura do .wp-block-button que é align-self:stretch */
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+.hero-form .wp-block-button__link:hover,
+.hero-form button[type=submit]:hover {
+  background: var(--wp--custom--primary-dark) !important;
+}
+
+/* Container de sucesso Jetpack: oculto por padrão no DOM */
+.wp-block-jetpack-contact-form [data-wp-class--submission-success]:not(.submission-success) {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .hero-form.wp-block-jetpack-contact-form { flex-direction: column !important; }
+  .hero-form .wp-block-button__link { width: 100% !important; justify-content: center !important; }
+}
+
+@media (max-width: 640px) {
+  .hero-section.wp-block-group {
+    padding-top: calc(var(--iawp-header-height) + var(--wp--preset--spacing--50)) !important;
+    padding-bottom: var(--wp--preset--spacing--50) !important;
+  }
+  .hero-title.wp-block-heading {
+    font-size: clamp(1.875rem, 10vw, 2.5rem) !important;
+    line-height: 0.95 !important;
+  }
+  .hero-cols.wp-block-columns { flex-direction: column !important; }
+  .hero-desc { font-size: var(--wp--preset--font-size--md) !important; }
+}

@@ -1,0 +1,24 @@
+# IA+WP
+
+> Hub editorial sobre inteligência artificial aplicada ao WordPress moderno e soberania digital.
+> Site: https://iaewp.com.br
+
+## O que é
+
+Mídia e educação: artigos, fluxos testados (agentes, MCP, Gutenberg, Studio, ops) e newsletter de novos artigos.
+Não é landing de curso nem waitlist comercial.
+
+## Tese
+
+A IA acelera a criação. O WordPress garante que o ativo continue sendo seu.
+
+## Conteúdo principal
+
+- /blog/ — índice de artigos
+- /categoria/ia-agentes/ — cluster IA + Agentes
+- /sobre/ — quem escreve e o que o projeto é
+- Pilar: https://iaewp.com.br/ia-wordpress-combinacao-estrategica-2026/
+
+## Contato
+
+ola@iaewp.com.br

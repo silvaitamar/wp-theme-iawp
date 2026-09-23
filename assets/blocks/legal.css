@@ -1,0 +1,113 @@
+/* === LEGAL PAGES — Privacidade e Termos === */
+
+/* ── HEADER ── */
+.legal-header {
+  padding-top: calc(var(--iawp-header-height) + var(--wp--preset--spacing--70)) !important;
+  border-bottom: 1px solid var(--wp--custom--border-color-subtle);
+  text-align: center;
+}
+.legal-header .wp-block-group.alignwide {
+  align-items: center;
+}
+
+.legal-title.wp-block-post-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--wp--preset--color--contrast);
+  margin: 0;
+}
+
+.legal-date.wp-block-post-date {
+  font-size: var(--wp--preset--font-size--sm);
+  color: var(--wp--preset--color--dim);
+  margin: 0;
+}
+
+/* ── PROSE ── */
+.legal-content .wp-block-post-content {
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.legal-content .wp-block-post-content h2 {
+  font-size: var(--wp--preset--font-size--xl);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--wp--preset--color--contrast);
+  margin-block-start: var(--wp--preset--spacing--60);
+  margin-block-end: var(--wp--preset--spacing--20);
+  padding-bottom: var(--wp--preset--spacing--20);
+  border-bottom: 1px solid var(--wp--custom--border-color-subtle);
+}
+
+.legal-content .wp-block-post-content h3 {
+  font-size: var(--wp--preset--font-size--lg);
+  font-weight: 700;
+  color: var(--wp--preset--color--contrast);
+  margin-block-start: var(--wp--preset--spacing--50);
+  margin-block-end: var(--wp--preset--spacing--10);
+}
+
+.legal-content .wp-block-post-content p {
+  font-size: var(--wp--preset--font-size--md);
+  line-height: 1.75;
+  color: var(--wp--preset--color--muted);
+}
+
+.legal-content .wp-block-post-content > * + * {
+  margin-block-start: var(--wp--preset--spacing--30);
+}
+
+.legal-content .wp-block-post-content ul,
+.legal-content .wp-block-post-content ol {
+  padding-inline-start: 1.5rem;
+  color: var(--wp--preset--color--muted);
+  line-height: 1.75;
+}
+
+.legal-content .wp-block-post-content ul li,
+.legal-content .wp-block-post-content ol li {
+  margin-block-end: var(--wp--preset--spacing--10);
+}
+
+.legal-content .wp-block-post-content a {
+  color: var(--wp--preset--color--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-content .wp-block-post-content strong {
+  color: var(--wp--preset--color--contrast);
+  font-weight: 700;
+}
+
+/* ── NOTA DE ATUALIZAÇÃO ── */
+.legal-notice.wp-block-paragraph {
+  font-size: var(--wp--preset--font-size--sm) !important;
+  color: var(--wp--preset--color--dim) !important;
+  border-left: 3px solid var(--wp--custom--border-color-subtle);
+  padding-left: var(--wp--preset--spacing--30);
+  margin-block-start: var(--wp--preset--spacing--60) !important;
+}
+
+@media (max-width: 640px) {
+  .legal-header {
+    padding-top: calc(var(--iawp-header-height) + var(--wp--preset--spacing--50)) !important;
+    padding-bottom: var(--wp--preset--spacing--40) !important;
+    text-align: left;
+  }
+  .legal-header .wp-block-group.alignwide { align-items: flex-start; }
+  .legal-title.wp-block-post-title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
+  }
+  .legal-content.wp-block-group {
+    padding-top: var(--wp--preset--spacing--50) !important;
+    padding-bottom: var(--wp--preset--spacing--60) !important;
+  }
+  .legal-content .wp-block-post-content h2 {
+    margin-block-start: var(--wp--preset--spacing--50) !important;
+    font-size: var(--wp--preset--font-size--lg) !important;
+  }
+}
