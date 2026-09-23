@@ -279,9 +279,10 @@ add_filter( 'render_block', function ( $html, $block ) {
 	if ( $block['blockName'] !== 'core/navigation' ) return $html;
 	$class = $block['attrs']['className'] ?? '';
 	if ( strpos( $class, 'site-header__nav' ) !== false ) {
-		$html = preg_replace( '/<nav\b/', '<nav aria-label="Menu principal"', $html, 1 );
+		// Proto: aria-label="Principal"
+		$html = preg_replace( '/<nav\b/', '<nav aria-label="Principal"', $html, 1 );
 	} elseif ( strpos( $class, 'footer-nav' ) !== false ) {
-		$html = preg_replace( '/<nav\b/', '<nav aria-label="Menu rodapé"', $html, 1 );
+		$html = preg_replace( '/<nav\b/', '<nav aria-label="Rodapé"', $html, 1 );
 	}
 	return $html;
 }, 10, 2 );
