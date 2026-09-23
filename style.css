@@ -70,10 +70,35 @@ Tags: full-site-editing, block-patterns, block-styles, wide-blocks, accessibilit
 *, *::before, *::after { box-sizing: border-box; }
 /* overflow-x: clip em vez de hidden — evita scroll horizontal sem criar stacking context,
    o que permitia que position:sticky nos filhos funcionasse corretamente. */
-html { overflow-x: clip; }
+html { overflow-x: clip; scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; overflow-x: clip; max-width: 100%; }
 img, video { max-width: 100%; height: auto; display: block; }
 h1, h2, h3, h4, h5, h6 { max-width: 100%; overflow-wrap: break-word; }
+
+/* === ATMOSPHERE (proto — punk + fashion) ===
+   Grain overlay + wash sutil. Tipografia manda; opacidade baixa. */
+.site-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: var(--wp--custom--grain-opacity, 0.04);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
 
 /* === ICONS (SVG inline) ===
    Material Symbols substituído por SVGs locais em assets/icons/.

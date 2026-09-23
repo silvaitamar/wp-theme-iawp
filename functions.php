@@ -190,6 +190,7 @@ add_action( 'template_redirect', function (): void {
  * incluindo os SVGs nativos do core/social-links.
  */
 add_action( 'wp_body_open', function (): void {
+	echo '<div class="site-grain" aria-hidden="true"></div>';
 	echo '<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">' .
 		'<defs><linearGradient id="grad-brand" x1="0" y1="0" x2="1" y2="1">' .
 		'<stop offset="0%" stop-color="#3B82F6"/>' .

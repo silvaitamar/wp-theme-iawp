@@ -41,9 +41,13 @@ Fidelidade ao proto **antes** de “melhorias” inventadas.
 Ver Conventional Commits. Marcos típicos deste tema:
 
 1. `chore: scaffold iawp block theme` — estrutura + git
-2. `feat: port hub home from approved HTML proto`
-3. `feat: port single, archive, about, 404`
-4. `chore: release x.y.z` — só com OK de testes
+2. `feat(chrome): align header and footer…` — parts
+3. `feat: add newsletter pattern and sync proto tokens` — pattern + tokens
+4. `feat: port hub home from approved HTML proto`
+5. `feat: port single, archive, about, 404`
+6. `chore: release x.y.z` — só com OK de testes
+
+Após **adicionar/renomear** arquivos em `patterns/`, limpar cache de patterns do tema no Studio (`$theme->delete_pattern_cache()` + reload) se o inserter/template não enxergar o slug novo.
 
 ## Ambiente
 

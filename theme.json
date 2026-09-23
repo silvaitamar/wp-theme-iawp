@@ -107,13 +107,17 @@
       "primary-dark":        "#2563eb",
       "base-alpha-65":       "rgba(11,16,32,0.65)",
       "base-alpha-45":       "rgba(11,16,32,0.45)",
+      "base-alpha-40":       "rgba(11,16,32,0.4)",
       "base-alpha-38":       "rgba(11,16,32,0.38)",
       "base-alpha-25":       "rgba(11,16,32,0.25)",
+      "base-alpha-82":       "rgba(11,16,32,0.82)",
       "muted-alpha-35":      "rgba(194,198,214,0.35)",
       "primary-alpha-40":    "rgba(59,130,246,0.40)",
       "primary-alpha-10":    "rgba(59,130,246,0.10)",
       "primary-alpha-09":    "rgba(59,130,246,0.09)",
-      "base-alpha-82":        "rgba(11,16,32,0.82)"
+      "grain-opacity":       "0.04",
+      "ornament-line":       "rgba(255,255,255,0.06)",
+      "fashion-wash":       "linear-gradient(125deg, rgba(59,130,246,0.07) 0%, transparent 42%, rgba(139,92,246,0.05) 100%)"
     }
   },
   "templateParts": [
