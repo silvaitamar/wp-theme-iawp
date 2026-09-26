@@ -101,7 +101,8 @@
         { "slug": "5xl",  "size": "clamp(2rem,5.5vw,6rem)",      "name": "5XL",         "fluid": false },
         { "slug": "6xl",  "size": "clamp(2rem,4.5vw,3.75rem)",   "name": "6XL",         "fluid": false },
         { "slug": "section", "size": "clamp(2rem, 7vw, 7rem)",   "name": "Section display", "fluid": false },
-        { "slug": "hero", "size": "clamp(2.5rem, 7vw, 6.5rem)",  "name": "Hero display", "fluid": false }
+        { "slug": "hero", "size": "clamp(2.5rem, 7vw, 6.5rem)",  "name": "Hero display", "fluid": false },
+        { "slug": "page", "size": "clamp(2.5rem, 8vw, 5rem)",    "name": "Page hero display", "fluid": false }
       ]
     },
     "border": {

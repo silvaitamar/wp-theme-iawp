@@ -16,6 +16,7 @@ $needed = array(
 	'iawp/section-header-lede',
 	'iawp/query-featured',
 	'iawp/query-cards',
+	'iawp/query-cards-blog',
 	'iawp/posts-hub',
 	'iawp/bento-grid',
 	'iawp/about-teaser',
@@ -23,6 +24,8 @@ $needed = array(
 	'iawp/home-latest',
 	'iawp/home-eixos',
 	'iawp/home-about',
+	'iawp/blog-hero',
+	'iawp/blog-latest',
 	'iawp/newsletter',
 );
 

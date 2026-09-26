@@ -253,9 +253,10 @@ add_action( 'wp_enqueue_scripts', function (): void {
 		return;
 	}
 
-	// Blog index + category/tag archives (mesma listagem do proto)
-	if ( ( $post_id === $blog_id && $blog_id > 0 ) || is_category() || is_tag() || is_tax() ) {
-		wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), $base, $mtime( 'assets/blocks/blog.css' ) );
+	// Blog index + category/tag archives — hub listagem (.posts-hub) + page-hero slim
+	if ( ( $post_id === $blog_id && $blog_id > 0 ) || is_home() || is_category() || is_tag() || is_tax() ) {
+		wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
+		wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), array( 'iawp-hub' ), $mtime( 'assets/blocks/blog.css' ) );
 		wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
 		return;
 	}
