@@ -1,16 +1,18 @@
-<!-- wp:group {"align":"full","className":"site-header","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull site-header"><!-- wp:group {"align":"wide","className":"site-header__bar","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-<div class="wp-block-group alignwide site-header__bar"><!-- wp:paragraph {"className":"site-header__logo logo"} -->
-<p class="site-header__logo logo"><a href="/"><em>IA</em>+WP</a></p>
-<!-- /wp:paragraph -->
+<!-- wp:group {"className":"site-header__shell","layout":{"type":"constrained"}} -->
+<div class="wp-block-group site-header__shell"><!-- wp:group {"align":"wide","className":"site-header__bar","style":{"dimensions":{"minHeight":"var(--wp--custom--header-height, 96px)"},"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+<div class="wp-block-group alignwide site-header__bar" style="min-height:var(--wp--custom--header-height, 96px)"><!-- wp:group {"className":"site-header__logo logo","layout":{"type":"default"}} -->
+<div class="wp-block-group site-header__logo logo"><!-- wp:paragraph {"fontFamily":"display","fontSize":"lg","textColor":"contrast","style":{"typography":{"fontWeight":"800","letterSpacing":"-0.02em","lineHeight":"1"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
+<p class="has-contrast-color has-text-color has-display-font-family has-lg-font-size" style="margin-top:0;margin-bottom:0;font-weight:800;letter-spacing:-0.02em;line-height:1"><a href="/"><em>IA</em>+WP</a></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
 
-<!-- wp:navigation {"overlayMenu":"never","className":"site-header__nav","style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap"}} -->
+<!-- wp:navigation {"overlayMenu":"never","className":"site-header__nav","textColor":"muted","fontFamily":"display","fontSize":"xs","style":{"typography":{"fontWeight":"800","letterSpacing":"0.2em","textTransform":"uppercase"},"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap"}} -->
 <!-- wp:navigation-link {"label":"Artigos","url":"/blog/","kind":"custom","isTopLevelLink":true} /-->
 
 <!-- wp:navigation-link {"label":"Sobre","url":"/sobre/","kind":"custom","isTopLevelLink":true} /-->
 <!-- /wp:navigation -->
 
-<!-- wp:buttons {"className":"site-header__cta"} -->
+<!-- wp:buttons {"className":"site-header__cta","layout":{"type":"flex"}} -->
 <div class="wp-block-buttons site-header__cta"><!-- wp:button {"className":"btn-nav"} -->
 <div class="wp-block-button btn-nav"><a class="wp-block-button__link wp-element-button" href="/#newsletter">Receber novos artigos</a></div>
 <!-- /wp:button --></div>

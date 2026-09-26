@@ -1,0 +1,131 @@
+/**
+ * Site Editor canvas only (add_editor_style — auto-scoped under .editor-styles-wrapper).
+ *
+ * Do NOT prefix selectors with .editor-styles-wrapper here.
+ * ONLY: offset (proto pad) + mirror BHB fixed + HTML trap + BlockPreview caps
+ * + overrides cirúrgicos que NÃO reescrevem flex/width das colunas do hub.
+ * Width/align da barra = nativo (shell constrained + bar alignwide) via style.css.
+ * Nunca width:% em `.block-editor-block-list__block` do featured (regrediu o card — 2026-09-25).
+ */
+
+.is-root-container {
+	position: relative;
+	background-color: var(--wp--preset--color--base);
+	padding-top: var(--wp--custom--header-height, 96px);
+	overflow-x: clip;
+}
+
+/*
+ * Offset = proto body pad sob header fixed — só em templates com <main>.
+ * Ao editar a part header/footer isolada, o root NÃO tem main; o pad
+ * virava faixa vazia acima da barra (header “maior” no canvas).
+ * vence .wp-site-blocks do style.css (mesmo nó no canvas).
+ */
+.is-root-container:not(:has(main)):not(:has(#main-content)) {
+	padding-top: 0;
+}
+
+.site-header.header--overlay,
+header.site-header.header--overlay {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	max-width: 100%;
+	background: transparent;
+	box-sizing: border-box;
+	/* Stacking context estável — ::before glass (z-index:-1) não some atrás do canvas */
+	isolation: isolate;
+}
+
+/*
+ * Proto: ::before glass sempre visível.
+ * Front: theme deixa opacity:0 até .is-scrolled (BHB JS).
+ * Canvas: JS do BHB pode atrasar ou o scroll ser no iframe — espelhar proto
+ * com glass sempre on + fundo BHB quando .is-scrolled chegar.
+ */
+.site-header.header--overlay::before,
+header.site-header.header--overlay::before {
+	opacity: 1;
+	background: var(--bhb-header-scrolled-bg, var(--wp--custom--base-alpha-82, rgba(11, 16, 32, 0.82)));
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+}
+
+.site-header.header--overlay.is-scrolled,
+header.site-header.header--overlay.is-scrolled {
+	background: var(--bhb-header-scrolled-bg, var(--wp--custom--base-alpha-82, rgba(11, 16, 32, 0.92)));
+}
+
+.skip-link {
+	display: none !important;
+}
+
+/*
+ * Editor chrome of core/html can be position:relative and trap .hero-bg.
+ * Front+canvas: hub.css covers .wp-block-html / [data-type].
+ * Aqui só o wrapper da list view (:has) — exclusivo do editor.
+ */
+.hero .block-editor-block-list__block:has(.hero-bg) {
+	position: static !important;
+}
+
+/*
+ * Template/pattern thumbnails (BlockPreview): root gets .is-preview-mode.
+ * Live canvas does NOT — so front + edição da página mantêm 100dvh.
+ * Sem isto, min-height em dvh/vh infla o iframe do preview (Gutenberg #50449).
+ * !important vence o min-height inline do bloco.
+ */
+.is-root-container.is-preview-mode .hero,
+.is-root-container.is-preview-mode .hero-section,
+.is-preview-mode .hero,
+.is-preview-mode .hero-section {
+	min-height: unset !important;
+}
+
+/*
+ * Badge featured no canvas — paridade com front/proto.
+ * Causa real do “quadradinho” (2026-09-25): blog.css no add_editor_style com
+ * `.post-featured__img a { absolute; inset:0 }` engolia o <a> do post-terms
+ * (filho absolute → pill colapsa ao padding). Fix em blog.css + reset em hub.css.
+ * Aqui só reforço nowrap / max-content. NUNCA width 58%/40% nos wrappers flex.
+ */
+.posts-hub .post-featured__cat {
+	white-space: nowrap !important;
+	width: max-content !important;
+	min-width: max-content !important;
+	max-width: none !important;
+	overflow: visible !important;
+	overflow-wrap: normal !important;
+	word-break: normal !important;
+}
+.posts-hub .post-featured__cat a {
+	position: static !important;
+	inset: auto !important;
+	width: auto !important;
+	height: auto !important;
+	white-space: nowrap !important;
+}
+
+/*
+ * Newsletter Jetpack form — canvas: Jetpack editor-style.css força input #fff
+ * e o inner block list empilha field+button. Paridade do strip está em cta.css
+ * (vars + !important no chrome do plugin). Aqui só reforço se o prefixo do
+ * add_editor_style + ordem de enqueue do Jetpack ainda vencerem o input.
+ */
+.cta-form input[type="email"],
+.cta-form .grunion-field.email,
+.cta-form .components-text-control__input {
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+.cta-form.wp-block-jetpack-contact-form > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap !important;
+	align-items: flex-end !important;
+	gap: 0 !important;
+}

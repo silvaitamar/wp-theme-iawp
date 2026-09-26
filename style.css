@@ -17,50 +17,32 @@ Tags: full-site-editing, block-patterns, block-styles, wide-blocks, accessibilit
 /*
  * CSS architecture — IA+WP
  * ─────────────────────────────────────────────────────────────────
- * style.css = global only (skip link, chrome header/footer, icons, reveal)
+ * style.css = global only (chrome header/footer, icons, reveal; skip-link :focus brand)
+ * assets/editor-canvas.css = só Site Editor (add_editor_style) — offset BHB + HTML trap
  * assets/blocks/*.css = on-demand by template (hub, blog, single, author, cta, legal, hero)
  * Enqueue: conditional tags in functions.php + add_editor_style for canvas parity
  * Source of visual truth until Phase 5 port: Downloads/iawp-hub-proto/ (approved)
  * ─────────────────────────────────────────────────────────────────
  */
 
-/* === EDITOR OVERRIDES ===
-   .editor-styles-wrapper é o body dentro do iframe do editor.
-   position:fixed no header o torna invisível no canvas — sobrescrever.
-   ============================================================ */
-.editor-styles-wrapper .site-header.alignfull {
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  right: auto !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
 /* === SKIP LINK ===
-   Visível apenas no focus — WCAG 2.4.1 Level A.
-   Deve estar em style.css: é injetado antes de qualquer bloco
-   via core/html no topo do page.html.
+   NÃO adicionar core/html no template. O core injeta automaticamente
+   via _block_template_add_skip_link() (id="wp-skip-link", classes
+   skip-link screen-reader-text) apontando para <main id="…">.
+   Manter só anchor:"main-content" no group tagName:main.
+   Estilos base: wp-includes/css/wp-block-template-skip-link.css
+   Abaixo: foco alinhado à marca (opcional).
    ============================================================ */
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: var(--wp--preset--spacing--40);
-  z-index: 10000;
-  padding: 0.75rem 1.5rem;
-  background: var(--wp--preset--color--primary);
+.skip-link.screen-reader-text:focus {
+  background-color: var(--wp--preset--color--primary);
   color: var(--wp--preset--color--contrast);
   font-family: var(--wp--preset--font-family--display);
   font-size: var(--wp--preset--font-size--xs);
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  text-decoration: none;
   border-radius: var(--wp--custom--radius-btn);
-  transition: top 0.15s;
-  white-space: nowrap;
-}
-.skip-link:focus {
+  left: var(--wp--preset--spacing--40);
   top: var(--wp--preset--spacing--20);
   outline: 2px solid var(--wp--preset--color--contrast);
   outline-offset: 2px;
@@ -128,22 +110,43 @@ svg.author-avatar {
 }
 
 /* ============================================================
-   HEADER
-   Presente em todas as páginas via template-part → global.
-   alignfull + constrained → alignwide bar (logo | nav | cta)
+   HEADER — BHB composição + offset do proto
+   Template: group (headerMode:overlay, layout:default) full-bleed.
+   Part: shell constrained → bar alignwide (nativo; wideSize nos filhos diretos).
+   Plugin: position:fixed. Proto: body pad = header-h (aqui em .wp-site-blocks).
+   Hero: min-height calc(100dvh - header-h) + padding |70.
+   Nativo na part: logo/nav/CTA tipografia+cor+pad/borda; CSS só: glass,
+   em wordmark, muted nos <a> (elements.link), hover CTA, mobile wrap/order.
+   Sem !important na tipografia do chrome (mesmo padrão do footer).
    ============================================================ */
 :root {
-  --iawp-header-height: 96px; /* proto --header-h */
+  --iawp-header-height: var(--wp--custom--header-height, 96px);
 }
-.site-header.alignfull {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--wp--custom--border-color-subtle);
+/* Espaço reservado sob o fixed — evita header encobrir o hero (proto body pad). */
+.wp-site-blocks {
+  position: relative;
+  background-color: var(--wp--preset--color--base);
+  padding-top: var(--wp--custom--header-height, 96px);
 }
-/* backdrop-filter no ::before evita stacking context no header
-   que aprisionaria o overlay do menu mobile (z-index: 100000) */
-.site-header.alignfull::before {
+.site-header.header--overlay,
+header.site-header.header--overlay {
+  border-bottom: 1px solid var(--wp--preset--color--outline);
+  /* Contém o ::before (z-index:-1) — sem isto o glass some em alguns stacking contexts do editor */
+  isolation: isolate;
+}
+/* Gutter do proto (.wrap): padding do shell constrained (RPA).
+   Não min(100%-2·gutter) — dobra o inset e desalinha vs seções. */
+.site-header .site-header__bar.alignwide,
+.site-header__bar.alignwide {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--wp--style--global--wide-size, 1344px);
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Glass só após scroll (classe .is-scrolled do plugin) */
+.site-header.header--overlay::before,
+header.site-header.header--overlay::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -152,24 +155,20 @@ svg.author-avatar {
   -webkit-backdrop-filter: blur(16px);
   z-index: -1;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
-.site-header__bar {
-  min-height: var(--iawp-header-height);
-  align-items: center !important;
+.site-header.header--overlay.is-scrolled::before,
+header.site-header.header--overlay.is-scrolled::before {
+  opacity: 1;
 }
 .site-header__logo,
 .logo {
-  margin: 0 !important;
-  line-height: 1 !important;
   flex-shrink: 0;
-  font-family: var(--wp--preset--font-family--display);
 }
 .site-header__logo a,
 .logo a {
-  font-size: var(--wp--preset--font-size--lg);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--wp--preset--color--contrast);
+  color: inherit;
   text-decoration: none;
 }
 /* Wordmark canônico: <em>IA</em>+WP (não strong) */
@@ -182,55 +181,63 @@ svg.author-avatar {
   color: var(--wp--preset--color--primary);
 }
 .site-header__nav.wp-block-navigation { flex-shrink: 0; }
-.site-header__nav .wp-block-navigation__container {
-  gap: var(--wp--preset--spacing--40) !important;
-}
+/*
+ * elements.link = contrast nos <a>; textColor:muted no nav perde por herança.
+ * Seletor (0,2,1) > :where(a) — sem !important (igual footer).
+ */
+.site-header__nav.has-muted-color a,
 .site-header__nav .wp-block-navigation-item__content {
-  font-size: var(--wp--preset--font-size--xs) !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
-  color: var(--wp--preset--color--muted) !important;
-  text-decoration: none !important;
-  padding: 0 !important;
+  color: var(--wp--preset--color--muted);
+  text-decoration: none;
+  padding: 0;
   transition: color 0.2s;
 }
+.site-header__nav a:hover,
 .site-header__nav .wp-block-navigation-item__content:hover {
-  color: var(--wp--preset--color--primary) !important;
+  color: var(--wp--preset--color--primary);
 }
 .site-header__nav .wp-block-navigation-item.current-menu-item > .wp-block-navigation-item__content,
 .site-header__nav .wp-block-navigation-item[aria-current="page"] > .wp-block-navigation-item__content,
 .site-header__nav a[aria-current="page"] {
-  color: var(--wp--preset--color--contrast) !important;
+  color: var(--wp--preset--color--contrast);
 }
 .site-header__cta { flex-shrink: 0; }
-.btn-nav .wp-block-button__link,
-.btn-nav.wp-block-button .wp-block-button__link {
-  font-size: var(--wp--preset--font-size--xs) !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
-  color: var(--wp--preset--color--contrast) !important;
-  background: transparent !important;
-  border: 1px solid var(--wp--custom--border-color-mid) !important;
-  border-radius: var(--wp--custom--radius-btn) !important;
-  padding: 0.75rem 2rem !important;
+/*
+ * CTA ghost: HTML mínimo TT5 (só className btn-nav) — attrs tipografia/borda
+ * no botão invalidavam o save() JS. CSS com especificidade > elements.button
+ * (:where) — sem !important.
+ */
+.site-header .btn-nav .wp-block-button__link.wp-element-button,
+.site-header .btn-nav.wp-block-button .wp-block-button__link {
+  font-family: var(--wp--preset--font-family--display);
+  font-size: var(--wp--preset--font-size--xs);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--wp--preset--color--contrast);
+  background: transparent;
+  border: 1px solid var(--wp--custom--border-color-mid);
+  border-radius: var(--wp--custom--radius-btn);
+  padding: 0.75rem 2rem;
   white-space: nowrap;
+  text-decoration: none;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
-  line-height: 1 !important;
 }
-.btn-nav .wp-block-button__link:hover {
-  background: var(--wp--preset--color--contrast) !important;
-  border-color: var(--wp--preset--color--contrast) !important;
-  color: var(--wp--preset--color--base) !important;
+.site-header .btn-nav .wp-block-button__link.wp-element-button:hover,
+.site-header .btn-nav.wp-block-button .wp-block-button__link:hover {
+  background: var(--wp--preset--color--contrast);
+  border-color: var(--wp--preset--color--contrast);
+  color: var(--wp--preset--color--base);
 }
 @media (max-width: 768px) {
   :root {
+    --wp--custom--header-height: 72px;
     --iawp-header-height: 72px;
   }
+  /* breakpoint: layout flex não tem wrap/order responsivo nativo */
   .site-header__bar {
-    min-height: var(--iawp-header-height);
-    flex-wrap: wrap !important;
+    flex-wrap: wrap;
     gap: var(--wp--preset--spacing--30) 0;
     padding-block: var(--wp--preset--spacing--30);
   }
@@ -245,102 +252,72 @@ svg.author-avatar {
     flex-shrink: 1;
   }
   .site-header__nav .wp-block-navigation__container {
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40) !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
   }
 }
 
 /* ============================================================
-   FOOTER
-   Presente em todas as páginas via template-part → global.
-   alignfull + constrained → alignwide (brand | nav | icons)
+   FOOTER — allowlist (nativo: bg base, pad|50, bar flex space-between,
+   brand/copy/nav/email tipografia+cor)
+   CSS só: border-top outline (proto; seções ficam dentro de <main>,
+   então .newsletter+footer nunca casa — borda sempre presente);
+   em wordmark; cor muted nos <a> (elements.link=contrast);
+   nav padding/decoration; hover; template-part margin 0.
+   Sem !important.
    ============================================================ */
-.site-footer {
-  border-top: 1px solid var(--wp--custom--border-color-subtle);
-  background: var(--wp--preset--color--base);
-}
 footer.wp-block-template-part {
-  margin-block-start: 0 !important;
+  margin-block-start: 0;
 }
-.site-footer__bar {
-  align-items: flex-start !important;
+
+.site-footer {
+  border-top: 1px solid var(--wp--preset--color--outline);
 }
-.footer-brand {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: var(--wp--preset--font-size--lg) !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.02em;
-  color: var(--wp--preset--color--contrast) !important;
-  margin: 0 !important;
+
+/* Wordmark: <em>IA</em> (mesmo padrão do header/logo) */
+.footer-brand em,
+.footer-brand a em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--wp--preset--color--primary);
 }
+
 .footer-brand a {
-  color: inherit !important;
-  text-decoration: none !important;
+  color: inherit;
+  text-decoration: none;
   transition: opacity 0.2s;
 }
-.footer-brand a:hover { opacity: 0.7; }
-.footer-copy {
-  font-size: var(--wp--preset--font-size--2-xs) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--wp--custom--muted-alpha-35) !important;
-  margin: 0.5rem 0 0 0 !important;
+
+.footer-brand a:hover {
+  opacity: 0.7;
 }
-.footer-nav .wp-block-navigation__container {
-  gap: var(--wp--preset--spacing--40) !important;
-}
-.footer-nav .wp-block-navigation a,
+
+/*
+ * theme.json elements.link força contrast nos <a> (vence herança do
+ * textColor:muted do nav/email). Seletor (0,2,1) > :where(a) sem !important.
+ */
+.footer-nav.has-muted-color a,
 .footer-nav .wp-block-navigation-item__content {
-  font-size: var(--wp--preset--font-size--2-xs) !important;
-  font-weight: 900 !important;
-  letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
-  color: var(--wp--preset--color--muted) !important;
-  text-decoration: none !important;
-  padding: 0 !important;
-  transition: color 0.2s;
-}
-.footer-nav .wp-block-navigation a:hover,
-.footer-nav .wp-block-navigation-item__content:hover {
-  color: var(--wp--preset--color--primary) !important;
-}
-.footer-icons {
-  margin: 0 !important;
-  display: flex !important;
-  gap: var(--wp--preset--spacing--30) !important;
-  align-items: center;
-}
-.footer-icons .icon {
-  font-size: var(--wp--preset--font-size--md);
   color: var(--wp--preset--color--muted);
-  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
   transition: color 0.2s;
 }
-.footer-icons .icon:hover { color: var(--wp--preset--color--primary); }
 
-.footer-nav-group {
-  gap: var(--wp--preset--spacing--40) !important;
-  flex-wrap: wrap;
-  align-items: center;
+.footer-nav a:hover,
+.footer-nav .wp-block-navigation-item__content:hover {
+  color: var(--wp--preset--color--primary);
 }
 
-/* Email de contato limpo no footer */
-.footer-email {
-  font-size: var(--wp--preset--font-size--2-xs) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.15em !important;
-  text-transform: lowercase !important;
-  margin: 0 !important;
-}
-.footer-email a {
-  color: var(--wp--preset--color--muted) !important;
-  text-decoration: none !important;
+.footer-email.has-muted-color a {
+  color: inherit;
+  text-decoration: none;
   transition: color 0.2s;
 }
+
 .footer-email a:hover {
-  color: var(--wp--preset--color--primary) !important;
+  color: var(--wp--preset--color--primary);
 }
 
 /* ============================================================

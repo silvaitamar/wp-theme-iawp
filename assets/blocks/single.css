@@ -16,7 +16,7 @@
    ══════════════════════════════════════════════════════ */
 
 .single-header {
-  padding-top: calc(var(--iawp-header-height) + var(--wp--preset--spacing--70)) !important;
+  padding-top: var(--wp--preset--spacing--70) !important;
 }
 
 /* single-header__inner: layout:default — sem contentSize.
@@ -553,7 +553,7 @@ p.sidebar-cta-desc {
 
 @media (max-width: 640px) {
   .single-header {
-    padding-top: calc(var(--iawp-header-height) + var(--wp--preset--spacing--50)) !important;
+    padding-top: var(--wp--preset--spacing--50) !important;
     padding-bottom: var(--wp--preset--spacing--40) !important;
   }
   .single-content.wp-block-group {

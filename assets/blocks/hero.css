@@ -226,7 +226,7 @@
 
 @media (max-width: 640px) {
   .hero-section.wp-block-group {
-    padding-top: calc(var(--iawp-header-height) + var(--wp--preset--spacing--50)) !important;
+    padding-top: var(--wp--preset--spacing--50) !important;
     padding-bottom: var(--wp--preset--spacing--50) !important;
   }
   .hero-title.wp-block-heading {

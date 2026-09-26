@@ -1,15 +1,20 @@
-/* === CTA / NEWSLETTER — proto styles.css espelhado ===
-   Pattern: iawp/newsletter (class cta-section newsletter)
-   Enqueue: condicional + sempre disponível no editor.
+/* === CTA / NEWSLETTER — allowlist (nativo: bg primary, text base, pad|80,
+   inner flex+blockGap|40, heading clamp/display/tipo, subheading tipografia,
+   privacy 2xs, button pad/tipo/transparent)
+   CSS só: wash grid ::before, z-index inner, .cta-white, max-width sub,
+   chrome Jetpack (flex strip / input / gap container), privacy alpha,
+   mobile pad/form, success message.
+   Sem !important salvo gap/flex Jetpack wp-container-* (blocks.md).
    ======================================================== */
 
-.cta-section,
-.newsletter {
+.cta-section.newsletter,
+.cta-section.wp-block-group.newsletter {
   position: relative;
-  overflow: hidden !important;
+  overflow: hidden;
 }
-.cta-section::before,
-.newsletter::before {
+
+/* Vertical grid wash — Group sem support de pseudo / mask */
+.cta-section.newsletter::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -27,69 +32,149 @@
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
 }
-.cta-inner.wp-block-group,
-.cta-inner {
+
+.cta-inner.wp-block-group {
   position: relative;
   z-index: 1;
-  align-items: center !important;
-  width: 100% !important;
   text-align: center;
 }
-.cta-heading {
-  font-size: clamp(2rem, 6vw, 6rem) !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.05em !important;
-  line-height: 0.92 !important;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--base) !important;
-  margin: 0 !important;
+
+/* Span rich-text — cor contrast no 2º verso (proto .cta-white) */
+.cta-heading .cta-white {
+  color: var(--wp--preset--color--contrast);
 }
-.cta-heading .cta-white { color: var(--wp--preset--color--contrast); }
+
+/* paragraph sem maxWidth nativo */
 .cta-subheading {
-  font-size: 0.75rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.4em !important;
-  text-transform: uppercase !important;
-  color: var(--wp--preset--color--base) !important;
-  margin: 0 !important;
   max-width: 48rem;
 }
 
-/* --- Jetpack form CTA --- */
+/* --- Jetpack form strip (proto .cta-form) ---
+   Front DOM: .cta-form > .grunion-field-wrap + .wp-block-button
+   Editor DOM: mesmos blocos + chrome Jetpack (editor-style.css força
+   input[type=email] { background:#fff; border:1px solid #c8d7e1 }).
+   Variáveis + !important só no chrome do plugin (mesmo padrão hero.css /
+   blocks.md) — tipografia da seção permanece nativa. */
 .cta-form.wp-block-jetpack-contact-form {
+  --wp--style--block-gap: 0px;
+  --jetpack--contact-form--border-radius: 0px;
+  --jetpack--contact-form--border-color: transparent;
+  --jetpack--contact-form--border-size: 0px;
+  --jetpack--contact-form--border-style: none;
+  --jetpack--contact-form--input-background: transparent;
+  --jetpack--contact-form--input-background-color: transparent;
+  --jetpack--contact-form--input-padding: 0.75rem 0;
+  --jetpack--contact-form--input-padding-left: 0px;
+  --jetpack--contact-form--text-color: var(--wp--preset--color--base);
+  --jetpack--contact-form--font-family: var(--wp--preset--font-family--body);
+  --jetpack--contact-form--font-size: clamp(1.25rem, 3vw, 1.75rem);
   display: flex !important;
   flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-end !important;
   gap: 0 !important;
   max-width: 768px;
   width: 100%;
   margin: 0 auto !important;
   border-bottom: 1px solid var(--wp--custom--base-alpha-25);
-  align-items: flex-end;
   padding-bottom: 0.75rem;
+  box-sizing: border-box;
 }
-.cta-form label { display: none !important; }
-.cta-form .grunion-field-wrap { flex: 1; margin: 0 !important; }
-.cta-form input[type=email] {
-  width: 100% !important;
+
+/* Jetpack injeta gap em wp-container-* com alta especificidade (blocks.md) */
+[class*="wp-container-jetpack-contact-form"].cta-form {
+  gap: 0 !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+}
+
+/* Editor: inner blocks do contact-form também precisam do strip horizontal */
+.cta-form.wp-block-jetpack-contact-form > .block-editor-inner-blocks > .block-editor-block-list__layout,
+.cta-form .block-editor-block-list__layout:where(:has(> .wp-block-jetpack-field-email)) {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-end !important;
+  gap: 0 !important;
+  width: 100%;
+}
+
+/* Proto: label visually-hidden (a11y); não display:none no front —
+   no editor o label Jetpack ainda aparece — clip em ambos. */
+.cta-form label,
+.cta-form .jetpack-field-label,
+.cta-form .grunion-label-required {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.cta-form .grunion-field-wrap,
+.cta-form .jetpack-field,
+.cta-form .wp-block-jetpack-field-email,
+.cta-form .wp-block-jetpack-input-wrap {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+}
+
+/* Vence editor-style.css do Jetpack (input #fff + borda #c8d7e1) */
+.cta-form input[type="email"],
+.cta-form input[type="text"],
+.cta-form .grunion-field,
+.cta-form .grunion-field.email,
+.cta-form .jetpack-field input,
+.cta-form .wp-block-jetpack-input,
+.cta-form .components-text-control__input {
+  width: 100% !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
   padding: 0.75rem 0 !important;
   font-family: var(--wp--preset--font-family--body) !important;
   font-size: clamp(1.25rem, 3vw, 1.75rem) !important;
   font-weight: 400 !important;
   color: var(--wp--preset--color--base) !important;
-  outline: none !important;
-  border-radius: 0 !important;
+  text-align: left !important;
+  height: auto !important;
+  min-height: 0 !important;
 }
-.cta-form input[type=email]::placeholder {
+
+.cta-form input[type="email"]::placeholder,
+.cta-form input[type="text"]::placeholder,
+.cta-form .grunion-field::placeholder,
+.cta-form .components-text-control__input::placeholder {
   color: var(--wp--custom--base-alpha-38) !important;
-  text-transform: uppercase;
+  text-transform: uppercase !important;
+  opacity: 1 !important;
 }
-.cta-form .wp-block-button { flex-shrink: 0; margin: 0 !important; }
-.cta-form .wp-block-button__link,
-.cta-form button[type=submit] {
-  background: none !important;
+
+.cta-form .wp-block-button {
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+}
+
+/* Botão submit: markup mínimo TT/Jetpack (attrs no botão invalidam o save);
+   visual do proto só aqui. */
+.cta-form .wp-block-button__link.wp-element-button,
+.cta-form button[type="submit"].wp-element-button {
+  background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
@@ -99,70 +184,84 @@
   letter-spacing: 0.4em !important;
   text-transform: uppercase !important;
   color: var(--wp--preset--color--base) !important;
-  cursor: pointer;
   white-space: nowrap !important;
-  transition: opacity 0.2s !important;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-decoration: none !important;
 }
-.cta-form .wp-block-button__link:hover,
-.cta-form button[type=submit]:hover { opacity: 0.6 !important; }
+
+.cta-form .wp-block-button__link.wp-element-button:hover,
+.cta-form button[type="submit"].wp-element-button:hover {
+  opacity: 0.6 !important;
+  background: transparent !important;
+}
+
+/* Privacy: alpha sobre primary — sem preset equivalente */
 .cta-privacy {
-  font-size: var(--wp--preset--font-size--2-xs) !important;
-  letter-spacing: 0.1em !important;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.60) !important;
-  margin: 0 !important;
+  color: rgba(255, 255, 255, 0.6);
 }
+
 .cta-privacy a {
-  color: inherit !important;
-  text-decoration: underline !important;
+  color: inherit;
+  text-decoration: underline;
   text-underline-offset: 2px;
 }
+
 .cta-privacy a:hover {
-  color: rgba(255, 255, 255, 0.85) !important;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* Newsletter imediatamente antes do footer: sem borda dupla */
-.newsletter + footer.wp-block-template-part .site-footer,
-.cta-section.newsletter + .site-footer {
-  border-top: none;
-}
+/* border-top none pós-newsletter: style.css (chrome footer) */
 
 @media (max-width: 640px) {
-  .cta-form.wp-block-jetpack-contact-form {
-    flex-direction: column !important;
-    border-bottom: none !important;
+  /* spacing responsivo — Group sem pad por breakpoint */
+  .cta-section.newsletter.wp-block-group {
+    padding-top: var(--wp--preset--spacing--60);
+    padding-bottom: var(--wp--preset--spacing--60);
   }
-  .cta-form input[type=email] {
-    border-bottom: 1px solid var(--wp--custom--base-alpha-25) !important;
-  }
-  .cta-form .wp-block-button__link,
-  .cta-form button[type=submit] {
-    padding: 0.75rem 0 !important;
-    text-align: center !important;
-  }
-  .cta-section.wp-block-group,
-  .newsletter.wp-block-group {
-    padding-top: var(--wp--preset--spacing--60) !important;
-    padding-bottom: var(--wp--preset--spacing--60) !important;
-  }
+
+  /* clamp desktop ≠ mobile do proto (sem fontSize responsivo nativo) */
   .cta-heading.wp-block-heading {
-    font-size: clamp(2rem, 10vw, 3rem) !important;
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  /* Jetpack layout flex row vence sem !important no container dinâmico */
+  .cta-form.wp-block-jetpack-contact-form,
+  [class*="wp-container-jetpack-contact-form"].cta-form {
+    flex-direction: column !important;
+    border-bottom: none;
+  }
+
+  .cta-form input[type="email"] {
+    border-bottom: 1px solid var(--wp--custom--base-alpha-25);
+  }
+
+  .cta-form .wp-block-button,
+  .cta-form .wp-block-button__link.wp-element-button,
+  .cta-form button[type="submit"].wp-element-button {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
   }
 }
 
-/* Success message dentro da seção CTA */
+/* Success message — Jetpack default bg/border (especificidade :has) */
 .jetpack-contact-form-container:has(.cta-form) .contact-form-submission {
-  background: transparent !important;
-  border: none !important;
+  background: transparent;
+  border: none;
   align-items: center;
   text-align: center;
 }
+
 .jetpack-contact-form-container:has(.cta-form) .contact-form-submission > p {
-  color: rgba(255, 255, 255, 0.70) !important;
+  color: rgba(255, 255, 255, 0.7);
 }
+
 .jetpack-contact-form-container:has(.cta-form) .contact-form-submission .go-back-message a {
-  color: rgba(255, 255, 255, 0.45) !important;
+  color: rgba(255, 255, 255, 0.45);
 }
+
 .jetpack-contact-form-container:has(.cta-form) .contact-form-submission .go-back-message a:hover {
-  color: rgba(255, 255, 255, 0.80) !important;
+  color: rgba(255, 255, 255, 0.8);
 }

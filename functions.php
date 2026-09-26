@@ -45,21 +45,40 @@ add_action( 'after_setup_theme', function () {
 
 	// Stylesheet global no editor.
 	add_editor_style( 'style.css' );
+	// Canvas-only: offset BHB overlay + não prender .hero-bg no chrome do core/html.
+	add_editor_style( 'assets/editor-canvas.css' );
 
 	// CSS das seções no editor — paridade visual com o frontend.
 	// No editor não há render_block on-demand, então registramos todos
 	// via add_editor_style para que o canvas renderize corretamente.
+	// hub.css por último: .posts-hub vence blog.css nas classes compartilhadas.
 	$section_styles = [
-		'assets/blocks/hub.css',
 		'assets/blocks/hero.css',
 		'assets/blocks/author.css',
 		'assets/blocks/cta.css',
 		'assets/blocks/blog.css',
 		'assets/blocks/single.css',
 		'assets/blocks/legal.css',
+		'assets/blocks/hub.css',
 	];
 	foreach ( $section_styles as $file ) {
 		add_editor_style( $file );
+	}
+} );
+
+/**
+ * Block Header Behavior no iframe do editor:
+ * CSS (posição overlay) + JS (toggle .is-scrolled → fundo glass).
+ * O plugin agora também enfileira em enqueue_block_assets; manter aqui
+ * como rede de segurança se a versão do plugin no site for antiga.
+ */
+add_action( 'enqueue_block_assets', function () {
+	if ( ! wp_style_is( 'bhb-block-header-behavior', 'registered' ) ) {
+		return;
+	}
+	wp_enqueue_style( 'bhb-block-header-behavior' );
+	if ( is_admin() && wp_script_is( 'bhb-block-header-behavior', 'registered' ) ) {
+		wp_enqueue_script( 'bhb-block-header-behavior' );
 	}
 } );
 
@@ -226,10 +245,9 @@ add_action( 'wp_enqueue_scripts', function (): void {
 	$front_id = (int) get_option( 'page_on_front' );
 	$blog_id  = (int) get_option( 'page_for_posts' );
 
-	// Front page — hub editorial
+	// Front page — hub editorial (hub.css traz listagem; blog.css conflita com featured/cards)
 	if ( $post_id === $front_id && $front_id > 0 ) {
 		wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
-		wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), $base, $mtime( 'assets/blocks/blog.css' ) );
 		wp_enqueue_style( 'iawp-author', get_theme_file_uri( 'assets/blocks/author.css' ), $base, $mtime( 'assets/blocks/author.css' ) );
 		wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
 		return;

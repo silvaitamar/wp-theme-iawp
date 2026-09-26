@@ -16,122 +16,149 @@
 .corner--tl { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
 .corner--br { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
 
-@keyframes device-drift {
-  0%, 100% { transform: translateY(-48%); }
-  50% { transform: translateY(-52%); }
-}
-@keyframes hero-rise {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* FSE wrappers: hero section is a group */
+/* FSE wrappers: hero section is a group — full-bleed, not contentSize */
 .hero.wp-block-group,
 .hero.alignfull {
   max-width: none;
 }
-.hero .hero__inner.alignwide {
-  width: 100%;
+/* .hero-bg must fill the section; never inherit constrained max-width */
+.hero .hero-bg {
+  max-width: none !important;
+  width: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  left: 0;
+  right: 0;
 }
-.section.wp-block-group {
+/* Conteúdo = .wrap do proto (wideSize).
+   Gutter = padding do pai constrained (RPA / has-global-padding) — NÃO
+   subtrair 2·gutter de novo no width (dobra o inset vs proto e desalinha
+   seções cujo constrained está no section vs no neto alignfull).
+   Pai constrained + alignwide = max-width nativo; width 100% preenche o CB.
+   add_editor_style já prefixa .editor-styles-wrapper — não repetir. */
+.hero .hero__inner.alignwide {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--wp--style--global--wide-size, 1344px);
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+}
+.section.wp-block-group,
+.section.alignfull {
   max-width: none;
+  box-sizing: border-box;
 }
 .section .wrap.alignwide,
-.section--rule .alignwide,
-.section--surface .alignwide,
-.about-section .alignwide {
+.about-section .wrap.alignwide {
+  box-sizing: border-box;
   width: 100%;
+  max-width: var(--wp--style--global--wide-size, 1344px);
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Hide blog.css DESTAQUE badge on hub featured; proto uses category term */
-.posts-hub .post-featured__img::after { display: none !important; }
+/* Hide blog DESTAQUE badge on hub featured — also neutralized in blog.css via :not(.posts-hub).
+   Kept as belt-and-suspenders without !important (blog rule is now scoped out). */
+.posts-hub .post-featured__img::after { content: none; display: none; }
 
-/* Query Loop: list → flex column for posts-hub */
-.posts-hub > .wp-block-query > .wp-block-post-template,
-.posts-hub .wp-block-post-template {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.posts-hub__grid .wp-block-post-template {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-@media (min-width: 800px) {
-  .posts-hub__grid .wp-block-post-template {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-.posts-hub .wp-block-post {
+/* Buttons hub — tipografia/padding em theme.json + attrs.
+   Hover primary = proto .btn--primary → --primary-dark (#2563eb);
+   não usar elements.button:hover no theme.json (atingiria outline).
+   Sem !important. */
+.hero .wp-block-button,
+.about-actions .wp-block-button {
   margin: 0;
 }
-
-/* Buttons in hero / about — match proto .btn */
-.hero__actions .wp-block-button__link,
-.about-actions .wp-block-button__link {
-  border-radius: var(--wp--custom--radius-btn) !important;
+.hero .wp-block-buttons .wp-block-button__link.wp-element-button,
+.about-actions.wp-block-buttons .wp-block-button__link.wp-element-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 0;
+  height: auto;
+  line-height: 1;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
-.hero__actions .is-style-outline .wp-block-button__link,
-.about-actions .is-style-outline .wp-block-button__link,
-.btn-ghost .wp-block-button__link {
-  background: transparent !important;
-  color: var(--wp--preset--color--contrast) !important;
-  border: 1px solid var(--wp--custom--border-color-subtle) !important;
+.hero .wp-block-button:not(.is-style-outline) .wp-block-button__link.wp-element-button,
+.about-actions .wp-block-button:not(.is-style-outline) .wp-block-button__link.wp-element-button {
+  border: none;
 }
-.hero__actions .is-style-outline .wp-block-button__link:hover,
-.about-actions .is-style-outline .wp-block-button__link:hover {
-  border-color: var(--wp--preset--color--primary) !important;
-  color: var(--wp--preset--color--primary) !important;
+.hero .wp-block-button:not(.is-style-outline) .wp-block-button__link.wp-element-button:hover,
+.about-actions .wp-block-button:not(.is-style-outline) .wp-block-button__link.wp-element-button:hover {
+  background: var(--wp--custom--primary-dark);
+  color: #fff;
+}
+.hero .is-style-outline .wp-block-button__link.wp-element-button,
+.about-actions .is-style-outline .wp-block-button__link.wp-element-button {
+  background: transparent;
+  color: var(--wp--preset--color--contrast);
+  border: 1px solid var(--wp--preset--color--outline);
+}
+.hero .is-style-outline .wp-block-button__link.wp-element-button:hover,
+.about-actions .is-style-outline .wp-block-button__link.wp-element-button:hover {
+  background: transparent;
+  border-color: var(--wp--preset--color--primary);
+  color: var(--wp--preset--color--primary);
 }
 .text-accent {
   color: var(--wp--preset--color--primary);
 }
-.about-cols {
-  display: grid !important;
-  grid-template-columns: 1fr;
-  gap: var(--wp--preset--spacing--50);
-  align-items: center;
-}
-@media (min-width: 800px) {
-  .about-cols {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--wp--preset--spacing--50) var(--wp--preset--spacing--40);
-  }
-}
-.about-visual .wp-block-image,
-.about-visual .wp-block-image img {
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0 !important;
-  object-fit: cover;
-}
-.section-more a {
-  color: inherit;
-  text-decoration: none;
-}
-.bento-more a {
-  color: inherit;
-  text-decoration: none;
-}
-/* ═══ Hero hub — composição editorial (wide, sem badge/regra interna) ═══ */
+/* ═══ Hero hub — CSS só o que attrs/Core não expressam ═══
+   Nativo: minHeight, flex vertical + verticalAlignment/justifyContent,
+   blockGap 0, padding|70/|60, backgroundColor base, stack tipografia/margins.
+   Provas (layout.php + block.json heading/paragraph, 2026-09):
+   - position/overflow: sem support no Group
+   - ::before wash: gradient nativo → `background:…!important` apaga background-color
+   - ::after frame inset+cantos: border do Group não é inset
+   - hero-bg/device/grid: core/html multi-nó (blocks.md)
+   - max-width ch/rem: sem maxWidth no heading/paragraph; constrained +
+     has-global-padding quebra align esquerdo do proto
+   - meta flex+dots: paragraph className:false, sem layout flex
+   - em / motion / mobile: sem support / sem breakpoint nativo
+   Removido: width/margin redundantes; flex:none; flex-shrink:0. */
 .hero {
   position: relative;
-  width: 100%;
-  margin: 0;
-  min-height: calc(100dvh - var(--iawp-header-height));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--wp--preset--spacing--70) 0 var(--wp--preset--spacing--60);
-  background: var(--wp--preset--color--base);
   overflow: hidden;
+}
+/* Wash sobre base (proto .hero-bg__wash) — ver nota gradient !important */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--wp--custom--fashion-wash);
+}
+/* Frame + cantos TL/BR (proto .hero-bg__frame + .corner) — não cabe em border nativo */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: clamp(1.25rem, 3vw, 2.5rem);
+  z-index: 0;
+  pointer-events: none;
+  border: 1px solid var(--wp--preset--color--outline);
+  opacity: 0.45;
+  background:
+    linear-gradient(
+      color-mix(in srgb, var(--wp--preset--color--primary) 85%, transparent),
+      color-mix(in srgb, var(--wp--preset--color--primary) 85%, transparent)
+    ) 0 0 / 1.25rem 1px no-repeat,
+    linear-gradient(
+      color-mix(in srgb, var(--wp--preset--color--primary) 85%, transparent),
+      color-mix(in srgb, var(--wp--preset--color--primary) 85%, transparent)
+    ) 0 0 / 1px 1.25rem no-repeat,
+    linear-gradient(
+      color-mix(in srgb, var(--wp--preset--color--primary) 85%, transparent),
+      color-mix(in srgb, var(--wp--preset--color--primary) 85%, transparent)
+    ) 100% 100% / 1.25rem 1px no-repeat,
+    linear-gradient(
+      color-mix(in srgb, var(--wp--preset--color--primary) 85%, transparent),
+      color-mix(in srgb, var(--wp--preset--color--primary) 85%, transparent)
+    ) 100% 100% / 1px 1.25rem no-repeat;
 }
 .hero-bg {
   position: absolute;
@@ -140,12 +167,14 @@
   pointer-events: none;
   overflow: hidden;
 }
-.hero-bg__wash {
-  position: absolute;
-  inset: 0;
-  background: var(--wp--custom--fashion-wash);
+/* Editor: chrome do core/html não pode ser containing block do .hero-bg */
+.hero .wp-block-html,
+.hero [data-type="core/html"] {
+  position: static !important;
 }
-.hero-bg__grid {
+/* Grid mascarado (proto .hero-bg__grid) */
+.hero-bg::before {
+  content: "";
   position: absolute;
   inset: 0;
   background-image:
@@ -174,27 +203,28 @@
   transform: translateY(-48%);
   width: min(42vw, 26rem);
   opacity: 0.55;
+  z-index: 1;
 }
 .device {
   border: 1px solid var(--wp--custom--border-color-mid);
-  background: rgba(11, 16, 32, 0.35);
-  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.08);
+  background: color-mix(in srgb, var(--wp--preset--color--base) 35%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--wp--preset--color--primary) 8%, transparent);
 }
 .device__bar {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   padding: 0.65rem 0.85rem;
-  border-bottom: 1px solid var(--wp--custom--border-color-subtle);
+  border-bottom: 1px solid var(--wp--preset--color--outline);
 }
 .device__bar span {
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 50%;
-  background: var(--wp--custom--border-color-subtle);
+  background: var(--wp--preset--color--outline);
 }
 .device__bar span:first-child {
-  background: rgba(59, 130, 246, 0.45);
+  background: color-mix(in srgb, var(--wp--preset--color--primary) 45%, transparent);
 }
 .device__body {
   display: flex;
@@ -205,31 +235,34 @@
 }
 .device__line {
   height: 1px;
-  width: var(--w, 70%);
+  width: 70%;
   background: linear-gradient(90deg, var(--wp--preset--color--primary), var(--wp--preset--color--secondary));
   opacity: 0.35;
 }
 .device__line--mute {
-  background: var(--wp--custom--border-color-subtle);
+  background: var(--wp--preset--color--outline);
   opacity: 1;
 }
-.hero-bg__frame {
-  position: absolute;
-  inset: clamp(1.25rem, 3vw, 2.5rem);
-  border: 1px solid var(--wp--custom--border-color-subtle);
-  opacity: 0.45;
+.device__line--w78 { width: 78%; }
+.device__line--w54 { width: 54%; }
+.device__line--w66 { width: 66%; }
+.device__line--w42 { width: 42%; }
+.device__line--w88 { width: 88%; }
+.device__line--w36 { width: 36%; }
+/* measure do proto — sem maxWidth em heading/paragraph (block.json).
+   z-index do .hero__inner já no bloco .alignwide acima. */
+.hero__inner > .wp-block-heading.has-hero-headline-font-size {
+  max-width: 28ch;
 }
-.hero-bg__frame .corner {
-  opacity: 0.85;
+.hero__inner > .wp-block-paragraph.has-lg-font-size {
+  max-width: 38rem;
 }
-.hero__inner {
-  position: relative;
-  z-index: 1;
+/* meta: p sem layout flex / className:false */
+.hero__inner > .wp-block-paragraph.has-xs-font-size {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-  /* largura = .wrap (wide); não usar width:100% aqui */
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
 }
 @media (prefers-reduced-motion: no-preference) {
   .hero-bg__device {
@@ -238,11 +271,11 @@
   .hero__inner > * {
     animation: hero-rise 0.7s ease-out both;
   }
-  .hero__title { animation-delay: 0.05s; }
-  .hero__headline { animation-delay: 0.12s; }
-  .hero__lede { animation-delay: 0.18s; }
-  .hero__actions { animation-delay: 0.24s; }
-  .hero__meta { animation-delay: 0.3s; }
+  .hero__inner > *:nth-child(1) { animation-delay: 0.05s; }
+  .hero__inner > *:nth-child(2) { animation-delay: 0.12s; }
+  .hero__inner > *:nth-child(3) { animation-delay: 0.18s; }
+  .hero__inner > *:nth-child(4) { animation-delay: 0.24s; }
+  .hero__inner > *:nth-child(5) { animation-delay: 0.3s; }
 }
 @keyframes device-drift {
   0%, 100% { transform: translateY(-48%); }
@@ -252,56 +285,10 @@
   from { opacity: 0; transform: translateY(0.6rem); }
   to { opacity: 1; transform: translateY(0); }
 }
-.hero__title {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: clamp(2.5rem, 7vw, 6.5rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--contrast);
-  margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
-}
-.hero__title em {
+.hero .wp-block-heading em {
   font-style: italic;
   font-weight: 300;
   color: var(--wp--preset--color--primary);
-}
-.hero__headline {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: clamp(1.375rem, 2.8vw, 2.125rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1.2;
-  color: var(--wp--preset--color--contrast);
-  margin: 0 0 1.25rem;
-  max-width: 28ch;
-}
-.hero__lede {
-  margin: 0 0 2rem;
-  font-size: 1.125rem;
-  line-height: 1.65;
-  color: var(--wp--preset--color--muted);
-  max-width: 38rem;
-}
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 0 0 2.5rem;
-}
-.hero__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1rem;
-  margin: 0;
-  font-family: var(--wp--preset--font-family--display);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--dim);
 }
 .hero__meta-dot {
   width: 3px;
@@ -310,11 +297,19 @@
   background: var(--wp--preset--color--primary);
   opacity: 0.7;
   flex-shrink: 0;
+  display: inline-block;
 }
 @media (max-width: 799px) {
   .hero {
     min-height: unset;
-    padding-top: var(--wp--preset--spacing--60);
+    /* proto mobile: section-lg; override do padding |70 inline */
+    padding-top: var(--wp--preset--spacing--60) !important;
+  }
+  .hero::after {
+    inset: 1rem;
+  }
+  .hero-bg::before {
+    opacity: 0.4;
   }
   .hero-bg__device {
     right: -8%;
@@ -324,36 +319,19 @@
     transform: none;
     animation: none;
   }
-  .hero-bg__grid {
-    opacity: 0.4;
-  }
-  .hero-bg__frame {
-    inset: 1rem;
-  }
-  .hero__headline {
-    max-width: none;
-  }
 }
 
 /* ═══ Sections ═══
-   Full-bleed (largura da viewport). Conteúdo em .wrap.
-   Separador: border-top outline full width (DV problem/author).
-   Quebra de cor: .section--surface = surface-low (DV contents-section). */
-.section {
-  width: 100%;
-  margin: 0;
-  padding: var(--wp--preset--spacing--60) 0;
-  background: var(--wp--preset--color--base);
-}
+   Full-bleed via alignfull + RPA. Conteúdo em .wrap.alignwide.
+   Padding/background: attrs nativos no template (spacing|60, backgroundColor).
+   Proibido width:100% / margin:0 aqui — trava o CB e desalinha wide vs header/hero. */
 .section--rule {
-  border-top: 1px solid var(--wp--custom--border-color-subtle);
+  border-top: 1px solid var(--wp--preset--color--outline);
 }
-.section--surface {
-  background: var(--wp--preset--color--surface-low);
-}
+/* .section--surface: background via backgroundColor surface-low no template */
 .section--rule-y {
-  border-top: 1px solid var(--wp--custom--border-color-subtle);
-  border-bottom: 1px solid var(--wp--custom--border-color-subtle);
+  border-top: 1px solid var(--wp--preset--color--outline);
+  border-bottom: 1px solid var(--wp--preset--color--outline);
 }
 .section__label {
   font-family: var(--wp--preset--font-family--display);
@@ -389,91 +367,68 @@
 
 .section-header,
 .benefits-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: var(--space-50, 3rem);
+	/* flex / gap via attrs na home; margin = ritmo proto (--space-50: 3rem) */
+	margin-bottom: 3rem;
 }
 .section-header__aside {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.85rem;
   max-width: min(28rem, 100%);
   text-align: right;
 }
-.section-header__aside .section-lede {
+.section-header__aside .section-lede,
+.section-header__aside .section-lede p {
   margin: 0;
   text-align: right;
+  max-width: 16rem;
 }
-.section-more {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--primary);
+.section-more a {
+  color: inherit;
+  text-decoration: none;
   white-space: nowrap;
 }
-.section-more:hover {
+.section-more a:hover {
   color: var(--wp--preset--color--contrast);
 }
-.section-more span {
+.section-more a span {
   display: inline-block;
   transition: transform 0.25s ease;
 }
-.section-more:hover span {
+.section-more a:hover span {
   transform: translateX(0.25rem);
 }
 @media (max-width: 799px) {
   .section-header__aside {
-    align-items: flex-start;
     text-align: left;
     max-width: none;
   }
-  .section-header__aside .section-lede {
+  .section-header__aside .section-lede,
+  .section-header__aside .section-lede p {
     text-align: left;
+    max-width: none;
   }
 }
 .section-heading,
 .benefits-heading {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: clamp(2rem, 7vw, 7rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--contrast);
+  /* tipografia nativa (fontSize:section + attrs); accent abaixo */
   margin: 0;
 }
 .section-heading .text-accent,
 .benefits-heading .text-accent {
   color: var(--wp--preset--color--primary);
 }
-/* Subtítulo/descrição: caixa comum (hub ≠ waitlist uppercase eyebrow) */
+/* Lede: sm/muted nativos; caixa max-width = CSS */
 .section-lede,
 .benefits-eyebrow {
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: normal;
-  text-transform: none;
-  color: var(--wp--preset--color--muted);
-  margin: 0;
-  text-align: right;
   max-width: 16rem;
-  line-height: 1.6;
 }
 @media (max-width: 900px) {
   .section-lede,
   .benefits-eyebrow {
-    text-align: left;
     max-width: none;
   }
+  /* Proto: heading encolhe no mobile (preset section é desktop-first) */
   .section-heading,
   .benefits-heading {
-    font-size: clamp(2rem, 10vw, 3rem);
+    font-size: clamp(2rem, 10vw, 3rem) !important;
   }
 }
 
@@ -505,7 +460,11 @@ svg.bento-icon [fill]:not([fill="none"]) {
   stroke: none;
 }
 
-/* Spotlight hover — genérico (.spotlight) = .bento-item do tema */
+/* ═══ Eixos / bento — allowlist (nativo: pad|40, flex vertical, tipografia, bg)
+   CSS só: grid 12 + span 8/4, outline (não border — blocks.md),
+   ::before spotlight, faixa gradiente, max-width desc, margin-top:auto CTA,
+   font-size wide≠narrow (sem preset dual), mobile 1-col, hover seta.
+   Sem !important — grid vence layout default do Group sem guerra. */
 .spotlight,
 .bento-item {
   position: relative;
@@ -518,7 +477,7 @@ svg.bento-icon [fill]:not([fill="none"]) {
   inset: 0;
   background: radial-gradient(
     400px circle at var(--mx, 50%) var(--my, 50%),
-    var(--primary-alpha-09, rgba(59, 130, 246, 0.09)) 0%,
+    var(--wp--custom--primary-alpha-09, rgba(59, 130, 246, 0.09)) 0%,
     transparent 60%
   );
   opacity: 0;
@@ -531,7 +490,6 @@ svg.bento-icon [fill]:not([fill="none"]) {
   opacity: 1;
 }
 
-/* Bento grid — benefits.css do Digital Vanguard */
 .bento-grid {
   position: relative;
   display: grid;
@@ -554,13 +512,10 @@ svg.bento-icon [fill]:not([fill="none"]) {
   pointer-events: none;
 }
 .bento-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background: var(--wp--preset--color--base);
-  padding: var(--space-40, clamp(1.5rem, 4vw, 3rem));
+  /* flex/pad/bg = attrs; outline = bordas internas (blocks.md) */
   outline: 1px solid var(--wp--custom--border-color-subtle);
   outline-offset: 0;
+  min-width: 0;
 }
 .bento-wide {
   grid-column: span 8;
@@ -568,13 +523,7 @@ svg.bento-icon [fill]:not([fill="none"]) {
 .bento-narrow {
   grid-column: span 4;
 }
-.bento-title {
-  font-family: var(--wp--preset--font-family--display);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  margin: 0 0 0.75rem;
-  color: var(--wp--preset--color--contrast);
-}
+/* Tamanhos distintos wide/narrow — sem fontSize dual no heading */
 .bento-wide .bento-title {
   font-size: clamp(1.5rem, 3vw, 1.875rem);
 }
@@ -582,30 +531,25 @@ svg.bento-icon [fill]:not([fill="none"]) {
   font-size: clamp(1.125rem, 2vw, 1.25rem);
 }
 .bento-desc {
-  color: var(--wp--preset--color--muted);
-  font-size: 1rem;
-  line-height: 1.65;
   max-width: 420px;
-  margin: 0;
 }
 .bento-more {
   margin-top: auto;
-  padding-top: 1.5rem;
-  font-family: var(--wp--preset--font-family--display);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--primary);
 }
-.bento-more:hover {
+.bento-more a {
+  color: inherit;
+  text-decoration: none;
+}
+.bento-more:hover,
+.bento-more a:hover {
   color: var(--wp--preset--color--contrast);
 }
 .bento-more span {
   display: inline-block;
   transition: transform 0.25s ease;
 }
-.bento-more:hover span {
+.bento-more:hover span,
+.bento-more a:hover span {
   transform: translateX(0.25rem);
 }
 @media (max-width: 900px) {
@@ -616,262 +560,210 @@ svg.bento-icon [fill]:not([fill="none"]) {
 }
 
 
-/* ═══ Listagem hub: 1 featured + grid post-card ═══ */
-.posts-hub {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+/* ═══ Listagem hub — allowlist (nativo: tipografia, padding, border, flex, grid cols)
+   CSS só: proporção 58/40, cover absoluto, badge overlay, grid mobile,
+   hover/motion, ::after seta/dot, line-clamp.
+   blog.css escopado fora de .posts-hub — sem guerra de !important. */
+.posts-hub,
+.posts-hub__grid,
+.posts-hub .wp-block-query,
+.posts-hub__grid .wp-block-query,
+.posts-hub__grid .wp-block-post-template {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .posts-hub__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  display: block;
   border: none;
   background: transparent;
 }
-@media (min-width: 800px) {
-  .posts-hub__grid {
-    grid-template-columns: repeat(2, 1fr);
+.posts-hub__grid > * {
+  min-width: 0;
+  width: 100%;
+}
+.posts-hub > .wp-block-query > .wp-block-post-template {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+.posts-hub__grid .wp-block-post-template {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* Proto <800px = 1 col; columnCount:2 nativo não quebra sozinho */
+@media (max-width: 799px) {
+  .posts-hub__grid .wp-block-post-template {
+    grid-template-columns: 1fr;
   }
 }
-.posts-hub__grid > * {
+.posts-hub .wp-block-post {
+  margin: 0;
+  width: 100%;
   min-width: 0;
 }
 
-/* Featured — blog.css .post-featured */
-.post-featured {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  min-height: unset;
-  background: var(--wp--preset--color--base);
-  border: 1px solid var(--wp--custom--border-color-subtle);
+.posts-hub .post-featured {
   overflow: hidden;
   position: relative;
-  color: inherit;
   transition: border-color 0.3s ease, transform 0.3s ease;
 }
-.post-featured:hover {
+.posts-hub .post-featured:hover {
   border-color: var(--wp--preset--color--primary);
   transform: translateY(-4px);
-  color: inherit;
 }
-/* Coluna imagem: preenche a altura do card; cover sobre master 21:9 */
-.post-featured__img {
+.posts-hub .post-featured__img {
   width: 58%;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
   min-height: 20rem;
-  background: var(--wp--preset--color--surface-mid);
+  align-self: stretch;
 }
-.post-featured__img img {
+/* Coluna stretch: figure preenche; width/height/object-fit vêm dos attrs no <img> */
+.posts-hub .post-featured__img .wp-block-post-featured-image {
   position: absolute;
   inset: 0;
+  margin: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+}
+.posts-hub .post-featured__img img {
   filter: grayscale(1);
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.post-featured:hover .post-featured__img img {
+.posts-hub .post-featured:hover .post-featured__img img {
   transform: scale(1.05);
   filter: grayscale(0);
 }
-.post-featured__cat {
+/* Badge: tipografia/cor/padding nativos; position absolute = CSS (sem support). */
+.posts-hub .post-featured__cat {
   position: absolute;
   top: 2rem;
   left: 2rem;
-  z-index: 2;
-  margin: 0;
-  background: var(--wp--preset--color--primary);
-  color: var(--wp--preset--color--base);
-  font-family: var(--wp--preset--font-family--display);
-  font-size: 0.625rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 0.25rem 0.85rem;
-  border-radius: 2px;
+  z-index: 3;
+  width: max-content;
+  max-width: 20rem;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
-.post-featured__body {
+.posts-hub .post-featured__cat a {
+  color: inherit;
+  text-decoration: none;
+}
+.posts-hub .post-featured__cat .wp-block-post-terms__separator {
+  display: none;
+}
+.posts-hub .post-featured__body {
   width: 40%;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: var(--wp--preset--color--base);
+  box-sizing: border-box;
 }
-.post-featured__meta {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 0 0 1.5rem;
-  font-size: 0.625rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--muted);
-}
-.post-featured__dot {
+.posts-hub .post-featured__date::after {
+  content: "";
+  display: inline-block;
   width: 4px;
   height: 4px;
+  margin-left: var(--wp--preset--spacing--20);
   border-radius: 50%;
   background: var(--wp--preset--color--primary);
-  flex-shrink: 0;
+  vertical-align: middle;
 }
-.post-featured__title {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: clamp(1.25rem, 2.5vw, 2.25rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1;
-  color: var(--wp--preset--color--contrast);
-  margin: 0 0 1.5rem;
-  transition: color 0.2s;
+.posts-hub .post-featured__title a {
+  color: inherit;
+  text-decoration: none;
 }
-.post-featured:hover .post-featured__title {
+.posts-hub .post-featured:hover .post-featured__title,
+.posts-hub .post-featured:hover .post-featured__title a {
   color: var(--wp--preset--color--primary);
 }
-.post-featured__excerpt {
-  margin: 0 0 2.5rem;
-  font-size: 0.875rem;
-  line-height: 1.65;
-  color: var(--wp--preset--color--muted);
+.posts-hub .post-featured__excerpt p {
+  margin: 0;
 }
-.post-featured__cta {
+.posts-hub .post-featured__cta {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--wp--preset--font-family--display);
-  font-size: 0.625rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--primary);
+  text-decoration: none;
 }
-.post-featured__cta::after {
+.posts-hub .post-featured__cta::after {
   content: "";
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  background-color: var(--wp--preset--color--primary);
+  background-color: currentColor;
   -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15 5l-1.41 1.41L18.17 11H2v2h16.17l-4.59 4.59L15 19l7-7z'/></svg>")
     center / contain no-repeat;
   mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15 5l-1.41 1.41L18.17 11H2v2h16.17l-4.59 4.59L15 19l7-7z'/></svg>")
     center / contain no-repeat;
   transition: transform 0.3s;
 }
-.post-featured:hover .post-featured__cta::after {
+.posts-hub .post-featured:hover .post-featured__cta::after {
   transform: translateX(6px);
 }
 
-/* Grid card — blog.css .post-card */
-.post-card {
-  display: flex;
-  flex-direction: column;
+.posts-hub .post-card {
   height: 100%;
-  background: var(--wp--preset--color--base);
-  border: 1px solid var(--wp--custom--border-color-subtle);
-  text-decoration: none;
   overflow: hidden;
   position: relative;
-  color: inherit;
   transition: border-color 0.3s ease, transform 0.3s ease;
 }
-.post-card:hover {
+.posts-hub .post-card:hover {
   border-color: var(--wp--preset--color--primary);
   transform: translateY(-4px);
-  color: inherit;
 }
-.post-card__img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 21 / 9;
+.posts-hub .post-card__img.wp-block-post-featured-image,
+.posts-hub .wp-block-post-featured-image.post-card__img {
   flex-shrink: 0;
+  width: 100%;
+  margin: 0;
   overflow: hidden;
-  position: relative;
   background: var(--wp--preset--color--surface-mid);
 }
-.post-card__img img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.posts-hub .post-card__img img {
   filter: grayscale(1);
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.post-card:hover .post-card__img img {
+.posts-hub .post-card:hover .post-card__img img {
   transform: scale(1.05);
   filter: grayscale(0);
 }
-.post-card__body {
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
+.posts-hub .post-card__body {
   flex: 1 1 auto;
   box-sizing: border-box;
 }
-.post-card__cat {
-  display: block;
-  margin: 0 0 1rem;
-  font-family: var(--wp--preset--font-family--display);
-  font-size: 0.625rem;
-  font-weight: 900;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--primary);
-  line-height: 1;
-  background: none;
-  border: none;
-  padding: 0;
+.posts-hub .post-card__cat a {
+  color: inherit;
+  text-decoration: none;
 }
-.post-card__title {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: clamp(1.25rem, 2.5vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.25;
-  color: var(--wp--preset--color--contrast);
-  margin: 0 0 1rem;
-  transition: color 0.2s;
+.posts-hub .post-card__cat .wp-block-post-terms__separator {
+  display: none;
 }
-.post-card:hover .post-card__title {
+.posts-hub .post-card__title a {
+  color: inherit;
+  text-decoration: none;
+}
+.posts-hub .post-card:hover .post-card__title,
+.posts-hub .post-card:hover .post-card__title a {
   color: var(--wp--preset--color--primary);
 }
-.post-card__excerpt {
-  margin: 0 0 2rem;
-  font-size: 0.875rem;
-  line-height: 1.65;
-  color: var(--wp--preset--color--muted);
+.posts-hub .post-card__excerpt {
   flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.post-card__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 1.5rem;
+.posts-hub .post-card__excerpt p {
+  margin: 0;
+}
+.posts-hub .post-card__footer {
   border-top: 1px solid var(--wp--custom--border-color-subtle);
   margin-top: auto;
   width: 100%;
 }
-.post-card__byline {
-  margin: 0;
-  font-size: 0.625rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--muted);
-  line-height: 1;
-}
-.post-card__arrow {
+.posts-hub .post-card__arrow {
   display: block;
   width: 20px;
   height: 20px;
@@ -883,19 +775,20 @@ svg.bento-icon [fill]:not([fill="none"]) {
     center / contain no-repeat;
   transition: transform 0.2s;
 }
-.post-card:hover .post-card__arrow {
+.posts-hub .post-card:hover .post-card__arrow {
   transform: translateX(4px);
 }
 
 @media (max-width: 799px) {
-  .post-featured {
+  .posts-hub .post-featured {
     flex-direction: column;
   }
-  .post-featured__img {
+  .posts-hub .post-featured__img {
     width: 100%;
     aspect-ratio: 21 / 9;
+    min-height: 0;
   }
-  .post-featured__body {
+  .posts-hub .post-featured__body {
     width: 100%;
     padding: 1.5rem;
   }
@@ -921,29 +814,30 @@ svg.bento-icon [fill]:not([fill="none"]) {
   color: var(--wp--preset--color--contrast);
 }
 
-/* About teaser — espelho author-section DV (sem rule se vier de surface) */
+/* ═══ Sobre teaser — allowlist (nativo: bg base, pad|60, tipografia, image
+   aspect/scale/width/height, copy flex+blockGap|40, buttons gap|15+pad-top|40,
+   visual border+bg surface-mid)
+   CSS só: grid 1fr/2fr, cantos ::before/::after, grayscale/hover img,
+   max-width visual/bio, fill da figure no quadrado, em wordmark.
+   Sem !important. */
 .about-cols {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-50, 3rem);
+  gap: var(--wp--preset--spacing--50);
   align-items: center;
 }
 @media (min-width: 800px) {
   .about-cols {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--space-50, 3rem) var(--wp--preset--spacing--40);
+    gap: var(--wp--preset--spacing--50) var(--wp--preset--spacing--40);
   }
 }
 .about-visual {
   position: relative;
-  margin: 0;
   aspect-ratio: 1 / 1;
   max-width: 22rem;
   width: 100%;
-  border: 1px solid var(--wp--custom--border-color-subtle);
   overflow: visible;
-  background: var(--wp--preset--color--surface-mid);
-  filter: none;
 }
 .about-visual::before,
 .about-visual::after {
@@ -966,42 +860,23 @@ svg.bento-icon [fill]:not([fill="none"]) {
   bottom: -1px;
   border-width: 0 1px 1px 0;
 }
-.about-visual img {
+.about-visual .wp-block-image,
+.about-visual .wp-block-image img {
   display: block;
   width: 100%;
   height: 100%;
+  margin: 0;
   object-fit: cover;
   object-position: center;
+}
+.about-visual img {
   filter: grayscale(1);
   transition: filter 0.7s;
 }
 .about-visual:hover img {
   filter: grayscale(0);
 }
-.about-copy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--wp--preset--spacing--40);
-}
-.about-eyebrow {
-  margin: 0;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--primary);
-}
-.about-heading {
-  margin: 0;
-  font-family: var(--wp--preset--font-family--display);
-  font-size: clamp(1.75rem, 4.5vw, 3.75rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--contrast);
-}
+/* Tipografia/cores = attrs; só em (rich-text) + max-width bio */
 .about-heading em {
   font-style: italic;
   font-weight: 300;
@@ -1009,17 +884,9 @@ svg.bento-icon [fill]:not([fill="none"]) {
   text-transform: none;
 }
 .about-bio {
-  margin: 0;
   max-width: 56ch;
-  font-size: clamp(1.125rem, 2vw, 1.25rem);
-  line-height: 1.65;
-  color: var(--wp--preset--color--muted);
 }
 .about-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  padding-top: var(--wp--preset--spacing--40);
   width: 100%;
 }
 

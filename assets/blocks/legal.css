@@ -2,7 +2,7 @@
 
 /* ── HEADER ── */
 .legal-header {
-  padding-top: calc(var(--iawp-header-height) + var(--wp--preset--spacing--70)) !important;
+  padding-top: var(--wp--preset--spacing--70) !important;
   border-bottom: 1px solid var(--wp--custom--border-color-subtle);
   text-align: center;
 }
@@ -94,7 +94,7 @@
 
 @media (max-width: 640px) {
   .legal-header {
-    padding-top: calc(var(--iawp-header-height) + var(--wp--preset--spacing--50)) !important;
+    padding-top: var(--wp--preset--spacing--50) !important;
     padding-bottom: var(--wp--preset--spacing--40) !important;
     text-align: left;
   }

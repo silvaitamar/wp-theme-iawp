@@ -12,14 +12,20 @@
       "defaultSpacingSizes": false,
       "units": ["%","px","em","rem","vh","vw"],
       "spacingSizes": [
-        { "slug": "10", "name": "2XS (8px)",              "size": "0.5rem"                      },
-        { "slug": "20", "name": "XS (16px)",              "size": "1rem"                        },
-        { "slug": "30", "name": "S (24px)",               "size": "1.5rem"                      },
-        { "slug": "40", "name": "M — gutter (48px)",      "size": "clamp(24px, 4vw, 48px)"       },
-        { "slug": "50", "name": "L — section-md (80px)",  "size": "clamp(50px,6.25vw,80px)"    },
-        { "slug": "60", "name": "XL — section-lg (100px)","size": "clamp(60px,7.8vw,100px)"    },
-        { "slug": "70", "name": "2XL — section-xl (128px)","size": "clamp(80px,10vw,128px)"    },
-        { "slug": "80", "name": "3XL — section-2xl (160px)","size": "clamp(100px,12.5vw,160px)"}
+        { "slug": "10", "name": "2XS (8px)",               "size": "0.5rem"                        },
+        { "slug": "15", "name": "Gap tight (12px)",         "size": "0.75rem"                       },
+        { "slug": "20", "name": "XS (16px)",                "size": "1rem"                          },
+        { "slug": "25", "name": "Stack-S (20px)",           "size": "1.25rem"                       },
+        { "slug": "30", "name": "S (24px)",                 "size": "1.5rem"                        },
+        { "slug": "35", "name": "Stack-M (32px)",           "size": "2rem"                          },
+        { "slug": "40", "name": "M — gutter (48px)",        "size": "clamp(24px, 4vw, 48px)"         },
+        { "slug": "45", "name": "Stack-L / after display",  "size": "clamp(1.5rem, 3vw, 2.5rem)"    },
+        { "slug": "48", "name": "Stack-L fixed (2.5rem)",   "size": "2.5rem"                       },
+        { "slug": "50", "name": "L — section-md (80px)",    "size": "clamp(50px,6.25vw,80px)"      },
+        { "slug": "60", "name": "XL — section-lg (100px)",  "size": "clamp(60px,7.8vw,100px)"      },
+        { "slug": "70", "name": "2XL — section-xl (128px)", "size": "clamp(80px, 10vw, 128px)"       },
+        { "slug": "75", "name": "Hero top (header + section-xl)", "size": "calc(var(--wp--custom--header-height) + clamp(80px, 10vw, 128px))" },
+        { "slug": "80", "name": "3XL — section-2xl (160px)","size": "clamp(100px, 12.5vw, 160px)"    }
       ]
     },
     "color": {
@@ -87,18 +93,22 @@
         { "slug": "md",   "size": "1rem",                        "name": "MD — 16px"   },
         { "slug": "lg",   "size": "1.125rem",                    "name": "LG — 18px"   },
         { "slug": "xl",   "size": "1.25rem",                     "name": "XL — 20px"   },
-        { "slug": "2xl",  "size": "clamp(1.25rem,2.5vw,2rem)",   "name": "2XL",         "fluid": false },
+        { "slug": "2xl",  "size": "clamp(1.25rem,2.5vw,2rem)",   "name": "2XL — card title", "fluid": false },
+        { "slug": "featured", "size": "clamp(1.25rem, 2.5vw, 2.25rem)", "name": "Featured title", "fluid": false },
+        { "slug": "hero-headline", "size": "clamp(1.375rem, 2.8vw, 2.125rem)", "name": "Hero headline", "fluid": false },
         { "slug": "3xl",  "size": "clamp(1.5rem,3.5vw,3rem)",    "name": "3XL",         "fluid": false },
         { "slug": "4xl",  "size": "clamp(1.75rem,4vw,4rem)",     "name": "4XL",         "fluid": false },
         { "slug": "5xl",  "size": "clamp(2rem,5.5vw,6rem)",      "name": "5XL",         "fluid": false },
         { "slug": "6xl",  "size": "clamp(2rem,4.5vw,3.75rem)",   "name": "6XL",         "fluid": false },
-        { "slug": "hero", "size": "clamp(2.25rem,6vw,8rem)",     "name": "Hero",        "fluid": false }
+        { "slug": "section", "size": "clamp(2rem, 7vw, 7rem)",   "name": "Section display", "fluid": false },
+        { "slug": "hero", "size": "clamp(2.5rem, 7vw, 6.5rem)",  "name": "Hero display", "fluid": false }
       ]
     },
     "border": {
       "color": true, "radius": true, "style": true, "width": true
     },
     "custom": {
+      "header-height":       "96px",
       "border-color-subtle": "rgba(255,255,255,0.08)",
       "border-color-mid":    "rgba(255,255,255,0.14)",
       "gradient-brand":      "linear-gradient(135deg,#3B82F6 0%,#8B5CF6 100%)",
