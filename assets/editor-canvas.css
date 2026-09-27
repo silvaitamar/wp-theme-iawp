@@ -129,3 +129,108 @@ header.site-header.header--overlay.is-scrolled {
 	align-items: flex-end !important;
 	gap: 0 !important;
 }
+
+/*
+ * Sidebar newsletter (single) — proto: input + botão colados (gap 0, border-bottom 0).
+ * No canvas o Jetpack empilha via .block-editor-block-list__layout com gap/margin
+ * do editor — single.css cobre o front; aqui o DOM de edição.
+ */
+.sidebar-form.wp-block-jetpack-contact-form {
+	--wp--style--block-gap: 0px;
+	gap: 0 !important;
+}
+.sidebar-form.wp-block-jetpack-contact-form > .block-editor-inner-blocks > .block-editor-block-list__layout,
+.sidebar-form .block-editor-block-list__layout:where(:has(> .wp-block-jetpack-field-email)),
+.sidebar-form .block-editor-block-list__layout:where(:has(> [data-type="jetpack/field-email"])) {
+	display: flex !important;
+	flex-direction: column !important;
+	flex-wrap: nowrap !important;
+	align-items: stretch !important;
+	gap: 0 !important;
+	row-gap: 0 !important;
+	width: 100%;
+}
+.sidebar-form .block-editor-block-list__layout > .wp-block,
+.sidebar-form .block-editor-block-list__layout > [data-block] {
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+}
+.sidebar-form input[type="email"],
+.sidebar-form .components-text-control__input,
+.sidebar-form .jetpack-field input {
+	margin: 0 !important;
+	border-bottom-width: 0 !important;
+	border-radius: 0 !important;
+	background-color: transparent !important;
+}
+.sidebar-form .wp-block-button,
+.sidebar-form .wp-block-button__link {
+	margin: 0 !important;
+	width: 100% !important;
+}
+
+/*
+ * Share boxes (Outermost) — canvas: plugin/editor encolhe o anchor; SVG fica
+ * colado na borda. Proto/front: min 2rem + pad + texto in/X/@ via ::after.
+ */
+.single-share-list.wp-block-outermost-social-sharing,
+.single-share-list[data-type="outermost/social-sharing"] {
+	display: flex !important;
+	gap: 0.5rem !important;
+	align-items: center !important;
+}
+.single-share-list .outermost-social-sharing-link,
+.single-share-list [data-type^="outermost/social-sharing-link"],
+.single-share-list .wp-block-outermost-social-sharing-link {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	min-width: 2rem !important;
+	min-height: 2rem !important;
+	border: 1px solid var(--wp--preset--color--outline) !important;
+	border-radius: 0 !important;
+	background: transparent !important;
+	box-sizing: border-box !important;
+}
+.single-share-list .wp-block-outermost-social-sharing-link-anchor,
+.single-share-list .outermost-social-sharing-link-anchor,
+.single-share-list a {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	min-width: 2rem !important;
+	min-height: 2rem !important;
+	height: 2rem !important;
+	padding: 0 0.5rem !important;
+	box-sizing: border-box !important;
+	line-height: 1 !important;
+}
+.single-share-list .outermost-social-sharing-link svg,
+.single-share-list [data-type^="outermost/social-sharing-link"] svg {
+	display: none !important;
+}
+.single-share-list .outermost-social-sharing-link-linkedin .wp-block-outermost-social-sharing-link-anchor::after,
+.single-share-list [data-type="outermost/social-sharing-link-linkedin"] .wp-block-outermost-social-sharing-link-anchor::after,
+.single-share-list .outermost-social-sharing-link-linkedin a::after {
+	content: "in";
+}
+.single-share-list .outermost-social-sharing-link-x .wp-block-outermost-social-sharing-link-anchor::after,
+.single-share-list [data-type="outermost/social-sharing-link-x"] .wp-block-outermost-social-sharing-link-anchor::after,
+.single-share-list .outermost-social-sharing-link-x a::after {
+	content: "X";
+}
+.single-share-list .outermost-social-sharing-link-mail .wp-block-outermost-social-sharing-link-anchor::after,
+.single-share-list [data-type="outermost/social-sharing-link-mail"] .wp-block-outermost-social-sharing-link-anchor::after,
+.single-share-list .outermost-social-sharing-link-mail a::after {
+	content: "@";
+}
+.single-share-list .wp-block-outermost-social-sharing-link-anchor::after,
+.single-share-list .outermost-social-sharing-link a::after {
+	font-family: var(--wp--preset--font-family--display);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	color: inherit;
+}

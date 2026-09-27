@@ -32,3 +32,6 @@ build/
 credentials.json
 
 # Proto / internal paths must never be committed as copies with client data
+
+# Agent / local QA probes (Studio eval-file, Playwright) — not product
+scripts/

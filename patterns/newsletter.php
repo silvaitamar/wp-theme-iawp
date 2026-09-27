@@ -4,7 +4,7 @@
  * Slug: iawp/newsletter
  * Categories: featured, call-to-action
  * Keywords: newsletter, email, hub, subscribe
- * Description: Full-width newsletter CTA — copy from the approved hub proto (no waitlist / Lista VIP).
+ * Description: Full-width newsletter CTA — copy from the approved hub proto (newsletter of new articles).
  * Viewport Width: 1344
  * Inserter: yes
  */

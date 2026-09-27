@@ -307,6 +307,91 @@ add_filter( 'render_block', function ( $html, $block ) {
 	return $html;
 }, 10, 2 );
 
+/**
+ * Single meta — sempre exibir “Atualizado” (fidelidade artigo.html).
+ *
+ * O core omite <time> do post-date modified quando modified ≤ publish.
+ * O proto mostra os dois pares mesmo com a mesma data civil.
+ */
+add_filter( 'render_block_core/post-date', function ( $content, $block ) {
+	$class = (string) ( $block['attrs']['className'] ?? '' );
+	if ( ! str_contains( $class, 'wp-block-post-date__modified-date' ) ) {
+		return $content;
+	}
+	if ( is_string( $content ) && str_contains( $content, '<time' ) ) {
+		return $content;
+	}
+
+	$post = get_post();
+	if ( ! $post instanceof WP_Post ) {
+		return $content;
+	}
+
+	$format = $block['attrs']['format'] ?? get_option( 'date_format' );
+	$display = get_the_modified_date( $format, $post );
+	if ( ! is_string( $display ) || $display === '' ) {
+		$display = get_the_date( $format, $post );
+	}
+	$datetime = get_the_modified_date( DATE_W3C, $post );
+	if ( ! is_string( $datetime ) || $datetime === '' ) {
+		$datetime = get_the_date( DATE_W3C, $post );
+	}
+
+	$classes = array( 'wp-block-post-date', 'single-author-date', 'wp-block-post-date__modified-date' );
+	if ( ! empty( $block['attrs']['textColor'] ) ) {
+		$classes[] = 'has-text-color';
+		$classes[] = 'has-' . sanitize_title( $block['attrs']['textColor'] ) . '-color';
+	}
+
+	$style_bits = array();
+	if ( ! empty( $block['attrs']['style']['typography']['fontSize'] ) ) {
+		$style_bits[] = 'font-size:' . $block['attrs']['style']['typography']['fontSize'];
+	}
+	if ( isset( $block['attrs']['style']['spacing']['margin']['top'] ) ) {
+		$style_bits[] = 'margin-top:' . $block['attrs']['style']['spacing']['margin']['top'];
+	}
+	if ( isset( $block['attrs']['style']['spacing']['margin']['bottom'] ) ) {
+		$style_bits[] = 'margin-bottom:' . $block['attrs']['style']['spacing']['margin']['bottom'];
+	}
+	$style_attr = $style_bits ? ' style="' . esc_attr( implode( ';', $style_bits ) ) . '"' : '';
+
+	return sprintf(
+		'<div class="%s"%s><time datetime="%s">%s</time></div>',
+		esc_attr( implode( ' ', $classes ) ),
+		$style_attr,
+		esc_attr( $datetime ),
+		esc_html( $display )
+	);
+}, 10, 2 );
+
+/**
+ * Sidebar “Relacionados” — reforço do nativo excludeCurrent (WP 7.1+).
+ *
+ * O core usa get_the_ID(); no canvas/FSE às vezes o ID está só no queried object.
+ * className no query NÃO chega ao filtro (build usa o bloco com context, não o
+ * wrapper com className) — por isso o match por class falhava e o self entrava.
+ */
+add_filter( 'query_loop_block_query_vars', function ( array $query, $block ): array {
+	$q = array();
+	if ( $block instanceof WP_Block ) {
+		$q = $block->context['query'] ?? ( $block->attributes['query'] ?? array() );
+	}
+	if ( empty( $q['excludeCurrent'] ) ) {
+		return $query;
+	}
+	$id = (int) get_the_ID();
+	if ( $id <= 0 ) {
+		$id = (int) get_queried_object_id();
+	}
+	if ( $id <= 0 ) {
+		return $query;
+	}
+	$exclude = isset( $query['post__not_in'] ) ? (array) $query['post__not_in'] : array();
+	$exclude[] = $id;
+	$query['post__not_in'] = array_values( array_unique( array_map( 'intval', $exclude ) ) );
+	return $query;
+}, 10, 2 );
+
 // Seções semânticas: core/group com tagName:"section" e ariaLabel nos atributos do bloco.
 // O WP renderiza <section aria-label> nativamente — não é necessário filtro render_block.
 
