@@ -3,19 +3,6 @@
    ================================================================ */
 
 
-/* Corner accents (hero frame / about visual) */
-.corner {
-  position: absolute;
-  width: 1.25rem;
-  height: 1.25rem;
-  border-color: var(--wp--preset--color--primary);
-  border-style: solid;
-  border-width: 0;
-  opacity: 0.55;
-}
-.corner--tl { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
-.corner--br { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
-
 /* FSE wrappers: hero section is a group — full-bleed, not contentSize */
 .hero.wp-block-group,
 .hero.alignfull {
@@ -439,7 +426,7 @@ svg.bento-icon {
   display: block;
   flex-shrink: 0;
   fill: none;
-  stroke: url(#grad-brand);
+  stroke: url(#grad-brand) var(--wp--preset--color--primary);
   stroke-width: 1;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -456,7 +443,7 @@ svg.bento-icon {
 /* Lucide: pontos preenchidos (ex. palette) usam fill, não stroke */
 svg.icon [fill]:not([fill="none"]),
 svg.bento-icon [fill]:not([fill="none"]) {
-  fill: url(#grad-brand);
+  fill: url(#grad-brand) var(--wp--preset--color--primary);
   stroke: none;
 }
 
@@ -891,40 +878,43 @@ svg.bento-icon [fill]:not([fill="none"]) {
   width: 100%;
 }
 
-/* Sociais do autor — logos-only, stroke brand (espelho author.css DV) */
-.author-social {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.25rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* Sociais do autor — Lucide stroke (proto .author-social__icon).
+   Gap/size = attrs nativos (blockGap / has-small-icon-size).
+   Core logos-only já zera bg/padding do anchor; aqui só o que o core não cobre:
+   - border-radius (core = pill 9999px)
+   - cor brand do logos-only (#0d66c2 etc.) → primary / grad-brand
+   - fill:currentColor do core → fill:none + stroke Lucide
+   Sem !important. */
+.author-social.wp-block-social-links.is-style-logos-only .wp-social-link {
+  border-radius: 0;
+  color: var(--wp--preset--color--primary);
 }
-.author-social a {
-  display: flex;
-  color: inherit;
-}
-.author-social__icon {
-  display: block;
+.author-social.wp-block-social-links.is-style-logos-only .wp-social-link svg {
+  width: 22px;
+  height: 22px;
   fill: none;
-  stroke: url(#grad-brand);
+  /* Fallback sólido se #grad-brand ausente (canvas sem wp_body_open). */
+  stroke: url(#grad-brand) var(--wp--preset--color--primary);
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: stroke 0.25s ease;
 }
-.author-social a:hover .author-social__icon {
-  stroke: var(--wp--preset--color--primary);
+/* Core força fill:currentColor no svg/anchor — anular shapes Lucide. */
+.author-social.wp-block-social-links.is-style-logos-only .wp-social-link svg path,
+.author-social.wp-block-social-links.is-style-logos-only .wp-social-link svg rect,
+.author-social.wp-block-social-links.is-style-logos-only .wp-social-link svg circle {
+  fill: none;
+  stroke: inherit;
 }
 
-/* Página Sobre — pilares editoriais */
+/* Página Sobre — pilares (grid/outline; tipografia/padding = attrs no pattern).
+   Sem !important. Outline = preset outline (= border-color-subtle). */
 .sobre-pillars {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  border: 1px solid var(--wp--custom--border-color-subtle);
-  background: var(--wp--custom--border-color-subtle);
+  border: 1px solid var(--wp--preset--color--outline);
+  background: var(--wp--preset--color--outline);
 }
 @media (min-width: 800px) {
   .sobre-pillars {
@@ -932,24 +922,9 @@ svg.bento-icon [fill]:not([fill="none"]) {
   }
 }
 .sobre-pillar {
-  background: var(--wp--preset--color--base);
-  padding: var(--wp--preset--spacing--40);
-  outline: 1px solid var(--wp--custom--border-color-subtle);
-}
-.sobre-pillar__title {
-  margin: 0 0 0.85rem;
-  font-family: var(--wp--preset--font-family--display);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--primary);
+  outline: 1px solid var(--wp--preset--color--outline);
 }
 .sobre-pillar__body {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--wp--preset--color--muted);
   max-width: 36ch;
 }
 @media (max-width: 799px) {
