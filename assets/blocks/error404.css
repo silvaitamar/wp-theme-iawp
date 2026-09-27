@@ -1,0 +1,108 @@
+/**
+ * Editorial 404 — allowlist only.
+ * Tipografia/spacing/minHeight/blockGap = attrs no pattern.
+ * Centro vertical = layout flex + verticalAlignment (como home-hero).
+ * Primary button = theme.json elements.button. Zero !important.
+ */
+
+.error-404 {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Wash + ornament — sem equivalente nativo */
+.error-404::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    var(--wp--custom--fashion-wash),
+    repeating-linear-gradient(
+      90deg,
+      var(--wp--custom--ornament-line) 0,
+      var(--wp--custom--ornament-line) 1px,
+      transparent 1px,
+      transparent 6.5rem
+    );
+  -webkit-mask-image: linear-gradient(105deg, transparent 0%, #000 55%, transparent 100%);
+  mask-image: linear-gradient(105deg, transparent 0%, #000 55%, transparent 100%);
+  opacity: 0.55;
+}
+
+/* Frame inset */
+.error-404::after {
+  content: "";
+  position: absolute;
+  inset: clamp(1.25rem, 3vw, 2.5rem);
+  z-index: 0;
+  pointer-events: none;
+  border: 1px solid var(--wp--preset--color--outline);
+  opacity: 0.45;
+}
+
+.error-404 > .wrap,
+.error-404 > .wp-block-group.alignwide {
+  position: relative;
+  z-index: 1;
+}
+
+/* Code size — clamp sem preset equivalente */
+.error-404__code {
+  font-size: clamp(4rem, 18vw, 11rem);
+  opacity: 0.35;
+}
+
+.error-404__lede {
+  max-width: 36rem;
+}
+
+.error-404__lede .brand {
+  color: var(--wp--preset--color--contrast);
+}
+
+.error-404__lede .brand em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--wp--preset--color--primary);
+}
+
+/* Botões — mesmo chrome do hub (.hero / .about-actions); pad igual via attrs no pattern.
+   Outline do core muda box-model sem isto → primary maior que ghost (bug reportado). */
+.error-404 .wp-block-button {
+  margin: 0;
+}
+
+.error-404 .wp-block-buttons .wp-block-button__link.wp-element-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 0;
+  height: auto;
+  line-height: 1;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.error-404 .wp-block-button:not(.is-style-outline) .wp-block-button__link.wp-element-button {
+  /* 1px transparente = mesma altura do outline (border-box), como .btn do proto */
+  border: 1px solid transparent;
+}
+
+.error-404 .wp-block-button:not(.is-style-outline) .wp-block-button__link.wp-element-button:hover {
+  background: var(--wp--custom--primary-dark, #2563eb);
+  color: #fff;
+}
+
+.error-404 .is-style-outline .wp-block-button__link.wp-element-button {
+  background: transparent;
+  color: var(--wp--preset--color--contrast);
+  border: 1px solid var(--wp--preset--color--outline);
+}
+
+.error-404 .is-style-outline .wp-block-button__link.wp-element-button:hover {
+  background: transparent;
+  border-color: var(--wp--preset--color--primary);
+  color: var(--wp--preset--color--primary);
+}

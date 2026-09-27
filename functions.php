@@ -59,6 +59,7 @@ add_action( 'after_setup_theme', function () {
 		'assets/blocks/blog.css',
 		'assets/blocks/single.css',
 		'assets/blocks/legal.css',
+		'assets/blocks/error404.css',
 		'assets/blocks/hub.css',
 	];
 	foreach ( $section_styles as $file ) {
@@ -253,8 +254,8 @@ add_action( 'wp_enqueue_scripts', function (): void {
 		return;
 	}
 
-	// Blog index + category/tag archives — hub listagem (.posts-hub) + page-hero slim
-	if ( ( $post_id === $blog_id && $blog_id > 0 ) || is_home() || is_category() || is_tag() || is_tax() ) {
+	// Blog index + archives — hub listagem (.posts-hub) + page-hero / archive-hero slim
+	if ( ( $post_id === $blog_id && $blog_id > 0 ) || is_home() || is_archive() ) {
 		wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
 		wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), array( 'iawp-hub' ), $mtime( 'assets/blocks/blog.css' ) );
 		wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
@@ -282,9 +283,9 @@ add_action( 'wp_enqueue_scripts', function (): void {
 		return;
 	}
 
-	// 404
+	// 404 editorial — wash/frame + botões (sem newsletter / hub listagem)
 	if ( is_404() ) {
-		wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
+		wp_enqueue_style( 'iawp-error404', get_theme_file_uri( 'assets/blocks/error404.css' ), $base, $mtime( 'assets/blocks/error404.css' ) );
 	}
 } );
 
@@ -376,21 +377,107 @@ add_filter( 'query_loop_block_query_vars', function ( array $query, $block ): ar
 	if ( $block instanceof WP_Block ) {
 		$q = $block->context['query'] ?? ( $block->attributes['query'] ?? array() );
 	}
-	if ( empty( $q['excludeCurrent'] ) ) {
-		return $query;
+
+	// Relacionados: excludeCurrent
+	if ( ! empty( $q['excludeCurrent'] ) ) {
+		$id = (int) get_the_ID();
+		if ( $id <= 0 ) {
+			$id = (int) get_queried_object_id();
+		}
+		if ( $id > 0 ) {
+			$exclude = isset( $query['post__not_in'] ) ? (array) $query['post__not_in'] : array();
+			$exclude[] = $id;
+			$query['post__not_in'] = array_values( array_unique( array_map( 'intval', $exclude ) ) );
+		}
 	}
-	$id = (int) get_the_ID();
-	if ( $id <= 0 ) {
-		$id = (int) get_queried_object_id();
+
+	/*
+	 * Archive featured/cards: inherit:false + perPage/offset (offset some com inherit).
+	 * Sem tax_query explícito no pattern — o filtro injeta o termo/autor/data atuais.
+	 * Não usar className (não chega ao filtro; ver excludeCurrent acima).
+	 */
+	if ( empty( $q['inherit'] ) && ( is_category() || is_tag() || is_tax() || is_author() || is_date() ) ) {
+		$already =
+			! empty( $query['cat'] ) ||
+			! empty( $query['tag_id'] ) ||
+			! empty( $query['tax_query'] ) ||
+			! empty( $query['author'] ) ||
+			! empty( $query['year'] );
+		if ( ! $already ) {
+			if ( is_category() ) {
+				$query['cat'] = (int) get_queried_object_id();
+			} elseif ( is_tag() ) {
+				$query['tag_id'] = (int) get_queried_object_id();
+			} elseif ( is_tax() ) {
+				$term = get_queried_object();
+				if ( $term instanceof WP_Term ) {
+					$query['tax_query'] = array(
+						array(
+							'taxonomy' => $term->taxonomy,
+							'field'    => 'term_id',
+							'terms'    => (int) $term->term_id,
+						),
+					);
+				}
+			} elseif ( is_author() ) {
+				$query['author'] = (int) get_queried_object_id();
+			} elseif ( is_date() ) {
+				global $wp_query;
+				foreach ( array( 'year', 'monthnum', 'day' ) as $key ) {
+					if ( ! empty( $wp_query->query_vars[ $key ] ) ) {
+						$query[ $key ] = $wp_query->query_vars[ $key ];
+					}
+				}
+			}
+		}
 	}
-	if ( $id <= 0 ) {
-		return $query;
-	}
-	$exclude = isset( $query['post__not_in'] ) ? (array) $query['post__not_in'] : array();
-	$exclude[] = $id;
-	$query['post__not_in'] = array_values( array_unique( array_map( 'intval', $exclude ) ) );
+
 	return $query;
 }, 10, 2 );
+
+/**
+ * Archive hero title — proto accent na última parte após "+" (query-title é texto plano).
+ * Só no front; o bloco no editor permanece nativo.
+ */
+add_filter( 'render_block_core/query-title', function ( string $html ): string {
+	if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+		return $html;
+	}
+	if ( ! is_category() && ! is_tag() && ! is_tax() ) {
+		return $html;
+	}
+	return (string) preg_replace_callback(
+		'/(<h1\b[^>]*>)(.*?)(<\/h1>)/ius',
+		static function ( array $m ): string {
+			$plain = trim( html_entity_decode( wp_strip_all_tags( $m[2] ), ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+			if ( ! preg_match( '/^(.+\+)\s+(.+)$/u', $plain, $parts ) ) {
+				return $m[0];
+			}
+			return $m[1]
+				. esc_html( trim( $parts[1] ) )
+				. '<br><span class="text-accent">'
+				. esc_html( trim( $parts[2] ) )
+				. '</span>'
+				. $m[3];
+		},
+		$html,
+		1
+	);
+} );
+
+/**
+ * Meta do archive: "N artigos" em vez de "N resultados encontrados" (query-total i18n).
+ */
+add_filter( 'render_block_core/query-total', function ( string $html ): string {
+	if ( ! is_category() && ! is_tag() && ! is_tax() ) {
+		return $html;
+	}
+	return (string) preg_replace(
+		'/(\d+)\s+resultados?\s+encontrados?/iu',
+		'$1 artigos',
+		$html
+	);
+} );
 
 // Seções semânticas: core/group com tagName:"section" e ariaLabel nos atributos do bloco.
 // O WP renderiza <section aria-label> nativamente — não é necessário filtro render_block.

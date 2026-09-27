@@ -1,0 +1,22 @@
+<?php
+/**
+ * Title: Archive latest
+ * Slug: iawp/archive-latest
+ * Categories: posts, featured
+ * Keywords: archive, category, posts-hub, cluster
+ * Description: Archive list — posts-hub (featured + 2 cards scoped to term).
+ * Viewport Width: 1344
+ * Inserter: yes
+ */
+?>
+<!-- wp:group {"tagName":"section","align":"full","className":"section section--rule","backgroundColor":"base","ariaLabel":"Artigos do cluster","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"0","right":"0"},"blockGap":"0px"}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull section section--rule has-base-background-color has-background" aria-label="Artigos do cluster" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--60);padding-right:0;padding-bottom:var(--wp--preset--spacing--60);padding-left:0"><!-- wp:group {"align":"wide","className":"wrap","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide wrap"><!-- wp:group {"className":"posts-hub","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","orientation":"vertical","flexWrap":"nowrap","justifyContent":"stretch"}} -->
+<div class="wp-block-group posts-hub"><!-- wp:pattern {"slug":"iawp/query-featured-archive"} /-->
+
+<!-- wp:group {"className":"posts-hub__grid","layout":{"type":"default"}} -->
+<div class="wp-block-group posts-hub__grid"><!-- wp:pattern {"slug":"iawp/query-cards-archive"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></section>
+<!-- /wp:group -->

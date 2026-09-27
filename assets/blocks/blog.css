@@ -1,9 +1,9 @@
 /**
- * Blog / posts index — page-hero allowlist only.
+ * Blog / posts index + archive hero — allowlist only.
  *
  * Listagem = hub.css (.posts-hub) + L3 patterns. Tipografia/spacing/cores = attrs
- * no pattern iawp/blog-hero. CSS só o que o support do bloco não cobre.
- * Zero !important.
+ * nos patterns. CSS só o que o support do bloco não cobre.
+ * Zero !important (proto archive-meta tinha; não portamos).
  */
 
 .page-hero {
@@ -49,4 +49,66 @@
   font-style: italic;
   font-weight: 300;
   color: var(--wp--preset--color--primary);
+}
+
+/* ═══ Archive / categoria ═══
+   Alinhamento = layout flex justifyContent:left no pattern.
+   Ícone size = svg.bento-icon em style.css; só zera margin do bento (2rem). */
+
+.page-hero--archive .archive-hero__icon {
+  margin: 0;
+}
+
+/* term-description: sem support de maxWidth */
+.page-hero--archive .wp-block-term-description,
+.page-hero--archive .wp-block-term-description p {
+  max-width: 40rem;
+}
+
+.page-crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.65rem;
+}
+
+.page-crumb a {
+  color: var(--wp--preset--color--primary);
+  text-decoration: none;
+}
+
+.page-crumb a:hover {
+  color: var(--wp--preset--color--contrast);
+}
+
+.page-crumb__sep {
+  opacity: 0.5;
+}
+
+/* Meta: wrappers query + post-template em linha no flex do group */
+.archive-meta .archive-meta-count,
+.archive-meta .archive-meta-updated-query,
+.archive-meta .wp-block-post-template,
+.archive-meta .wp-block-post-template > li {
+  display: contents;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.archive-meta__dot {
+  width: 3px;
+  height: 3px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--wp--preset--color--primary);
+  opacity: 0.7;
+  flex-shrink: 0;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.archive-meta time::before {
+  content: "Atualizado ";
 }

@@ -2,30 +2,15 @@
 <header class="wp-block-group site-header header--overlay" style="--bhb-header-scrolled-bg:rgba(11, 16, 32, 0.92)"><!-- wp:template-part {"slug":"header","theme":"iawp"} /--></header>
 <!-- /wp:group -->
 
-<!-- wp:group {"tagName":"main","anchor":"main-content","layout":{"type":"default"}} -->
-<main id="main-content" class="wp-block-group">
-	<!-- wp:group {"layout":{"type":"constrained"}} -->
-	<div class="wp-block-group">
-		<!-- wp:query-title {"type":"archive"} /-->
-		<!-- wp:term-description /-->
+<!-- wp:group {"tagName":"main","anchor":"main-content","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<main id="main-content" class="wp-block-group" style="margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0">
 
-		<!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":true}} -->
-		<div class="wp-block-query">
-			<!-- wp:post-template -->
-				<!-- wp:post-title {"isLink":true,"level":2} /-->
-				<!-- wp:post-date /-->
-				<!-- wp:post-excerpt /-->
-			<!-- /wp:post-template -->
+<!-- wp:pattern {"slug":"iawp/archive-hero"} /-->
 
-			<!-- wp:query-pagination -->
-				<!-- wp:query-pagination-previous /-->
-				<!-- wp:query-pagination-numbers /-->
-				<!-- wp:query-pagination-next /-->
-			<!-- /wp:query-pagination -->
-		</div>
-		<!-- /wp:query -->
-	</div>
-	<!-- /wp:group -->
+<!-- wp:pattern {"slug":"iawp/archive-latest"} /-->
+
+<!-- wp:pattern {"slug":"iawp/newsletter"} /-->
+
 </main>
 <!-- /wp:group -->
 
