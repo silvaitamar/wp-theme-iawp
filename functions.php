@@ -13,7 +13,8 @@
  *  O WP gera os @font-face automaticamente e os serve inline no global stylesheet.
  *  Não usar wp_enqueue_style para Google Fonts — gera request externo bloqueante.
  *  Não usar add_editor_style para Google Fonts — o editor lê fontFace do theme.json.
- *  Ícones: SVGs locais em assets/icons/ (Lucide) via ob_start filter.
+ *  Ícones: assets/icons/ → coleção WP Icons API (`iawp/*`) para core/icon;
+ *  legado span→SVG via ob_start ainda cobre header/CTA pontuais.
  *
  * NÃO inclui: meta description, Open Graph, Twitter Card, JSON-LD por post,
  * canonical por post, sitemap — responsabilidade do plugin The SEO Framework
@@ -53,8 +54,8 @@ add_action( 'after_setup_theme', function () {
 	// via add_editor_style para que o canvas renderize corretamente.
 	// hub.css por último: .posts-hub vence blog.css nas classes compartilhadas.
 	// author.css removido: classes author-section/* eram LP Digital Vanguard; hub usa about-*.
+	// hero.css removido: leftover LP (.hero-section) — hub usa hub.css (.hero).
 	$section_styles = [
-		'assets/blocks/hero.css',
 		'assets/blocks/cta.css',
 		'assets/blocks/blog.css',
 		'assets/blocks/single.css',
@@ -111,15 +112,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		(string) filemtime( get_stylesheet_directory() . '/style.css' )
 	);
 
-	wp_enqueue_script(
-		'iawp-scroll',
-		get_theme_file_uri( 'assets/scroll.js' ),
-		array(),
-		wp_get_theme()->get( 'Version' ),
-		true
-	);
-	wp_script_add_data( 'iawp-scroll', 'defer', true );
-
+	// Proto motion.js — reveal + spotlight. scroll.js (reveal-up) era leftover DV; removido.
 	wp_enqueue_script(
 		'iawp-motion',
 		get_theme_file_uri( 'assets/motion.js' ),
@@ -205,6 +198,110 @@ add_action( 'template_redirect', function (): void {
 } );
 
 /**
+ * Adapta SVG Lucide ao allowlist kses da Icons API (só svg/path/polygon).
+ * circle → path; stroke/fill no root ficam a cargo do CSS do tema.
+ *
+ * @param string $svg Markup SVG cru de assets/icons/.
+ * @return string Markup compatível com sanitize_icon_content do core.
+ */
+function iawp_icon_svg_for_core( string $svg ): string {
+	return (string) preg_replace_callback(
+		'/<circle\b([^>]*)\/?>/i',
+		static function ( array $m ): string {
+			$attrs = $m[1];
+			if (
+				! preg_match( '/\bcx="([^"]+)"/i', $attrs, $cx )
+				|| ! preg_match( '/\bcy="([^"]+)"/i', $attrs, $cy )
+				|| ! preg_match( '/\br="([^"]+)"/i', $attrs, $r )
+			) {
+				return '';
+			}
+			$cx_v = (float) $cx[1];
+			$cy_v = (float) $cy[1];
+			$r_v  = (float) $r[1];
+			$fill = '';
+			if ( preg_match( '/\bfill="([^"]+)"/i', $attrs, $f ) && 'none' !== strtolower( $f[1] ) ) {
+				$fill = ' fill="' . esc_attr( $f[1] ) . '"';
+			}
+			// Dois arcos = círculo fechado (kses permite path, não circle).
+			$d = sprintf(
+				'M%s %s a%s %s 0 1 0 %s 0 a%s %s 0 1 0 %s 0',
+				iawp_svg_num( $cx_v - $r_v ),
+				iawp_svg_num( $cy_v ),
+				iawp_svg_num( $r_v ),
+				iawp_svg_num( $r_v ),
+				iawp_svg_num( $r_v * 2 ),
+				iawp_svg_num( $r_v ),
+				iawp_svg_num( $r_v ),
+				iawp_svg_num( -$r_v * 2 )
+			);
+			return '<path d="' . esc_attr( $d ) . '"' . $fill . '/>';
+		},
+		$svg
+	);
+}
+
+/**
+ * @param float $n Número para atributo d do path.
+ */
+function iawp_svg_num( float $n ): string {
+	$s = rtrim( rtrim( sprintf( '%.4f', $n ), '0' ), '.' );
+	return '' === $s || '-' === $s ? '0' : $s;
+}
+
+/**
+ * Registra a biblioteca Lucide do tema na Icons API (WP 7.1+ / core/icon).
+ *
+ * Cada arquivo em assets/icons/{slug}.svg vira `iawp/{slug}` — mesma pasta
+ * usada pelo inliner legado e pelos sociais. Prioridade sobre core/html.
+ *
+ * Armadilha: sanitize_icon_content do core só permite svg/path/polygon e
+ * remove stroke* — por isso circle→path aqui e stroke via CSS (.bento-icon).
+ */
+add_action( 'init', function (): void {
+	if ( ! function_exists( 'wp_register_icon_collection' ) || ! function_exists( 'wp_register_icon' ) ) {
+		return;
+	}
+
+	$dir = get_stylesheet_directory() . '/assets/icons';
+	if ( ! is_dir( $dir ) ) {
+		return;
+	}
+
+	wp_register_icon_collection(
+		'iawp',
+		array(
+			'label'       => __( 'IA+WP', 'iawp' ),
+			'description' => __( 'Ícones Lucide do tema (assets/icons).', 'iawp' ),
+		)
+	);
+
+	$files = glob( $dir . '/*.svg' );
+	if ( ! is_array( $files ) ) {
+		return;
+	}
+
+	foreach ( $files as $file ) {
+		$slug = basename( $file, '.svg' );
+		if ( ! preg_match( '/^[a-z0-9](?:[a-z0-9_-]*[a-z0-9])?$/', $slug ) ) {
+			continue;
+		}
+		$raw = (string) file_get_contents( $file );
+		if ( '' === $raw ) {
+			continue;
+		}
+		$label = ucwords( str_replace( array( '-', '_' ), ' ', $slug ) );
+		wp_register_icon(
+			'iawp/' . $slug,
+			array(
+				'label'   => $label,
+				'content' => iawp_icon_svg_for_core( $raw ),
+			)
+		);
+	}
+}, 11 );
+
+/**
  * Injeta o <svg> hidden com <defs> do gradiente brand logo no body_open.
  * Emitido uma vez — qualquer SVG da página pode referenciar url(#grad-brand),
  * incluindo os SVGs nativos do core/social-links.
@@ -283,11 +380,51 @@ add_action( 'wp_enqueue_scripts', function (): void {
 		return;
 	}
 
+	// Demais páginas — page-hero (template page) + tipografia nativa
+	if ( $obj instanceof WP_Post && $obj->post_type === 'page' ) {
+		wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), $base, $mtime( 'assets/blocks/blog.css' ) );
+		return;
+	}
+
 	// 404 editorial — wash/frame + botões (sem newsletter / hub listagem)
 	if ( is_404() ) {
 		wp_enqueue_style( 'iawp-error404', get_theme_file_uri( 'assets/blocks/error404.css' ), $base, $mtime( 'assets/blocks/error404.css' ) );
 	}
 } );
+
+/**
+ * Descrições dos templates custom na listagem do Site Editor.
+ *
+ * theme.json customTemplates só aceita name / title / postTypes — sem description.
+ * Não usar default_template_types: isso marca is_custom=false e tira o template
+ * do seletor de páginas.
+ */
+add_filter( 'get_block_templates', function ( array $templates, $query, string $template_type ): array {
+	if ( 'wp_template' !== $template_type ) {
+		return $templates;
+	}
+
+	$meta = array(
+		'page-no-title' => array(
+			'title'       => 'Página sem título',
+			'description' => 'Exibe o conteúdo da página sem título automático — útil quando o cabeçalho e o layout vêm do próprio conteúdo.',
+		),
+		'page-legal'    => array(
+			'title'       => 'Legal',
+			'description' => 'Layout para páginas legais (privacidade, termos): título e prosa estreita, sem meta de post.',
+		),
+	);
+
+	foreach ( $templates as $template ) {
+		if ( ! isset( $meta[ $template->slug ] ) ) {
+			continue;
+		}
+		$template->title       = $meta[ $template->slug ]['title'];
+		$template->description = $meta[ $template->slug ]['description'];
+	}
+
+	return $templates;
+}, 10, 3 );
 
 /**
  * aria-label nas navegações do tema.

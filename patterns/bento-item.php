@@ -10,9 +10,7 @@
  */
 ?>
 <!-- wp:group {"tagName":"article","className":"bento-item bento-wide","backgroundColor":"base","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","right":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40"},"blockGap":"0px","margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left","flexWrap":"nowrap"}} -->
-<article class="wp-block-group bento-item bento-wide has-base-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:html -->
-<svg class="bento-icon" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
-<!-- /wp:html -->
+<article class="wp-block-group bento-item bento-wide has-base-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:icon {"icon":"iawp/zap","className":"bento-icon","style":{"dimensions":{"width":"2.25rem"},"spacing":{"margin":{"bottom":"2rem"}}}} /-->
 
 <!-- wp:heading {"level":3,"className":"bento-title","fontFamily":"display","textColor":"contrast","style":{"typography":{"fontWeight":"700","letterSpacing":"-0.025em","lineHeight":"1.15"},"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|15"}}}} -->
 <h3 class="wp-block-heading bento-title has-contrast-color has-text-color has-display-font-family" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--15);font-weight:700;letter-spacing:-0.025em;line-height:1.15">IA + Agentes</h3>

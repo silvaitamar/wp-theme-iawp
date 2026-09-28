@@ -16,9 +16,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:group {"className":"archive-hero__top","style":{"spacing":{"blockGap":"var:preset|spacing|25"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left","flexWrap":"nowrap"}} -->
-<div class="wp-block-group archive-hero__top"><!-- wp:html -->
-<svg class="archive-hero__icon bento-icon" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
-<!-- /wp:html -->
+<div class="wp-block-group archive-hero__top"><!-- wp:icon {"icon":"iawp/zap","className":"archive-hero__icon bento-icon","style":{"dimensions":{"width":"2.25rem"},"spacing":{"margin":{"top":"0","bottom":"0","left":"0","right":"0"}}}} /-->
 
 <!-- wp:query-title {"type":"archive","showPrefix":false,"level":1,"fontFamily":"display","fontSize":"page","textColor":"contrast","style":{"typography":{"fontWeight":"900","letterSpacing":"-0.05em","lineHeight":"0.9","textTransform":"uppercase"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} /--></div>
 <!-- /wp:group -->

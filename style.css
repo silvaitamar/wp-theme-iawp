@@ -82,25 +82,32 @@ h1, h2, h3, h4, h5, h6 { max-width: 100%; overflow-wrap: break-word; }
   border: 0 !important;
 }
 
-/* === ICONS (SVG inline) ===
-   Material Symbols substituído por SVGs locais em assets/icons/.
-   Convertidos via ob_start em functions.php: <span class="icon">nome</span>
-   → <svg class="icon" aria-hidden="true">...</svg>.
-   Deve ficar em style.css pois os ícones aparecem no header,
-   footer e em qualquer seção — sempre presente.
+/* === ICONS (SVG inline + core/icon) ===
+   Biblioteca: assets/icons/ → Icons API `iawp/*` (core/icon).
+   Legado: span.icon → SVG via ob_start. Classe de produto `bento-icon`
+   fica no wrapper .wp-block-icon (ou no <svg> legado).
    ============================================================ */
 svg.icon,
 svg.bento-icon,
-svg.author-avatar,
-svg.author-avatar-label {
+.wp-block-icon.bento-icon {
   display: block;
   flex-shrink: 0;
 }
 svg.icon { width: 1.25em; height: 1.25em; fill: url(#grad-brand); }
-svg.bento-icon {
+svg.bento-icon,
+.wp-block-icon.bento-icon {
   width: 2.25rem;
   height: 2.25rem;
+}
+/* Margin do bento: attr nativo spacing.margin no core/icon (não CSS).
+   Legado svg.bento-icon (se restar): margin abaixo. */
+svg.bento-icon {
   margin: 0 0 2rem 0;
+}
+/* core/icon: size nativo via dimensions.width no SVG; altura = caixa 1:1 */
+.wp-block-icon.bento-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* Utilitários tipográficos compartilhados (home/hub/archive/404) */
@@ -125,6 +132,12 @@ svg.bento-icon {
 
 .section-more a:hover span {
   transform: translateX(0.25rem);
+}
+
+svg.author-avatar,
+svg.author-avatar-label {
+  display: block;
+  flex-shrink: 0;
 }
 
 svg.author-avatar {
@@ -346,27 +359,87 @@ footer.wp-block-template-part {
 }
 
 /* ============================================================
-   REVEAL ANIMATIONS (progressive enhancement)
-   Presente em todas as seções → global.
-   CSS define estado final visível por padrão (sem JS).
-   JS adiciona .is-hidden e depois .is-visible via IntersectionObserver.
+   MOTION (proto assets/motion.js + styles.css)
+   Progressive enhancement: só com <html class="js-motion">.
+   Sem JS → conteúdo permanece visível (sem classe .reveal).
+   Spotlight CSS vive em hub.css (.bento-item / .spotlight).
    ============================================================ */
-.reveal-up { opacity: 1; transform: translateY(0); }
-.reveal-up.is-hidden {
-  opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-duration: 0.55s;
 }
-.reveal-up.is-visible { opacity: 1; transform: translateY(0); }
 
-@keyframes pulse-dot {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.5; transform: scale(1.6); }
+.js-motion .reveal {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition:
+    opacity var(--motion-duration) var(--ease-out),
+    transform var(--motion-duration) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js-motion .reveal.is-inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-motion .site-header {
+  animation: header-in 0.5s var(--ease-out) both;
+}
+@keyframes header-in {
+  from { opacity: 0; transform: translateY(-0.4rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.js-motion .error-404__code {
+  animation: code-fade 1s var(--ease-out) both;
+}
+@keyframes code-fade {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to { opacity: 0.35; transform: translateY(0); }
+}
+
+/* Hovers unificados (proto) — tokens; sem !important */
+a,
+.wp-element-button,
+.section-more,
+.bento-more,
+.single-more,
+.single-cat a,
+.single-share-list a,
+.author-social a,
+.post-card,
+.post-featured {
+  transition:
+    color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    background-color 0.25s var(--ease-out),
+    transform 0.3s var(--ease-out),
+    opacity 0.25s var(--ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  .reveal-up.is-hidden { opacity: 1 !important; transform: none !important; }
+  html {
+    scroll-behavior: auto;
+  }
+  .js-motion .reveal,
+  .js-motion .reveal.is-inview {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .js-motion .site-header,
+  .js-motion .error-404__code {
+    animation: none;
+  }
+  a,
+  .wp-element-button,
+  .section-more,
+  .bento-more,
+  .single-more,
+  .post-card,
+  .post-featured {
+    transition-duration: 0.01ms;
+  }
 }
 
 /* === JETPACK FORM SUCCESS MESSAGE

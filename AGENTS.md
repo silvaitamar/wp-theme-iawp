@@ -17,6 +17,7 @@ Fidelidade ao proto **antes** de “melhorias” inventadas.
 - CSS: `style.css` = global; `assets/blocks/*.css` = seções.
 - JS: `motion.js` (reveal + spotlight); respeitar `prefers-reduced-motion`.
 - Preferir blocos **nativos**; Jetpack form / TSF só quando necessário (wp.org).
+- Ícones de UI: **`core/icon`** + coleção `iawp/*` (`assets/icons/`). Não `core/html` para SVG de ícone.
 
 ## Nomenclatura
 

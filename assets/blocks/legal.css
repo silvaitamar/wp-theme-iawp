@@ -1,36 +1,24 @@
-/* === LEGAL PAGES — Privacidade e Termos === */
+/**
+ * Legal pages — allowlist only.
+ *
+ * Padding / tipografia do título / contentSize = attrs no template (nativos).
+ * Nota “Última atualização” — className de produto `legal-notice` (skill OK) +
+ * regra abaixo com tokens (zero important). Tipografia/borda/spacing também
+ * cabem em attrs nativos do parágrafo; a classe cobre o conteúdo atual.
+ * Prosa em :where(p) para não esmagar has-*-color / font-size se houver attrs.
+ * Sem declarações important.
+ */
 
-/* ── HEADER ── */
 .legal-header {
-  padding-top: var(--wp--preset--spacing--70) !important;
   border-bottom: 1px solid var(--wp--custom--border-color-subtle);
-  text-align: center;
-}
-.legal-header .wp-block-group.alignwide {
-  align-items: center;
 }
 
+/* Escala fluida — post-title não tem maxWidth/fluid próprio além dos presets. */
 .legal-title.wp-block-post-title {
   font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  color: var(--wp--preset--color--contrast);
-  margin: 0;
 }
 
-.legal-date.wp-block-post-date {
-  font-size: var(--wp--preset--font-size--sm);
-  color: var(--wp--preset--color--dim);
-  margin: 0;
-}
-
-/* ── PROSE ── */
-.legal-content .wp-block-post-content {
-  max-width: 680px;
-  margin-inline: auto;
-}
-
+/* Prosa legal — elementos dentro do conteúdo da página (não serializáveis no template). */
 .legal-content .wp-block-post-content h2 {
   font-size: var(--wp--preset--font-size--xl);
   font-weight: 900;
@@ -50,7 +38,7 @@
   margin-block-end: var(--wp--preset--spacing--10);
 }
 
-.legal-content .wp-block-post-content p {
+.legal-content .wp-block-post-content :where(p) {
   font-size: var(--wp--preset--font-size--md);
   line-height: 1.75;
   color: var(--wp--preset--color--muted);
@@ -83,31 +71,18 @@
   font-weight: 700;
 }
 
-/* ── NOTA DE ATUALIZAÇÃO ── */
-.legal-notice.wp-block-paragraph {
-  font-size: var(--wp--preset--font-size--sm) !important;
-  color: var(--wp--preset--color--dim) !important;
-  border-left: 3px solid var(--wp--custom--border-color-subtle);
+/*
+ * Nota “Última atualização” — className de produto `legal-notice` (skill: semântico OK).
+ * Preferência: attrs nativos no parágrafo (fontSize/textColor/spacing/border).
+ * Esta regra cobre o conteúdo que hoje só tem a classe; zero !important.
+ * Seletor (0,3,1) > :where(p) da prosa.
+ */
+.legal-content .wp-block-post-content p.legal-notice {
+  font-size: var(--wp--preset--font-size--sm);
+  line-height: 1.65;
+  color: var(--wp--preset--color--dim);
+  border-left: 3px solid var(--wp--preset--color--outline);
   padding-left: var(--wp--preset--spacing--30);
-  margin-block-start: var(--wp--preset--spacing--60) !important;
-}
-
-@media (max-width: 640px) {
-  .legal-header {
-    padding-top: var(--wp--preset--spacing--50) !important;
-    padding-bottom: var(--wp--preset--spacing--40) !important;
-    text-align: left;
-  }
-  .legal-header .wp-block-group.alignwide { align-items: flex-start; }
-  .legal-title.wp-block-post-title {
-    font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
-  }
-  .legal-content.wp-block-group {
-    padding-top: var(--wp--preset--spacing--50) !important;
-    padding-bottom: var(--wp--preset--spacing--60) !important;
-  }
-  .legal-content .wp-block-post-content h2 {
-    margin-block-start: var(--wp--preset--spacing--50) !important;
-    font-size: var(--wp--preset--font-size--lg) !important;
-  }
+  margin-block-start: var(--wp--preset--spacing--60);
+  margin-block-end: 0;
 }

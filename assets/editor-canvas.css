@@ -79,9 +79,7 @@ header.site-header.header--overlay.is-scrolled {
  * !important vence o min-height inline do bloco.
  */
 .is-root-container.is-preview-mode .hero,
-.is-root-container.is-preview-mode .hero-section,
-.is-preview-mode .hero,
-.is-preview-mode .hero-section {
+.is-preview-mode .hero {
 	min-height: unset !important;
 }
 

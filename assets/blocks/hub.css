@@ -311,52 +311,15 @@
 /* ═══ Sections ═══
    Full-bleed via alignfull + RPA. Conteúdo em .wrap.alignwide.
    Padding/background: attrs nativos no template (spacing|60, backgroundColor).
+   Tipografia de label/heading/lede: attrs nos patterns (não re-declarar aqui).
    Proibido width:100% / margin:0 aqui — trava o CB e desalinha wide vs header/hero. */
 .section--rule {
   border-top: 1px solid var(--wp--preset--color--outline);
 }
 /* .section--surface: background via backgroundColor surface-low no template */
-.section--rule-y {
-  border-top: 1px solid var(--wp--preset--color--outline);
-  border-bottom: 1px solid var(--wp--preset--color--outline);
-}
-.section__label {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: 0.625rem;
-  font-weight: 900;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--wp--preset--color--primary);
-  margin: 0 0 var(--wp--preset--spacing--30);
-}
-/* Título menor — só quando há .section__label acima */
-.section__title {
-  font-family: var(--wp--preset--font-family--display);
-  font-size: clamp(1.5rem, 3.5vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-  color: var(--wp--preset--color--contrast);
-  margin: 0 0 0.75rem;
-}
-.section__intro {
-  margin: 0 0 2rem;
-  font-size: 1.125rem;
-  line-height: 1.65;
-  color: var(--wp--preset--color--muted);
-  max-width: 36rem;
-}
-.section-foot {
-  margin-top: 2rem;
-}
 
-/* Seção sem label — padrão DV benefits-heading (caixa alta + lede à direita) */
-
-.section-header,
-.benefits-header {
-	/* flex / gap via attrs na home; margin = ritmo proto (--space-50: 3rem) */
-	margin-bottom: 3rem;
-}
+/* section-header: margin-bottom = attr nativo (3rem) nos patterns.
+   CSS só: aside max-width / align (sem support nativo de text-align no group). */
 .section-header__aside {
   max-width: min(28rem, 100%);
   text-align: right;
@@ -366,21 +329,6 @@
   margin: 0;
   text-align: right;
   max-width: 16rem;
-}
-.section-more a {
-  color: inherit;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.section-more a:hover {
-  color: var(--wp--preset--color--contrast);
-}
-.section-more a span {
-  display: inline-block;
-  transition: transform 0.25s ease;
-}
-.section-more a:hover span {
-  transform: translateX(0.25rem);
 }
 @media (max-width: 799px) {
   .section-header__aside {
@@ -393,36 +341,29 @@
     max-width: none;
   }
 }
-.section-heading,
-.benefits-heading {
-  /* tipografia nativa (fontSize:section + attrs); accent abaixo */
-  margin: 0;
-}
-.section-heading .text-accent,
-.benefits-heading .text-accent {
+.section-heading .text-accent {
   color: var(--wp--preset--color--primary);
 }
-/* Lede: sm/muted nativos; caixa max-width = CSS */
-.section-lede,
-.benefits-eyebrow {
+/* Lede: sm/muted nativos; caixa max-width = CSS (paragraph sem maxWidth) */
+.section-lede {
   max-width: 16rem;
 }
 @media (max-width: 900px) {
-  .section-lede,
-  .benefits-eyebrow {
+  .section-lede {
     max-width: none;
   }
   /* Proto: heading encolhe no mobile (preset section é desktop-first) */
-  .section-heading,
-  .benefits-heading {
+  .section-heading {
     font-size: clamp(2rem, 10vw, 3rem) !important;
   }
 }
 
-/* ═══ Ícones (Lucide → SVG local, stroke 1px) ═══ */
+/* ═══ Ícones (Lucide → SVG local / core/icon, stroke 1px) ═══
+   core/icon aplica fill:currentColor no SVG — Lucide precisa fill:none + stroke.
+   Classe de produto `bento-icon` no wrapper .wp-block-icon. */
 svg.icon,
-
-svg.bento-icon {
+svg.bento-icon,
+.wp-block-icon.bento-icon svg {
   display: block;
   flex-shrink: 0;
   fill: none;
@@ -440,9 +381,11 @@ svg.bento-icon {
   height: 2.25rem;
   margin: 0 0 2rem;
 }
+/* .wp-block-icon.bento-icon: size em style.css; margin = attr nativo do core/icon */
 /* Lucide: pontos preenchidos (ex. palette) usam fill, não stroke */
 svg.icon [fill]:not([fill="none"]),
-svg.bento-icon [fill]:not([fill="none"]) {
+svg.bento-icon [fill]:not([fill="none"]),
+.wp-block-icon.bento-icon svg [fill]:not([fill="none"]) {
   fill: url(#grad-brand) var(--wp--preset--color--primary);
   stroke: none;
 }

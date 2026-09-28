@@ -53,7 +53,7 @@
    Front DOM: .cta-form > .grunion-field-wrap + .wp-block-button
    Editor DOM: mesmos blocos + chrome Jetpack (editor-style.css força
    input[type=email] { background:#fff; border:1px solid #c8d7e1 }).
-   Variáveis + !important só no chrome do plugin (mesmo padrão hero.css /
+   Variáveis + !important só no chrome do plugin (mesmo padrão sidebar /
    blocks.md) — tipografia da seção permanece nativa. */
 .cta-form.wp-block-jetpack-contact-form {
   --wp--style--block-gap: 0px;
