@@ -50,6 +50,8 @@ Ver Conventional Commits. Marcos típicos deste tema:
 
 Após **adicionar/renomear** arquivos em `patterns/`, limpar cache de patterns do tema no Studio (`$theme->delete_pattern_cache()` + reload) se o inserter/template não enxergar o slug novo.
 
+**Home (F5.10):** composição no `post_content` da página estática (`page_on_front`) via pattern L0 `iawp/page-home`; template de página `page-no-title`. **Não** usar `templates/front-page.html` neste hub — mesma abordagem da Sobre.
+
 ## Ambiente
 
 Site Studio: `Studio/ia-wordpress`. WP-CLI: `studio wp … --path C:\Users\silva\Studio\ia-wordpress` (um comando por vez). Shell da máquina: skill `ambiente-local` (WSL default; commit = C-08).
