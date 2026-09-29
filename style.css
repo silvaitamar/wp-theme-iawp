@@ -144,7 +144,7 @@ svg.author-avatar {
   width: var(--wp--preset--font-size--hero);
   height: var(--wp--preset--font-size--hero);
   fill: url(#grad-brand);
-  margin: 0 !important;
+  margin: 0;
 }
 
 /* ============================================================

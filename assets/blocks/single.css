@@ -64,11 +64,7 @@
   border-color: var(--wp--preset--color--contrast);
 }
 
-/* Read time — tipografia nativa no bloco; CSS só bullet + margin */
-.single-read-time.wp-block-post-time-to-read {
-  margin: 0;
-}
-
+/* Read time — tipografia nativa; CSS só bullet (margin = attr no pattern) */
 .single-read-time.wp-block-post-time-to-read::before {
   content: "• ";
   color: var(--wp--preset--color--primary);

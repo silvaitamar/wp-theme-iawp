@@ -54,12 +54,7 @@
 /* ═══ Archive / categoria ═══
    Alinhamento = layout flex justifyContent:left no pattern.
    Ícone = core/icon + class archive-hero__icon; size = bento-icon (2.25rem);
-   zera margin-bottom do bento (2rem). */
-
-.page-hero--archive .archive-hero__icon,
-.page-hero--archive .wp-block-icon.archive-hero__icon {
-  margin: 0;
-}
+   margin = attrs nativos no pattern (zera margin-bottom do svg.bento-icon legado). */
 
 /* term-description: sem support de maxWidth */
 .page-hero--archive .wp-block-term-description,
