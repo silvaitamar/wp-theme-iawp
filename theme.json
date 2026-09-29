@@ -4,6 +4,10 @@
   "settings": {
     "appearanceTools": true,
     "useRootPaddingAwareAlignments": true,
+    "viewport": {
+      "mobile": "799px",
+      "tablet": "900px"
+    },
     "layout": {
       "contentSize": "680px",
       "wideSize": "1344px"

@@ -41,6 +41,38 @@ header.site-header.header--overlay {
 }
 
 /*
+ * Mobile canvas (viewport.mobile 799): espelha front — header no fluxo,
+ * sem pad-top, sem glass fixed. CTA some via style.css (mesmo arquivo no editor).
+ */
+@media (max-width: 799px) {
+	.is-root-container {
+		padding-top: 0;
+	}
+
+	.site-header.header--overlay,
+	header.site-header.header--overlay {
+		position: relative;
+		left: auto;
+		right: auto;
+		top: auto;
+		background-color: var(--wp--preset--color--base);
+	}
+
+	.site-header.header--overlay::before,
+	header.site-header.header--overlay::before {
+		content: none;
+		display: none;
+	}
+
+	.site-header.header--overlay.is-scrolled,
+	header.site-header.header--overlay.is-scrolled {
+		background: var(--wp--preset--color--base);
+		background-color: var(--wp--preset--color--base);
+		box-shadow: none;
+	}
+}
+
+/*
  * Proto: ::before glass sempre visível.
  * Front: theme deixa opacity:0 até .is-scrolled (BHB JS).
  * Canvas: JS do BHB pode atrasar ou o scroll ser no iframe — espelhar proto

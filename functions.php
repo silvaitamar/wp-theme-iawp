@@ -105,10 +105,14 @@ add_action( 'wp_enqueue_scripts', function (): void {
 } );
 
 add_action( 'wp_enqueue_scripts', function () {
+	$deps = array();
+	if ( wp_style_is( 'bhb-block-header-behavior', 'registered' ) ) {
+		$deps[] = 'bhb-block-header-behavior';
+	}
 	wp_enqueue_style(
 		'iawp-style',
 		get_theme_file_uri( 'style.css' ),
-		array(),
+		$deps,
 		(string) filemtime( get_stylesheet_directory() . '/style.css' )
 	);
 
@@ -121,7 +125,27 @@ add_action( 'wp_enqueue_scripts', function () {
 		true
 	);
 	wp_script_add_data( 'iawp-motion', 'defer', true );
+
+	wp_enqueue_script(
+		'iawp-back-to-top',
+		get_theme_file_uri( 'assets/back-to-top.js' ),
+		array(),
+		(string) filemtime( get_stylesheet_directory() . '/assets/back-to-top.js' ),
+		true
+	);
+	wp_script_add_data( 'iawp-back-to-top', 'defer', true );
 } );
+
+/**
+ * Back to top control (mobile CSS + back-to-top.js). Markup outside templates
+ * so every view gets it without L0/page patterns.
+ */
+add_action( 'wp_footer', function () {
+	$label = esc_attr__( 'Voltar ao topo', 'iawp' );
+	echo '<a class="iawp-back-to-top" href="#main-content" aria-label="' . $label . '">';
+	echo '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+	echo '</a>';
+}, 20 );
 
 /**
  * Substitui <span class="icon">nome</span> e <span class="bento-icon">nome</span>

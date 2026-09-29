@@ -10,7 +10,7 @@
  */
 ?>
 <!-- wp:group {"className":"section-header","style":{"spacing":{"blockGap":"var:preset|spacing|30","margin":{"bottom":"3rem"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
-<div class="wp-block-group section-header" style="margin-bottom:3rem"><!-- wp:heading {"level":2,"className":"section-heading","fontFamily":"display","fontSize":"section","textColor":"contrast","style":{"typography":{"fontWeight":"900","letterSpacing":"-0.05em","lineHeight":"0.9","textTransform":"uppercase"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
+<div class="wp-block-group section-header" style="margin-bottom:3rem"><!-- wp:heading {"level":2,"className":"section-heading","fontFamily":"display","fontSize":"section","textColor":"contrast","style":{"typography":{"fontWeight":"900","letterSpacing":"-0.05em","lineHeight":"0.9","textTransform":"uppercase"},"spacing":{"margin":{"top":"0","bottom":"0"}},"@tablet":{"typography":{"fontSize":"clamp(2rem, 10vw, 3rem)"}},"@mobile":{"typography":{"fontSize":"clamp(2rem, 10vw, 3rem)"}}}} -->
 <h2 class="wp-block-heading section-heading has-contrast-color has-text-color has-display-font-family has-section-font-size" id="hub-heading" style="margin-top:0;margin-bottom:0;font-weight:900;letter-spacing:-0.05em;line-height:0.9;text-transform:uppercase">O que é<br><span class="text-accent">o hub</span></h2>
 <!-- /wp:heading -->
 

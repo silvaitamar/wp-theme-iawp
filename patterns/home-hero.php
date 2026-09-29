@@ -9,7 +9,7 @@
  * Inserter: yes
  */
 ?>
-<!-- wp:group {"tagName":"section","align":"full","className":"hero","backgroundColor":"base","ariaLabel":"Apresentação","style":{"dimensions":{"minHeight":"calc(100dvh - var(--wp--custom--header-height, 96px))"},"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|60","left":"0","right":"0"},"blockGap":"0px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch","verticalAlignment":"center","flexWrap":"nowrap"}} -->
+<!-- wp:group {"tagName":"section","align":"full","className":"hero","backgroundColor":"base","ariaLabel":"Apresentação","style":{"dimensions":{"minHeight":"calc(100dvh - var(--wp--custom--header-height, 96px))"},"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|60","left":"0","right":"0"},"blockGap":"0px"},"@mobile":{"dimensions":{"minHeight":"unset"},"spacing":{"padding":{"top":"var:preset|spacing|60"}}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch","verticalAlignment":"center","flexWrap":"nowrap"}} -->
 <section class="wp-block-group alignfull hero has-base-background-color has-background" aria-label="Apresentação" style="min-height:calc(100dvh - var(--wp--custom--header-height, 96px));margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-right:0;padding-bottom:var(--wp--preset--spacing--60);padding-left:0"><!-- wp:html -->
 <div class="hero-bg" aria-hidden="true">
   <div class="hero-bg__device">

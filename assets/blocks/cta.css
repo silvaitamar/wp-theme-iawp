@@ -214,29 +214,43 @@
 /* border-top none pós-newsletter: style.css (chrome footer) */
 
 @media (max-width: 640px) {
-  /* spacing responsivo — Group sem pad por breakpoint */
-  .cta-section.newsletter.wp-block-group {
-    padding-top: var(--wp--preset--spacing--60);
-    padding-bottom: var(--wp--preset--spacing--60);
-  }
-
-  /* clamp desktop ≠ mobile do proto (sem fontSize responsivo nativo) */
-  .cta-heading.wp-block-heading {
-    font-size: clamp(2rem, 10vw, 3rem);
-  }
-
-  /* Jetpack layout flex row vence sem !important no container dinâmico */
+  /* Jetpack layout flex — chrome plugin (blocks.md); pad/heading = @mobile nativo.
+     Coluna + centro: vence align-items:flex-end do strip desktop (senão
+     campo/botão encolhem e ficam à esquerda do eixo). Proto: column + button center. */
   .cta-form.wp-block-jetpack-contact-form,
   [class*="wp-container-jetpack-contact-form"].cta-form {
     flex-direction: column !important;
+    align-items: center !important;
     border-bottom: none;
   }
 
-  .cta-form input[type="email"] {
-    border-bottom: 1px solid var(--wp--custom--base-alpha-25);
+  .cta-form.wp-block-jetpack-contact-form > .block-editor-inner-blocks > .block-editor-block-list__layout,
+  .cta-form .block-editor-block-list__layout:where(:has(> .wp-block-jetpack-field-email)) {
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
-  .cta-form .wp-block-button,
+  .cta-form .grunion-field-wrap,
+  .cta-form .jetpack-field,
+  .cta-form .wp-block-jetpack-field-email,
+  .cta-form .wp-block-jetpack-input-wrap,
+  .cta-form .wp-block-button {
+    width: 100% !important;
+    max-width: 100% !important;
+    align-self: stretch !important;
+  }
+
+  .cta-form input[type="email"],
+  .cta-form input[type="text"],
+  .cta-form .grunion-field,
+  .cta-form .grunion-field.email,
+  .cta-form .jetpack-field input,
+  .cta-form .wp-block-jetpack-input,
+  .cta-form .components-text-control__input {
+    border-bottom: 1px solid var(--wp--custom--base-alpha-25);
+    text-align: center !important;
+  }
+
   .cta-form .wp-block-button__link.wp-element-button,
   .cta-form button[type="submit"].wp-element-button {
     width: 100%;

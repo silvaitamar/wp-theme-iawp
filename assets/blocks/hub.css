@@ -18,10 +18,10 @@
   right: 0;
 }
 /* Conteúdo = .wrap do proto (wideSize).
-   Gutter = padding do pai constrained (RPA / has-global-padding) — NÃO
-   subtrair 2·gutter de novo no width (dobra o inset vs proto e desalinha
-   seções cujo constrained está no section vs no neto alignfull).
-   Pai constrained + alignwide = max-width nativo; width 100% preenche o CB.
+   Gutter = RPA has-global-padding no section constrained (root = spacing|40 =
+   clamp(24px,4vw,48px) = gutter do proto). NÃO zerar padding L/R no section
+   (anula o gutter). NÃO width:min(100%-2·gutter) no wrap se o pai já tem
+   has-global-padding (dobra o inset). wrap = width 100% + max-width wide.
    add_editor_style já prefixa .editor-styles-wrapper — não repetir. */
 .hero .hero__inner.alignwide {
   position: relative;
@@ -287,11 +287,6 @@
   display: inline-block;
 }
 @media (max-width: 799px) {
-  .hero {
-    min-height: unset;
-    /* proto mobile: section-lg; override do padding |70 inline */
-    padding-top: var(--wp--preset--spacing--60) !important;
-  }
   .hero::after {
     inset: 1rem;
   }
@@ -351,10 +346,6 @@
 @media (max-width: 900px) {
   .section-lede {
     max-width: none;
-  }
-  /* Proto: heading encolhe no mobile (preset section é desktop-first) */
-  .section-heading {
-    font-size: clamp(2rem, 10vw, 3rem) !important;
   }
 }
 
@@ -721,28 +712,9 @@ svg.bento-icon [fill]:not([fill="none"]),
   }
   .posts-hub .post-featured__body {
     width: 100%;
-    padding: 1.5rem;
+    /* padding mobile: style.@mobile no pattern (1.5rem) — inline 3rem vence CSS sem !important */
   }
-}
-
-/* Cluster / about — estrutura hub; borda DV */
-.cluster {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  padding: 2.5rem;
-  border: 1px solid var(--wp--custom--border-color-subtle);
-  border-radius: 0;
-}
-.cluster p {
-  margin: 0;
-  flex: 1 1 16rem;
-  color: var(--wp--preset--color--muted);
-  font-size: 0.875rem;
-}
-.cluster strong {
-  color: var(--wp--preset--color--contrast);
+  /* post-card__body mobile pad: style.@mobile no pattern (1.5rem) — espelha featured */
 }
 
 /* ═══ Sobre teaser — allowlist (nativo: bg base, pad|60, tipografia, image

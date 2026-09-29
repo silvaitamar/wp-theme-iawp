@@ -9,8 +9,8 @@
  * Inserter: yes
  */
 ?>
-<!-- wp:group {"tagName":"section","align":"full","className":"section section--rule","backgroundColor":"base","ariaLabel":"O que é o hub","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"0","right":"0"},"blockGap":"0px"}},"layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull section section--rule has-base-background-color has-background" aria-label="O que é o hub" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--60);padding-right:0;padding-bottom:var(--wp--preset--spacing--60);padding-left:0"><!-- wp:group {"align":"wide","className":"wrap","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"section","align":"full","className":"section section--rule","backgroundColor":"base","ariaLabel":"O que é o hub","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"},"blockGap":"0px"}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull section section--rule has-base-background-color has-background" aria-label="O que é o hub" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"align":"wide","className":"wrap","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group alignwide wrap"><!-- wp:pattern {"slug":"iawp/section-header-about-hub"} /-->
 
 <!-- wp:group {"className":"sobre-pillars","style":{"spacing":{"blockGap":"0px","margin":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->

@@ -9,8 +9,8 @@
  * Inserter: yes
  */
 ?>
-<!-- wp:group {"tagName":"header","align":"full","className":"single-header","backgroundColor":"base","ariaLabel":"Cabeçalho do Artigo","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|50","left":"0","right":"0"},"margin":{"top":"0","bottom":"0"},"blockGap":"0px"}},"layout":{"type":"constrained"}} -->
-<header class="wp-block-group alignfull single-header has-base-background-color has-background" aria-label="Cabeçalho do Artigo" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-right:0;padding-bottom:var(--wp--preset--spacing--50);padding-left:0"><!-- wp:group {"align":"wide","className":"single-header__inner wrap","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"header","align":"full","className":"single-header","backgroundColor":"base","ariaLabel":"Cabeçalho do Artigo","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"},"blockGap":"0px"}},"layout":{"type":"constrained"}} -->
+<header class="wp-block-group alignfull single-header has-base-background-color has-background" aria-label="Cabeçalho do Artigo" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:group {"align":"wide","className":"single-header__inner wrap","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group alignwide single-header__inner wrap"><!-- wp:group {"className":"single-cat-row","style":{"spacing":{"blockGap":"var:preset|spacing|20","margin":{"top":"0","bottom":"var:preset|spacing|30"}}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
 <div class="wp-block-group single-cat-row" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--30)"><!-- wp:post-terms {"term":"category","separator":" ","className":"single-cat"} /-->
 
