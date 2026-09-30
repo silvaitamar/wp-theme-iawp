@@ -21,6 +21,6 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"bento-more","fontFamily":"display","fontSize":"xs","textColor":"primary","style":{"typography":{"fontWeight":"700","letterSpacing":"0.14em","textTransform":"uppercase","lineHeight":"1"},"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|30"}}}} -->
-<p class="bento-more has-primary-color has-text-color has-display-font-family has-xs-font-size" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--30);font-weight:700;letter-spacing:0.14em;line-height:1;text-transform:uppercase"><a href="/category/ia-agentes/">Ver artigos <span aria-hidden="true">→</span></a></p>
+<p class="bento-more has-primary-color has-text-color has-display-font-family has-xs-font-size" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--30);font-weight:700;letter-spacing:0.14em;line-height:1;text-transform:uppercase"><a href="/categoria/ia-agentes/">Ver artigos <span aria-hidden="true">→</span></a></p>
 <!-- /wp:paragraph --></article>
 <!-- /wp:group -->

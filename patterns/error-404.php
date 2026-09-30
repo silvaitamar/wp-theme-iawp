@@ -34,7 +34,7 @@
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-outline","style":{"spacing":{"padding":{"top":"0.85rem","bottom":"0.85rem","left":"2rem","right":"2rem"}}}} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/category/ia-agentes/" style="padding-top:0.85rem;padding-right:2rem;padding-bottom:0.85rem;padding-left:2rem">IA + Agentes</a></div>
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/categoria/ia-agentes/" style="padding-top:0.85rem;padding-right:2rem;padding-bottom:0.85rem;padding-left:2rem">IA + Agentes</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
 
