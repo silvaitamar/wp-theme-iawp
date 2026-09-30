@@ -149,7 +149,7 @@ svg.author-avatar {
 
 /* ============================================================
    HEADER — BHB composição + offset do proto
-   Template: group (headerMode:overlay, layout:default) full-bleed.
+   Bloco: group (headerMode:overlay, layout:default) full-bleed.
    Part: shell constrained → bar alignwide (nativo; wideSize nos filhos diretos).
    Plugin: position:fixed. Proto: body pad = header-h (aqui em .wp-site-blocks).
    Hero: min-height calc(100dvh - header-h) + padding |70.
