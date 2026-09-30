@@ -1,24 +1,24 @@
 # IA+WP
 
 > Hub editorial sobre inteligência artificial aplicada ao WordPress moderno e soberania digital.
-> Site: https://iaewp.com.br
 
-## O que é
+Mídia e educação: artigos, fluxos testados (agentes, MCP, Gutenberg, Studio, ops) e newsletter de novos artigos. Não é landing de curso nem waitlist comercial.
 
-Mídia e educação: artigos, fluxos testados (agentes, MCP, Gutenberg, Studio, ops) e newsletter de novos artigos.
-Não é landing de curso nem waitlist comercial.
-
-## Tese
-
-A IA acelera a criação. O WordPress garante que o ativo continue sendo seu.
+Tese: a IA acelera a criação; o WordPress garante que o ativo continue sendo seu.
 
 ## Conteúdo principal
 
-- /blog/ — índice de artigos
-- /categoria/ia-agentes/ — cluster IA + Agentes
-- /sobre/ — quem escreve e o que o projeto é
-- Pilar: https://iaewp.com.br/ia-wordpress-combinacao-estrategica-2026/
+- [Blog](https://iaewp.com.br/blog/): índice de artigos
+- [IA + Agentes](https://iaewp.com.br/categoria/ia-agentes/): cluster de artigos sobre agentes e automação
+- [Sobre](https://iaewp.com.br/sobre/): o que é o projeto e quem escreve
+- [Pilar — IA e WordPress em 2026](https://iaewp.com.br/ia-wordpress-combinacao-estrategica-2026/): tese central do hub
 
-## Contato
+## Artigos recentes
 
-ola@iaewp.com.br
+- [Tutoriais WordPress em vídeo com agente e Playwright](https://iaewp.com.br/tutoriais-wordpress-video-agente-playwright/)
+- [WordPress e WebMCP: formulários como tools](https://iaewp.com.br/wordpress-webmcp-formularios-agentes/)
+- [Cursor no WordPress em produção (SSH, WP-CLI, MCP)](https://iaewp.com.br/cursor-wordpress-producao-ssh-wp-cli-mcp/)
+
+## Optional
+
+- [Contato](mailto:ola@iaewp.com.br): ola@iaewp.com.br
