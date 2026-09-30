@@ -127,6 +127,7 @@
       "base-alpha-25":       "rgba(11,16,32,0.25)",
       "base-alpha-82":       "rgba(11,16,32,0.82)",
       "muted-alpha-35":      "rgba(194,198,214,0.35)",
+      "muted-alpha-60":      "rgba(194,198,214,0.60)",
       "primary-alpha-40":    "rgba(59,130,246,0.40)",
       "primary-alpha-10":    "rgba(59,130,246,0.10)",
       "primary-alpha-09":    "rgba(59,130,246,0.09)",
