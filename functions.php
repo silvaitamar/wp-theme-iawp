@@ -688,6 +688,29 @@ add_action( 'template_redirect', function () {
 	exit;
 } );
 
+/**
+ * 301 /category/… → /categoria/… when category_base is Portuguese.
+ * Keeps old indexes and external links from 404ing after the base change.
+ */
+add_action( 'template_redirect', function (): void {
+	if ( 'categoria' !== (string) get_option( 'category_base' ) ) {
+		return;
+	}
+	$uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
+	$path = (string) wp_parse_url( $uri, PHP_URL_PATH );
+	if ( ! preg_match( '#^/category(/.*)?$#', $path, $m ) ) {
+		return;
+	}
+	$tail = isset( $m[1] ) ? $m[1] : '/';
+	$query = (string) wp_parse_url( $uri, PHP_URL_QUERY );
+	$target = home_url( '/categoria' . $tail );
+	if ( $query !== '' ) {
+		$target .= '?' . $query;
+	}
+	wp_safe_redirect( $target, 301 );
+	exit;
+}, 0 );
+
 remove_action( 'wp_head', 'wp_generator' );
 remove_action( 'wp_head', 'rsd_link' );
 remove_action( 'wp_head', 'wlwmanifest_link' );
