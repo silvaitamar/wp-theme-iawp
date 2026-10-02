@@ -752,6 +752,99 @@ add_filter( 'script_loader_tag', function ( $tag, $handle ) {
 }, 10, 2 );
 
 /**
+ * P0-1 variante A — depriorizar GTag do Site Kit (tracking preservado).
+ *
+ * - dataLayer / gtag() inline permanece no head (fila de eventos).
+ * - google_gtagjs (arquivo grande) vai para o footer com fetchpriority=low.
+ * - Remove dns-prefetch de googletagmanager (evita descoberta precoce).
+ *
+ * Inspirado em Weston Ruter / Site Kit GTag Script Deprioritization (GPLv2+).
+ * Bypass smoke: ?disable_iawp_gtag_deprioritization=1
+ *
+ * @see https://github.com/westonruter/google-site-kit-gtag-script-deprioritization
+ * @see https://github.com/google/site-kit-wp/issues/10825
+ */
+add_action(
+	'wp_enqueue_scripts',
+	static function (): void {
+		if ( isset( $_GET['disable_iawp_gtag_deprioritization'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+
+		$handle = 'google_gtagjs';
+		$wp_scripts = wp_scripts();
+		$dep        = $wp_scripts->query( $handle, 'registered' );
+		if ( ! ( $dep instanceof _WP_Dependency ) || ! wp_script_is( $handle, 'enqueued' ) ) {
+			return;
+		}
+
+		// Footer group.
+		$dep->add_data( 'group', 1 );
+
+		$inline_script = null;
+		foreach ( array( 'before', 'after' ) as $key ) {
+			if ( empty( $dep->extra[ $key ] ) || ! is_array( $dep->extra[ $key ] ) ) {
+				continue;
+			}
+			foreach ( $dep->extra[ $key ] as $i => $code ) {
+				if ( is_string( $code ) && false !== strpos( $code, 'function gtag(' ) ) {
+					$inline_script = $code;
+					array_splice( $dep->extra[ $key ], $i, 1 );
+					break 2;
+				}
+			}
+		}
+
+		if ( null !== $inline_script ) {
+			$inline_handle = 'iawp-gtag-datalayer';
+			// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- stub head-only.
+			wp_register_script( $inline_handle, false, array(), null, false );
+			wp_add_inline_script( $inline_handle, $inline_script );
+			wp_enqueue_script( $inline_handle );
+		}
+	},
+	100
+);
+
+add_filter(
+	'wp_script_attributes',
+	static function ( $attributes ) {
+		if ( isset( $_GET['disable_iawp_gtag_deprioritization'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return $attributes;
+		}
+		if ( ! is_array( $attributes ) ) {
+			$attributes = array();
+		}
+		if ( isset( $attributes['id'] ) && 'google_gtagjs-js' === $attributes['id'] ) {
+			$attributes['fetchpriority'] = 'low';
+		}
+		return $attributes;
+	}
+);
+
+add_filter(
+	'wp_resource_hints',
+	static function ( $urls, $relation_type ) {
+		if ( isset( $_GET['disable_iawp_gtag_deprioritization'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return $urls;
+		}
+		if ( 'dns-prefetch' !== $relation_type || ! is_array( $urls ) ) {
+			return $urls;
+		}
+		return array_values(
+			array_filter(
+				$urls,
+				static function ( $url ): bool {
+					return ! is_string( $url ) || false === strpos( $url, 'www.googletagmanager.com' );
+				}
+			)
+		);
+	},
+	100,
+	2
+);
+
+/**
  * ============================================================
  * EXTENSÃO DO BLOCO core/social-link COM SERVIÇOS PERSONALIZADOS
  * ============================================================
