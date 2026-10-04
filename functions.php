@@ -845,6 +845,54 @@ add_filter(
 );
 
 /**
+ * P0-3 — Jetpack Forms CSS late (newsletter/footer below-fold).
+ *
+ * Handles Jetpack: grunion.css + jetpack-forms-layout.
+ * media=print + onload restaura all — tira do critical path sem FOUC longo
+ * no form (usuário só vê o form ao rolar). noscript = fallback.
+ *
+ * Bypass smoke: ?disable_iawp_jetpack_forms_css_late=1
+ */
+add_filter(
+	'style_loader_tag',
+	static function ( $tag, $handle, $href, $media ) {
+		if ( is_admin() ) {
+			return $tag;
+		}
+		if ( isset( $_GET['disable_iawp_jetpack_forms_css_late'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return $tag;
+		}
+
+		$late_handles = array( 'grunion.css', 'jetpack-forms-layout' );
+		if ( ! in_array( $handle, $late_handles, true ) ) {
+			return $tag;
+		}
+
+		$updated = preg_replace(
+			"/\smedia=(['\"])all\\1/",
+			' media="print" onload="this.media=\'all\'"',
+			$tag,
+			1
+		);
+		if ( ! is_string( $updated ) ) {
+			return $tag;
+		}
+		$tag = $updated;
+
+		if ( is_string( $href ) && $href !== '' && false === strpos( $tag, '<noscript' ) ) {
+			$tag .= sprintf(
+				'<noscript><link rel="stylesheet" href="%s" media="all" /></noscript>' . "\n",
+				esc_url( $href )
+			);
+		}
+
+		return $tag;
+	},
+	10,
+	4
+);
+
+/**
  * ============================================================
  * EXTENSÃO DO BLOCO core/social-link COM SERVIÇOS PERSONALIZADOS
  * ============================================================
