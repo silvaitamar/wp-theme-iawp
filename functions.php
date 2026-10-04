@@ -893,6 +893,51 @@ add_filter(
 );
 
 /**
+ * P0-4 — Chrome critical path (fatia segura).
+ *
+ * Mapa (Home):
+ * - wp-polyfill + wp-hooks + wp-i18n são deps clássicas de jp-forms-blocks
+ *   (Jetpack Forms view.js). O filho já vinha com defer; as deps ficavam blocking.
+ * - bhb-block-header-behavior (frontend.js) não tem deps WP — só faltava defer.
+ *
+ * Fora desta fatia (FOUC / risco de header-menu):
+ * - BHB CSS (position:fixed do overlay — tema não duplica o fixed)
+ * - core navigation/style.min.css (menu mobile/overlay do bloco)
+ *
+ * Bypass smoke: ?disable_iawp_chrome_defer=1
+ */
+add_action(
+	'wp_enqueue_scripts',
+	static function (): void {
+		if ( is_admin() ) {
+			return;
+		}
+		if ( isset( $_GET['disable_iawp_chrome_defer'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+
+		$defer_handles = array(
+			'bhb-block-header-behavior',
+			'wp-polyfill',
+			'wp-hooks',
+			'wp-i18n',
+			'jp-forms-blocks',
+		);
+
+		foreach ( $defer_handles as $handle ) {
+			if ( ! wp_script_is( $handle, 'registered' ) ) {
+				continue;
+			}
+			// WP 6.3+ strategy (prod 7.1.x). Não forçar attr defer via
+			// script_loader_tag em wp-i18n/hooks: quebra inline *-js-after
+			// (ReferenceError: wp is not defined) e derruba Best Practices.
+			wp_script_add_data( $handle, 'strategy', 'defer' );
+		}
+	},
+	100
+);
+
+/**
  * ============================================================
  * EXTENSÃO DO BLOCO core/social-link COM SERVIÇOS PERSONALIZADOS
  * ============================================================
