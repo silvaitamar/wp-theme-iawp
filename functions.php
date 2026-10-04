@@ -845,13 +845,19 @@ add_filter(
 );
 
 /**
- * P0-3 — Jetpack Forms CSS late (newsletter/footer below-fold).
+ * CSS below-fold late (P0-3 Jetpack Forms + P0-5 tema cta).
  *
- * Handles Jetpack: grunion.css + jetpack-forms-layout.
- * media=print + onload restaura all — tira do critical path sem FOUC longo
- * no form (usuário só vê o form ao rolar). noscript = fallback.
+ * - P0-3: grunion.css + jetpack-forms-layout
+ * - P0-5: iawp-cta (só newsletter #newsletter — sempre após o fold)
  *
- * Bypass smoke: ?disable_iawp_jetpack_forms_css_late=1
+ * Fora de propósito (above-fold / FOUC): iawp-style, iawp-hub, iawp-blog,
+ * iawp-single, BHB CSS, wp-block-navigation.
+ *
+ * media=print + onload restaura all; noscript = fallback.
+ *
+ * Bypass smoke:
+ * - ?disable_iawp_jetpack_forms_css_late=1
+ * - ?disable_iawp_cta_css_late=1
  */
 add_filter(
 	'style_loader_tag',
@@ -859,11 +865,16 @@ add_filter(
 		if ( is_admin() ) {
 			return $tag;
 		}
-		if ( isset( $_GET['disable_iawp_jetpack_forms_css_late'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return $tag;
+
+		$late_handles = array();
+		if ( ! isset( $_GET['disable_iawp_jetpack_forms_css_late'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$late_handles[] = 'grunion.css';
+			$late_handles[] = 'jetpack-forms-layout';
+		}
+		if ( ! isset( $_GET['disable_iawp_cta_css_late'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$late_handles[] = 'iawp-cta';
 		}
 
-		$late_handles = array( 'grunion.css', 'jetpack-forms-layout' );
 		if ( ! in_array( $handle, $late_handles, true ) ) {
 			return $tag;
 		}
