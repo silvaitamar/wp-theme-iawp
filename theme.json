@@ -81,8 +81,8 @@
           "fontFamily": "'Inter', sans-serif",
           "fontFace": [
             {
-              "src": [ "file:./assets/fonts/inter/InterVF.woff2" ],
-              "fontWeight": "100 900",
+              "src": [ "file:./assets/fonts/inter/InterVF-latin.woff2" ],
+              "fontWeight": "300 800",
               "fontStyle": "normal",
               "fontFamily": "Inter",
               "fontDisplay": "swap"
