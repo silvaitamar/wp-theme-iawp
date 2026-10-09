@@ -11,7 +11,7 @@ Contrato **curto**. Detalhe obrigatório: [`docs/AGENTES.md`](docs/AGENTES.md). 
 ## Stack
 
 - FSE: `theme.json`, `templates/`, `parts/`, `patterns/`
-- PHP: `functions.php` (enqueue condicional, ícones, head) → alvo `inc/` (Onda 2)
+- PHP: `functions.php` (enqueue condicional, ícones, head) → alvo `inc/` (Onda 2); **WPCS sempre** (`.gutenlab/php-standards.md`)
 - CSS: `style.css` global · `assets/blocks/*` por superfície · `editor-canvas.css` no canvas
 - JS: `motion.js`, `back-to-top.js`; `prefers-reduced-motion`
 - Ícones: `core/icon` + `iawp/*` — não `core/html` para ícone
@@ -30,6 +30,7 @@ Pattern L0 `iawp/page-home` no `post_content` da página estática + template `p
 - Deploy/push sem pedido explícito
 - Mudança visual sem C.5 + OK humano
 - Zerar margin de `core/paragraph` no `theme.json` (mata blockGap da prosa)
+- PHP sem escape/prefixo/`ABSPATH` (adiar WPCS “para CI” é regressão)
 
 ## Ambiente
 

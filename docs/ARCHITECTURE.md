@@ -12,7 +12,7 @@ Tokens (theme.json)
 | Camada | Onde vive | Responsabilidade |
 |--------|-----------|------------------|
 | Tokens | `theme.json` | Cores, tipografia, spacing, layout, styles.blocks (ex. prosa) |
-| Comportamento | `style.css`, `assets/blocks/*.css`, `assets/*.js`, `functions.php` | Chrome, CSS por superfície, motion, ícones, enqueue |
+| Comportamento | `style.css`, `assets/blocks/*.css`, `assets/*.js`, `functions.php` → `inc/` | Chrome, CSS por superfície, motion, ícones, enqueue; PHP sob WPCS (`php-standards.md`) |
 | Composição | `patterns/*.php` | Seções L1 + páginas L0 reutilizáveis |
 | Instância | BD (Studio / prod) | `page_on_front` com L0 `iawp/page-home`; Sobre com `iawp/page-sobre`; overrides do Site Editor |
 

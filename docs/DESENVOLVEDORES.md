@@ -46,7 +46,9 @@ iawp/
 └── llms.txt                  # manifesto do hub (conteúdo/GEO), não arquitetura
 ```
 
-**Ausente por desenho (por agora):** `inc/` (Onda 2), `styles/` variations, `languages/`, PHPCS/CI.
+**Ausente por desenho (por agora):** `inc/` (Onda 2), `styles/` variations, `languages/`, `phpcs.xml.dist` (Onda 5).
+
+**PHP / WPCS (sempre):** prefixo `iawp_`; escape na saída; `ABSPATH` em includes; enqueue só via APIs WP. Consolida: `Studio/.gutenlab/php-standards.md`. CI Theme Check / wp.org = só se houver publish — a disciplina não espera CI.
 
 ---
 

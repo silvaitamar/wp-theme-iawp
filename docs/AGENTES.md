@@ -39,15 +39,16 @@ Não misturar conteúdo e refactor de tema num único passo opaco.
 1. **Preservar o aspecto visual aprovado em produção** por default. Mudança visual = gate C.5 (proto×front) + OK humano.
 2. **Não editar o core** nem plugins de terceiros. Trabalhar no tema `iawp`.
 3. **`functions.php`** hoje é monólito; código novo preferir módulos claros (Onda 2: `inc/`). Não espalhar lógica em patterns PHP além do header do pattern.
-4. **`style.css`** = metadados + chrome global. Seções em `assets/blocks/`.
-5. **Tokens** via presets `theme.json`. Não reintroduzir `margin: 0` global em `core/paragraph` (mata blockGap da prosa).
-6. **Classes de pattern em uso** = API pública (`.hero`, `.posts-hub`, `.post-featured`, `.single-prose`, …).
-7. **Ícones:** `core/icon` + `iawp/*`. Não `core/html` para SVG de ícone. Hero-bg `core/html` = exceção documentada.
-8. **CTA:** Receber novos artigos — nunca Lista VIP / curso / waitlist.
-9. **Wordmark:** `<em>IA</em>+WP`.
-10. **Segredos:** nunca no tema/docs.
-11. **Git / deploy / push:** só com pedido explícito. Prod = fonte da verdade de conteúdo; deploy de tema seletivo (arquivo a arquivo), não sync Studio→prod de posts.
-12. **Home:** L0 `iawp/page-home` + template `page-no-title`. **Não** recriar hub em `templates/front-page.html`.
+4. **PHP / WPCS (sempre):** WordPress Coding Standards — escape (`esc_*` / `wp_kses_*`), prefixo `iawp_`, `ABSPATH` em includes, sanitize/nonce se houver input. Ver `Studio/.gutenlab/php-standards.md`. Não adiar “para CI/wp.org”. Se existir `phpcs.xml.dist`, rodar nos paths tocados antes do commit PHP.
+5. **`style.css`** = metadados + chrome global. Seções em `assets/blocks/`.
+6. **Tokens** via presets `theme.json`. Não reintroduzir `margin: 0` global em `core/paragraph` (mata blockGap da prosa).
+7. **Classes de pattern em uso** = API pública (`.hero`, `.posts-hub`, `.post-featured`, `.single-prose`, …).
+8. **Ícones:** `core/icon` + `iawp/*`. Não `core/html` para SVG de ícone. Hero-bg `core/html` = exceção documentada.
+9. **CTA:** Receber novos artigos — nunca Lista VIP / curso / waitlist.
+10. **Wordmark:** `<em>IA</em>+WP`.
+11. **Segredos:** nunca no tema/docs.
+12. **Git / deploy / push:** só com pedido explícito. Prod = fonte da verdade de conteúdo; deploy de tema seletivo (arquivo a arquivo), não sync Studio→prod de posts.
+13. **Home:** L0 `iawp/page-home` + template `page-no-title`. **Não** recriar hub em `templates/front-page.html`.
 
 ---
 
@@ -69,5 +70,6 @@ Não misturar conteúdo e refactor de tema num único passo opaco.
 - Front: home, um single, Sobre (desktop; mobile se CSS tocado).
 - Editor: canvas da superfície tocada (sem “Tentar restaurar” novo).
 - Se CSS/JS relevante: bump `Version` em `style.css` (prática).
+- Se PHP tocado: checklist WPCS (`php-standards.md`); PHPCS se config existir.
 - Patterns novos: limpar cache de patterns do tema no Studio.
 - Anti-freeze: um `studio wp` por vez; sem Grep em `plugins/`.
