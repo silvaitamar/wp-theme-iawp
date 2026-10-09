@@ -220,7 +220,7 @@
   z-index: 2;
 }
 
-/* ── Prose (post-content children — sem attrs por bloco) ── */
+/* ── Prose (tipografia/cor residual; ritmo = theme.json blockGap + margins) ── */
 .single-prose.entry-content.wp-block-post-content,
 .single-prose.wp-block-post-content {
   max-width: none;
@@ -229,12 +229,7 @@
   color: var(--wp--preset--color--muted);
 }
 
-.single-prose.wp-block-post-content > * + * {
-  margin-block-start: 1.5rem;
-}
-
 .single-prose.wp-block-post-content > p {
-  margin: 0;
   font-size: var(--wp--preset--font-size--lg);
   line-height: 1.7;
   color: var(--wp--preset--color--muted);
@@ -255,8 +250,8 @@
   color: var(--wp--preset--color--contrast);
 }
 
+/* Size/cor de H2/H3 no single — margins vêm de styles.blocks.core/heading */
 .single-prose.wp-block-post-content > h2 {
-  margin: 2.5rem 0 0;
   font-family: var(--wp--preset--font-family--display);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 800;
@@ -265,9 +260,17 @@
   color: var(--wp--preset--color--contrast);
 }
 
+.single-prose.wp-block-post-content > h3 {
+  font-family: var(--wp--preset--font-family--display);
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--wp--preset--color--contrast);
+}
+
 .single-prose.wp-block-post-content > ul,
 .single-prose.wp-block-post-content > ol {
-  margin: 0;
   padding-left: 1.25rem;
   color: var(--wp--preset--color--muted);
 }
@@ -280,10 +283,6 @@
   color: var(--wp--preset--color--muted);
 }
 
-.single-prose.wp-block-post-content li + li {
-  margin-top: 0.5rem;
-}
-
 .single-prose.wp-block-post-content code {
   font-size: 0.9em;
   padding: 0.1em 0.35em;
@@ -294,7 +293,6 @@
 
 .single-prose.wp-block-post-content > blockquote,
 .single-prose.wp-block-post-content > .wp-block-quote {
-  margin: 0;
   padding: 0 0 0 1.25rem;
   border-left: 2px solid var(--wp--preset--color--primary);
   background: transparent;
