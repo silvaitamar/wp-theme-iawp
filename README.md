@@ -4,43 +4,59 @@ Tema de blocos (FSE) do hub editorial [IA+WP](https://iaewp.com.br) — intelig�
 
 **Não é** landing de curso nem waitlist. CTA canônico: **Receber novos artigos** (newsletter).
 
+## Documentação
+
+Suite completa em [`docs/`](docs/README.md):
+
+| Público | Doc |
+|---------|-----|
+| Desenvolvedores | [docs/DESENVOLVEDORES.md](docs/DESENVOLVEDORES.md) |
+| Editores | [docs/EDITORES.md](docs/EDITORES.md) |
+| Agentes de IA | [docs/AGENTES.md](docs/AGENTES.md) · contrato curto [AGENTS.md](AGENTS.md) |
+| Ops | [docs/ECOSSISTEMA.md](docs/ECOSSISTEMA.md) |
+| Arquitetura | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+
 ## Requisitos
 
 - WordPress 6.7+
 - PHP 8.0+
 - Plugins recomendados (wp.org): [Jetpack](https://wordpress.org/plugins/jetpack/) (form da newsletter), [The SEO Framework](https://wordpress.org/plugins/autodescription/)
+- Header overlay: plugin Block Header Behavior (BHB), se usado no ambiente
 
 ## Instalação (dev)
 
-1. Clonar ou copiar esta pasta para `wp-content/themes/iawp/`
+1. Copiar esta pasta para `wp-content/themes/iawp/`
 2. Ativar o tema
-3. Fonte visual aprovada: protótipo HTML em `iawp-hub-proto` (até o port Gutenberg fechar)
+3. Home: página estática com template **Página sem título** + pattern L0 `iawp/page-home` no conteúdo (não depender de `front-page.html`)
+4. Proto de referência: `iawp-hub-proto` (fidelidade visual); em produção o visual aprovado é a fonte operacional
 
 ## Estrutura
 
 ```text
 iawp/
-├── style.css          # chrome global + tokens de header
-├── theme.json         # design tokens (cores, tipo, spacing, layout)
-├── functions.php      # enqueue condicional, ícones SVG, llms.txt
-├── templates/         # FSE (front-page, index, single, archive, 404, page…)
-├── parts/             # header, footer
-├── patterns/          # block patterns (hub) — fase de port
+├── style.css             # metadados + chrome global
+├── theme.json            # tokens + styles.blocks
+├── functions.php         # enqueue, ícones, head (→ inc/ na Onda 2)
+├── docs/                 # documentação por público
+├── templates/            # index, archive, single, 404, page, page-no-title, page-legal
+├── parts/                # header, footer
+├── patterns/             # L0 page-* + L1 seções
 ├── assets/
-│   ├── blocks/        # CSS on-demand (hub, blog, single, author, cta…)
-│   ├── fonts/         # Geist + Inter (locais)
-│   ├── icons/         # Lucide SVG
-│   ├── motion.js      # reveal + spotlight
-│   └── scroll.js
-└── llms.txt
+│   ├── blocks/           # hub, blog, single, cta, legal, error404
+│   ├── fonts/            # Geist + Inter (locais)
+│   ├── icons/            # coleção core/icon
+│   ├── motion.js         # reveal + spotlight
+│   └── back-to-top.js
+└── llms.txt              # manifesto GEO do hub
 ```
 
 ## Princípios
 
-- Preferir **blocos core** e padrões FSE atuais
-- Custom CSS só onde o proto exige fidelidade
-- Plugins: apenas gratuitos do diretório oficial, quando o core não cobrir
-- Sem segredos, sem nomes de clientes no repositório
+- Preferir **blocos core** e padrões FSE
+- CSS residual só onde o core não chega (allowlist)
+- Plugins: diretório oficial quando o core não cobre
+- Sem segredos; classes de pattern em uso = API pública
+- Deploy em produção: seletivo + OK humano ([docs/ECOSSISTEMA.md](docs/ECOSSISTEMA.md))
 
 ## Licença
 
