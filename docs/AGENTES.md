@@ -38,7 +38,7 @@ Não misturar conteúdo e refactor de tema num único passo opaco.
 
 1. **Preservar o aspecto visual aprovado em produção** por default. Mudança visual = gate C.5 (proto×front) + OK humano.
 2. **Não editar o core** nem plugins de terceiros. Trabalhar no tema `iawp`.
-3. **`functions.php`** hoje é monólito; código novo preferir módulos claros (Onda 2: `inc/`). Não espalhar lógica em patterns PHP além do header do pattern.
+3. **`functions.php`** = bootstrap (`require_once` de `inc/*`). Código novo em `inc/` (setup, icons, assets, blocks, head-seo, social). Não espalhar lógica em patterns PHP além do header do pattern.
 4. **PHP / WPCS (sempre):** WordPress Coding Standards — escape (`esc_*` / `wp_kses_*`), prefixo `iawp_`, `ABSPATH` em includes, sanitize/nonce se houver input. Ver `Studio/.gutenlab/php-standards.md`. Não adiar “para CI/wp.org”. Se existir `phpcs.xml.dist`, rodar nos paths tocados antes do commit PHP.
 5. **`style.css`** = metadados + chrome global. Seções em `assets/blocks/`.
 6. **Tokens** via presets `theme.json`. Não reintroduzir `margin: 0` global em `core/paragraph` (mata blockGap da prosa).

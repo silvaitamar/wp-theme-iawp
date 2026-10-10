@@ -36,7 +36,8 @@ Suite completa em [`docs/`](docs/README.md):
 iawp/
 ├── style.css             # metadados + chrome global
 ├── theme.json            # tokens + styles.blocks
-├── functions.php         # enqueue, ícones, head (→ inc/ na Onda 2)
+├── functions.php         # bootstrap → inc/*
+├── inc/                  # setup, icons, assets, blocks, head-seo, social
 ├── docs/                 # documentação por público
 ├── templates/            # index, archive, single, 404, page, page-no-title, page-legal
 ├── parts/                # header, footer

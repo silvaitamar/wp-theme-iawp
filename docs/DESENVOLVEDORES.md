@@ -30,7 +30,14 @@ Guia para quem mantém o tema **IA+WP** (`iawp`, block theme / FSE).
 iawp/
 ├── style.css                 # Metadados + chrome global
 ├── theme.json                # Tokens + styles.blocks
-├── functions.php             # Bootstrap atual (monólito → Onda 2: inc/)
+├── functions.php             # Bootstrap: require_once inc/*
+├── inc/
+│   ├── setup.php             # theme supports + add_editor_style + BHB canvas
+│   ├── icons.php             # core/icon + inliner legado span→SVG
+│   ├── assets.php            # enqueue front, footer, img attrs, perf
+│   ├── blocks.php            # render_block / query filters
+│   ├── head-seo.php          # llms.txt, head cleanup, redirects
+│   └── social.php            # social-link services + editor JS
 ├── AGENTS.md · README.md
 ├── docs/                     # Esta suite
 ├── patterns/                 # L0 page-* + L1 seções
@@ -46,9 +53,9 @@ iawp/
 └── llms.txt                  # manifesto do hub (conteúdo/GEO), não arquitetura
 ```
 
-**Ausente por desenho (por agora):** `inc/` (Onda 2), `styles/` variations, `languages/`, `phpcs.xml.dist` (Onda 5).
+**Ausente por desenho (por agora):** `styles/` variations, `languages/`, `phpcs.xml.dist` (Onda 5).
 
-**PHP / WPCS (sempre):** prefixo `iawp_`; escape na saída; `ABSPATH` em includes; enqueue só via APIs WP. Consolida: `Studio/.gutenlab/php-standards.md`. CI Theme Check / wp.org = só se houver publish — a disciplina não espera CI.
+**PHP / WPCS (sempre):** prefixo `iawp_`; escape na saída; `ABSPATH` em includes; enqueue só via APIs WP. Consolida: `Studio/.gutenlab/php-standards.md`. Código novo → `inc/`, não inchando `functions.php`.
 
 ---
 

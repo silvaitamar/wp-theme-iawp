@@ -11,7 +11,7 @@ Contrato **curto**. Detalhe obrigatório: [`docs/AGENTES.md`](docs/AGENTES.md). 
 ## Stack
 
 - FSE: `theme.json`, `templates/`, `parts/`, `patterns/`
-- PHP: `functions.php` (enqueue condicional, ícones, head) → alvo `inc/` (Onda 2); **WPCS sempre** (`.gutenlab/php-standards.md`)
+- PHP: `functions.php` bootstrap → `inc/{setup,icons,assets,blocks,head-seo,social}.php`; **WPCS sempre** (`.gutenlab/php-standards.md`)
 - CSS: `style.css` global · `assets/blocks/*` por superfície · `editor-canvas.css` no canvas
 - JS: `motion.js`, `back-to-top.js`; `prefers-reduced-motion`
 - Ícones: `core/icon` + `iawp/*` — não `core/html` para ícone
