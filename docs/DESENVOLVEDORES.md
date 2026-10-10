@@ -32,9 +32,10 @@ iawp/
 ├── theme.json                # Tokens + styles.blocks
 ├── functions.php             # Bootstrap: require_once inc/*
 ├── inc/
+│   ├── style-surfaces.php    # Version helper + lista editor styles
 │   ├── setup.php             # theme supports + add_editor_style + BHB canvas
 │   ├── icons.php             # core/icon + inliner legado span→SVG
-│   ├── assets.php            # enqueue front, footer, img attrs, perf
+│   ├── assets.php            # enqueue front condicional, footer, perf
 │   ├── blocks.php            # render_block / query filters
 │   ├── head-seo.php          # llms.txt, head cleanup, redirects
 │   └── social.php            # social-link services + editor JS
@@ -73,12 +74,46 @@ iawp/
 
 | Contexto | Como |
 |----------|------|
-| Front | `wp_enqueue_scripts` + conditional tags (home, blog, single, sobre, legal, 404, archive) |
-| Editor | `add_editor_style` de `style.css`, `editor-canvas.css` e `assets/blocks/*.css` |
+| Front | `inc/assets.php` — conditional tags por queried object (home, blog, single, sobre, legal, 404, archive) |
+| Editor | `iawp_editor_style_files()` → `add_editor_style` (hub.css **por último**) |
 | BHB | `enqueue_block_assets` para header overlay no canvas |
-| Versionamento assets | `filemtime` por arquivo; **também** bump `Version` em `style.css` após CSS/JS relevantes (prática Onda 3) |
+| Cache-bust | `filemtime` por arquivo no front |
+| Release | bump `Version` em `style.css` após CSS/JS relevantes (`iawp_theme_version()`) |
 
-Home **não** carrega `blog.css` sozinho no front (evita colisão `.post-featured` / `.post-card`).
+### Matriz front (não alterar sem smoke)
+
+| Superfície | Folhas |
+|------------|--------|
+| Home | `hub` + `cta` (**sem** `blog`) |
+| Blog / archive | `hub` + `blog` + `cta` |
+| Single | `single` + `cta` |
+| Sobre | `hub` + `blog` + `cta` |
+| Legal | `legal` |
+| Outras pages | `blog` (page-hero) |
+| 404 | `error404` |
+
+### `wp_enqueue_block_style` — avaliação Onda 3 (embasamento)
+
+A Onda 3 pedia **avaliar** onde a API cabe **sem** regressão do mapa condicional — não “proibir para sempre”.
+
+| Fonte | O que diz |
+|-------|-----------|
+| `inc/assets.php` (histórico iawp) | Bundle/`render_block` on-demand **já falhou** em FSE: template renderiza **depois** de `wp_head` → `<link>` não entra no head. Por isso o mapa por `queried_object` / conditional tags. |
+| Screenshot `inc/assets/block-styles.php` | Usa `wp_enqueue_block_style` para CSS **amarrado a um tipo de bloco** (`core/image` logo rodapé, `core/embed`, `core/media-text`, GutSlider, Fluent, WPM…) — **não** para folhas de superfície de página (`hub.css` / “toda a home”). |
+| `.gutenlab/PROMPT.md` | Limitação da API: enfileira por **tipo** de bloco, não por instância. Mapear `hub.css` → `core/group` carregaria hub em **qualquer** página com Group. |
+| `.gutenlab/css-delivery.md` | Foco = **1 request** (bundle) / race FSE; é eixo de delivery, não “trocar condicional por block_style”. |
+
+**Conclusão desta avaliação (superfícies atuais):**
+
+- `hub.css`, `blog.css`, `single.css`, `cta.css`, `legal.css`, `error404.css` são **CSS de superfície/template** (matriz home≠blog: home **não** pode levar `blog.css`). Isso **não** mapeia 1:1 para um `block_type` sem regressão ou sem voltar a detectar seções tarde demais.
+- **Manter** o enqueue condicional para essas folhas.
+- **Candidato futuro** (só se surgir arquivo CSS realmente por bloco, modelo Screenshot): `wp_enqueue_block_style` **em paralelo**, sem substituir o mapa de superfície. Hoje o tema **não tem** esse tipo de folha em `assets/blocks/` (só superfícies).
+
+Não confundir com o late-load de `iawp-cta` / Jetpack via `style_loader_tag` (perf P0) — isso já é on-demand de *quando* o CSS aplica, não troca de API de superfície.
+
+### Allowlist CSS residual (não é “todo CSS livre”)
+
+Permitido fora de attrs nativos / `theme.json`: wash/grain/reveal, hero-bg escape, chrome header/footer, motion, Jetpack form overrides pontuais (`!important` só contra Jetpack), editor-canvas traps. **Proibido:** zerar `margin` de `core/paragraph` no `theme.json`; reinventar gap/padding nativo na classe.
 
 ---
 
@@ -95,14 +130,9 @@ Home **não** carrega `blog.css` sozinho no front (evita colisão `.post-feature
 
 ---
 
-## 6. PHP (estado atual)
+## 6. PHP
 
-Tudo em `functions.php` (~1060 linhas): setup, enqueue, ícones/`core/icon`, inliner legado span→SVG, head/SEO/`llms.txt`, query loop archive, sociais, etc.
-
-Alvo Onda 2 (sem mudança de comportamento):
-
-- `inc/setup.php` · `inc/assets.php` · `inc/icons.php` · `inc/head-seo.php` · `inc/social.php`
-- `functions.php` = só `require_once`
+`functions.php` = bootstrap (`require_once` de `inc/*`). Módulos: `style-surfaces`, `setup`, `icons`, `assets`, `blocks`, `head-seo`, `social`. Código novo → `inc/`. WPCS sempre (`Studio/.gutenlab/php-standards.md`).
 
 ---
 

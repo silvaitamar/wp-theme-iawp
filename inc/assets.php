@@ -80,8 +80,12 @@ add_action( 'wp_footer', function () {
  * Solução: conditional tags no wp_enqueue_scripts. Simples, confiável,
  * sem race condition entre render_block e wp_head.
  *
- * Paridade no editor: add_editor_style() no after_setup_theme
- * registra todos os arquivos individualmente.
+ * Onda 3 (avaliação): superfícies ficam neste mapa. wp_enqueue_block_style
+ * no Screenshot = CSS por *tipo de bloco* (embed/image/…), não hub/blog/single.
+ * Ver docs/DESENVOLVEDORES.md §4 — candidato só se surgir folha por bloco.
+ *
+ * Paridade no editor: iawp_editor_style_files() + add_editor_style (setup.php).
+ * Cache-bust: filemtime por arquivo; bump Theme Version em style.css após CSS/JS.
  */
 add_action( 'wp_enqueue_scripts', function (): void {
 	$base  = [ 'iawp-style' ];

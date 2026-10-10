@@ -37,7 +37,7 @@ iawp/
 ├── style.css             # metadados + chrome global
 ├── theme.json            # tokens + styles.blocks
 ├── functions.php         # bootstrap → inc/*
-├── inc/                  # setup, icons, assets, blocks, head-seo, social
+├── inc/                  # style-surfaces, setup, icons, assets, blocks, head-seo, social
 ├── docs/                 # documentação por público
 ├── templates/            # index, archive, single, 404, page, page-no-title, page-legal
 ├── parts/                # header, footer

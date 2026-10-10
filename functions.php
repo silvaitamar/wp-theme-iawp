@@ -15,6 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 $iawp_inc = get_theme_file_path( 'inc' );
 
+require_once $iawp_inc . '/style-surfaces.php';
 require_once $iawp_inc . '/setup.php';
 require_once $iawp_inc . '/icons.php';
 require_once $iawp_inc . '/assets.php';

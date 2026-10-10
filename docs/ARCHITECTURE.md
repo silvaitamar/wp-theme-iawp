@@ -37,7 +37,7 @@ Produção = fonte da verdade de **conteúdo**. O tema no disco = tokens + compo
 | `assets/blocks/legal.css` | Páginas legais |
 | `assets/blocks/error404.css` | 404 |
 
-Enqueue front: **condicional** por tipo de página em `functions.php` (evita race FSE com `render_block` tardio). Editor: `add_editor_style` das mesmas folhas.
+Enqueue front: **condicional** por tipo de página em `inc/assets.php` (race FSE documentada). Editor: `iawp_editor_style_files()` → `add_editor_style`. Avaliação Onda 3: `wp_enqueue_block_style` = modelo Screenshot para CSS **por tipo de bloco**; superfícies iawp ficam no mapa condicional (ver DESENVOLVEDORES §4).
 
 ## Natives first
 
@@ -51,5 +51,5 @@ Parts/templates no arquivo podem divergir do que o Site Editor salvou. Antes de 
 ## Próxima evolução estrutural
 
 - Onda 2: `functions.php` → `inc/*` (bootstrap apenas na raiz).
-- Onda 3: bump `Version` + contrato enqueue.
+- Onda 3 ✅: `Version` 0.1.1 + `inc/style-surfaces.php` + decisão block_style documentada.
 - Ver `Studio/.gutenlab/maturity-iawp-2026-10.md`.

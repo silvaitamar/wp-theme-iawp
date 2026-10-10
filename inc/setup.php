@@ -26,26 +26,9 @@ add_action( 'after_setup_theme', function () {
 		'script',
 	] );
 
-	// Stylesheet global no editor.
-	add_editor_style( 'style.css' );
-	// Canvas-only: offset BHB overlay + não prender .hero-bg no chrome do core/html.
-	add_editor_style( 'assets/editor-canvas.css' );
-
-	// CSS das seções no editor — paridade visual com o frontend.
-	// No editor não há render_block on-demand, então registramos todos
-	// via add_editor_style para que o canvas renderize corretamente.
-	// hub.css por último: .posts-hub vence blog.css nas classes compartilhadas.
-	// author.css removido: classes author-section/* eram LP Digital Vanguard; hub usa about-*.
-	// hero.css removido: leftover LP (.hero-section) — hub usa hub.css (.hero).
-	$section_styles = [
-		'assets/blocks/cta.css',
-		'assets/blocks/blog.css',
-		'assets/blocks/single.css',
-		'assets/blocks/legal.css',
-		'assets/blocks/error404.css',
-		'assets/blocks/hub.css',
-	];
-	foreach ( $section_styles as $file ) {
+	// Canvas parity: lista canónica em iawp_editor_style_files() (inc/style-surfaces.php).
+	// Front continua condicional em assets.php — não usar wp_enqueue_block_style para superfícies.
+	foreach ( iawp_editor_style_files() as $file ) {
 		add_editor_style( $file );
 	}
 } );

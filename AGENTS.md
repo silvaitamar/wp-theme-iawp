@@ -11,8 +11,8 @@ Contrato **curto**. Detalhe obrigatório: [`docs/AGENTES.md`](docs/AGENTES.md). 
 ## Stack
 
 - FSE: `theme.json`, `templates/`, `parts/`, `patterns/`
-- PHP: `functions.php` bootstrap → `inc/{setup,icons,assets,blocks,head-seo,social}.php`; **WPCS sempre** (`.gutenlab/php-standards.md`)
-- CSS: `style.css` global · `assets/blocks/*` por superfície · `editor-canvas.css` no canvas
+- PHP: `functions.php` bootstrap → `inc/{style-surfaces,setup,icons,assets,blocks,head-seo,social}.php`; **WPCS sempre**
+- CSS: front condicional (`inc/assets.php`); editor = `iawp_editor_style_files()`; bump `Version` após CSS/JS; folhas `style.css` / `assets/blocks/*` / `editor-canvas.css`
 - JS: `motion.js`, `back-to-top.js`; `prefers-reduced-motion`
 - Ícones: `core/icon` + `iawp/*` — não `core/html` para ícone
 - CTA: **Receber novos artigos** — nunca Lista VIP / curso

@@ -7,7 +7,7 @@ Description: Block theme for the IA+WP editorial hub — AI, modern WordPress, a
 Requires at least: 6.7
 Tested up to: 6.9
 Requires PHP: 8.0
-Version: 0.1.0
+Version: 0.1.1
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: iawp
@@ -18,10 +18,12 @@ Tags: full-site-editing, block-patterns, block-styles, wide-blocks, accessibilit
  * CSS architecture — IA+WP
  * ─────────────────────────────────────────────────────────────────
  * style.css = global only (chrome header/footer, icons, reveal; skip-link :focus brand)
- * assets/editor-canvas.css = só Site Editor (add_editor_style) — offset BHB + HTML trap
- * assets/blocks/*.css = on-demand by template (hub, blog, single, author, cta, legal, hero)
- * Enqueue: conditional tags in functions.php + add_editor_style for canvas parity
- * Source of visual truth until Phase 5 port: Downloads/iawp-hub-proto/ (approved)
+ * assets/editor-canvas.css = Site Editor only (add_editor_style) — BHB offset + HTML trap
+ * assets/blocks/*.css = by surface (hub, blog, single, cta, legal, error404)
+ * Front: conditional tags in inc/assets.php (not wp_enqueue_block_style for surfaces)
+ * Editor: iawp_editor_style_files() in inc/style-surfaces.php → add_editor_style
+ * After CSS/JS changes: bump this Version header (release signal) + filemtime busts assets
+ * Visual truth: production approved look; proto Downloads/iawp-hub-proto/ for fidelity work
  * ─────────────────────────────────────────────────────────────────
  */
 
