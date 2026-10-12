@@ -1,0 +1,17 @@
+{
+  "name": "iawp",
+  "version": "0.1.2",
+  "private": true,
+  "description": "IA+WP block theme — lint CSS/JS (moderno; sem gulp).",
+  "license": "GPL-2.0-or-later",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.0.0"
+  },
+  "scripts": {
+    "lint:css": "wp-scripts lint-style \"style.css\" \"assets/**/*.css\"",
+    "lint:js": "wp-scripts lint-js \"assets/**/*.js\""
+  }
+}

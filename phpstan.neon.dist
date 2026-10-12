@@ -1,0 +1,12 @@
+# composer analyze — leve: só bootstrap + inc/ (não patterns no dia 1).
+includes:
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+	level: 5
+	paths:
+		- functions.php
+		- inc/
+	excludePaths:
+		- vendor/
+		- node_modules/

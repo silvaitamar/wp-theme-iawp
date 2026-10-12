@@ -55,6 +55,8 @@ function iawp_icon_svg_for_core( string $svg ): string {
 }
 
 /**
+ * Format a float for SVG path attributes.
+ *
  * @param float $n Número para atributo d do path.
  */
 function iawp_svg_num( float $n ): string {
@@ -100,6 +102,7 @@ add_action(
 			if ( ! preg_match( '/^[a-z0-9](?:[a-z0-9_-]*[a-z0-9])?$/', $slug ) ) {
 				continue;
 			}
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local theme SVG.
 			$raw = (string) file_get_contents( $file );
 			if ( '' === $raw ) {
 				continue;

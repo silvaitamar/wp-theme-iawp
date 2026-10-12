@@ -17,58 +17,75 @@ defined( 'ABSPATH' ) || exit;
  * Jetpack Form UX — auto-reset + no-scroll.
  * Registrado como ES module para ter acesso ao @wordpress/interactivity store.
  */
-add_action( 'wp_enqueue_scripts', function (): void {
-	if ( ! function_exists( 'wp_enqueue_script_module' ) ) return;
-	wp_enqueue_script_module(
-		'iawp/jetpack-form-ux',
-		get_theme_file_uri( 'assets/jetpack-form-ux.js' ),
-		[ [ 'id' => '@wordpress/interactivity', 'import' => 'dynamic' ] ],
-		(string) filemtime( get_stylesheet_directory() . '/assets/jetpack-form-ux.js' )
-	);
-} );
-
-add_action( 'wp_enqueue_scripts', function () {
-	$deps = array();
-	if ( wp_style_is( 'bhb-block-header-behavior', 'registered' ) ) {
-		$deps[] = 'bhb-block-header-behavior';
+add_action(
+	'wp_enqueue_scripts',
+	function (): void {
+		if ( ! function_exists( 'wp_enqueue_script_module' ) ) {
+			return;
+		}
+		wp_enqueue_script_module(
+			'iawp/jetpack-form-ux',
+			get_theme_file_uri( 'assets/jetpack-form-ux.js' ),
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			(string) filemtime( get_stylesheet_directory() . '/assets/jetpack-form-ux.js' )
+		);
 	}
-	wp_enqueue_style(
-		'iawp-style',
-		get_theme_file_uri( 'style.css' ),
-		$deps,
-		(string) filemtime( get_stylesheet_directory() . '/style.css' )
-	);
+);
 
-	// Proto motion.js — reveal + spotlight. scroll.js (reveal-up) era leftover DV; removido.
-	wp_enqueue_script(
-		'iawp-motion',
-		get_theme_file_uri( 'assets/motion.js' ),
-		array(),
-		(string) filemtime( get_stylesheet_directory() . '/assets/motion.js' ),
-		true
-	);
-	wp_script_add_data( 'iawp-motion', 'defer', true );
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		$deps = array();
+		if ( wp_style_is( 'bhb-block-header-behavior', 'registered' ) ) {
+			$deps[] = 'bhb-block-header-behavior';
+		}
+		wp_enqueue_style(
+			'iawp-style',
+			get_theme_file_uri( 'style.css' ),
+			$deps,
+			(string) filemtime( get_stylesheet_directory() . '/style.css' )
+		);
 
-	wp_enqueue_script(
-		'iawp-back-to-top',
-		get_theme_file_uri( 'assets/back-to-top.js' ),
-		array(),
-		(string) filemtime( get_stylesheet_directory() . '/assets/back-to-top.js' ),
-		true
-	);
-	wp_script_add_data( 'iawp-back-to-top', 'defer', true );
-} );
+		// Proto motion.js — reveal + spotlight. scroll.js (reveal-up) era leftover DV; removido.
+		wp_enqueue_script(
+			'iawp-motion',
+			get_theme_file_uri( 'assets/motion.js' ),
+			array(),
+			(string) filemtime( get_stylesheet_directory() . '/assets/motion.js' ),
+			true
+		);
+		wp_script_add_data( 'iawp-motion', 'defer', true );
+
+		wp_enqueue_script(
+			'iawp-back-to-top',
+			get_theme_file_uri( 'assets/back-to-top.js' ),
+			array(),
+			(string) filemtime( get_stylesheet_directory() . '/assets/back-to-top.js' ),
+			true
+		);
+		wp_script_add_data( 'iawp-back-to-top', 'defer', true );
+	}
+);
 
 /**
  * Back to top control (mobile CSS + back-to-top.js). Markup outside templates
  * so every view gets it without L0/page patterns.
  */
-add_action( 'wp_footer', function () {
-	$label = esc_attr__( 'Voltar ao topo', 'iawp' );
-	echo '<a class="iawp-back-to-top" href="#main-content" aria-label="' . $label . '">';
-	echo '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
-	echo '</a>';
-}, 20 );
+add_action(
+	'wp_footer',
+	function () {
+		$label = esc_attr__( 'Voltar ao topo', 'iawp' );
+		echo '<a class="iawp-back-to-top" href="#main-content" aria-label="' . esc_attr( $label ) . '">';
+		echo '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+		echo '</a>';
+	},
+	20
+);
 /**
  * CSS das seções: enqueue direto por tipo de página.
  *
@@ -87,97 +104,118 @@ add_action( 'wp_footer', function () {
  * Paridade no editor: iawp_editor_style_files() + add_editor_style (setup.php).
  * Cache-bust: filemtime por arquivo; bump Theme Version em style.css após CSS/JS.
  */
-add_action( 'wp_enqueue_scripts', function (): void {
-	$base  = [ 'iawp-style' ];
-	$dir   = get_stylesheet_directory();
-	$mtime = function( string $file ) use ( $dir ): string {
-		$path = $dir . '/' . $file;
-		return file_exists( $path ) ? (string) filemtime( $path ) : '1';
-	};
+add_action(
+	'wp_enqueue_scripts',
+	function (): void {
+		$base  = array( 'iawp-style' );
+		$dir   = get_stylesheet_directory();
+		$mtime = function ( string $file ) use ( $dir ): string {
+			$path = $dir . '/' . $file;
+			return file_exists( $path ) ? (string) filemtime( $path ) : '1';
+		};
 
-	// Discrimina por queried_object (resolvido antes de wp_enqueue_scripts no browser).
-	$post_id  = get_queried_object_id();
-	$front_id = (int) get_option( 'page_on_front' );
-	$blog_id  = (int) get_option( 'page_for_posts' );
+		// Discrimina por queried_object (resolvido antes de wp_enqueue_scripts no browser).
+		$post_id  = get_queried_object_id();
+		$front_id = (int) get_option( 'page_on_front' );
+		$blog_id  = (int) get_option( 'page_for_posts' );
 
-	// Front page — hub editorial (hub.css traz listagem; blog.css conflita com featured/cards)
-	if ( $post_id === $front_id && $front_id > 0 ) {
-		wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
-		wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
-		return;
+		// Front page — hub editorial (hub.css traz listagem; blog.css conflita com featured/cards).
+		if ( $post_id === $front_id && $front_id > 0 ) {
+			wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
+			wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
+			return;
+		}
+
+		// Blog index + archives — hub listagem (.posts-hub) + page-hero / archive-hero slim.
+		if ( ( $post_id === $blog_id && $blog_id > 0 ) || is_home() || is_archive() ) {
+			wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
+			wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), array( 'iawp-hub' ), $mtime( 'assets/blocks/blog.css' ) );
+			wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
+			return;
+		}
+
+		// Single post.
+		$obj = get_queried_object();
+		if ( $obj instanceof WP_Post && 'post' === $obj->post_type ) {
+			wp_enqueue_style( 'iawp-single', get_theme_file_uri( 'assets/blocks/single.css' ), $base, $mtime( 'assets/blocks/single.css' ) );
+			wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
+			return;
+		}
+
+		// Sobre — page-hero (blog.css) + about/pillars (hub) + newsletter (cta).
+		if ( $obj instanceof WP_Post && 'sobre' === $obj->post_name ) {
+			wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
+			wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), array( 'iawp-hub' ), $mtime( 'assets/blocks/blog.css' ) );
+			wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
+			return;
+		}
+
+		// Páginas legais.
+		if ( $obj instanceof WP_Post && in_array( $obj->post_name, array( 'privacidade', 'termos' ), true ) ) {
+			wp_enqueue_style( 'iawp-legal', get_theme_file_uri( 'assets/blocks/legal.css' ), $base, $mtime( 'assets/blocks/legal.css' ) );
+			return;
+		}
+
+		// Demais páginas — page-hero (template page) + tipografia nativa.
+		if ( $obj instanceof WP_Post && 'page' === $obj->post_type ) {
+			wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), $base, $mtime( 'assets/blocks/blog.css' ) );
+			return;
+		}
+
+		// 404 editorial — wash/frame + botões (sem newsletter / hub listagem).
+		if ( is_404() ) {
+			wp_enqueue_style( 'iawp-error404', get_theme_file_uri( 'assets/blocks/error404.css' ), $base, $mtime( 'assets/blocks/error404.css' ) );
+		}
 	}
-
-	// Blog index + archives — hub listagem (.posts-hub) + page-hero / archive-hero slim
-	if ( ( $post_id === $blog_id && $blog_id > 0 ) || is_home() || is_archive() ) {
-		wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
-		wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), array( 'iawp-hub' ), $mtime( 'assets/blocks/blog.css' ) );
-		wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
-		return;
-	}
-
-	// Single post
-	$obj = get_queried_object();
-	if ( $obj instanceof WP_Post && $obj->post_type === 'post' ) {
-		wp_enqueue_style( 'iawp-single', get_theme_file_uri( 'assets/blocks/single.css' ), $base, $mtime( 'assets/blocks/single.css' ) );
-		wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
-		return;
-	}
-
-	// Sobre — page-hero (blog.css) + about/pillars (hub) + newsletter (cta)
-	if ( $obj instanceof WP_Post && $obj->post_name === 'sobre' ) {
-		wp_enqueue_style( 'iawp-hub', get_theme_file_uri( 'assets/blocks/hub.css' ), $base, $mtime( 'assets/blocks/hub.css' ) );
-		wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), array( 'iawp-hub' ), $mtime( 'assets/blocks/blog.css' ) );
-		wp_enqueue_style( 'iawp-cta', get_theme_file_uri( 'assets/blocks/cta.css' ), $base, $mtime( 'assets/blocks/cta.css' ) );
-		return;
-	}
-
-	// Páginas legais
-	if ( $obj instanceof WP_Post && in_array( $obj->post_name, [ 'privacidade', 'termos' ], true ) ) {
-		wp_enqueue_style( 'iawp-legal', get_theme_file_uri( 'assets/blocks/legal.css' ), $base, $mtime( 'assets/blocks/legal.css' ) );
-		return;
-	}
-
-	// Demais páginas — page-hero (template page) + tipografia nativa
-	if ( $obj instanceof WP_Post && $obj->post_type === 'page' ) {
-		wp_enqueue_style( 'iawp-blog', get_theme_file_uri( 'assets/blocks/blog.css' ), $base, $mtime( 'assets/blocks/blog.css' ) );
-		return;
-	}
-
-	// 404 editorial — wash/frame + botões (sem newsletter / hub listagem)
-	if ( is_404() ) {
-		wp_enqueue_style( 'iawp-error404', get_theme_file_uri( 'assets/blocks/error404.css' ), $base, $mtime( 'assets/blocks/error404.css' ) );
-	}
-} );
+);
 /**
  * Injeta loading="lazy" e decoding="async" em imagens do tema.
  *
- * core/image save() emite apenas src + alt. Adicionar loading/decoding diretamente
+ * Core/image save() emite apenas src + alt. Adicionar loading/decoding diretamente
  * no HTML do bloco invalida o bloco (divergência com save()). O filtro
  * wp_content_img_tag (WP 6.1+) é o ponto correto para esta injeção.
  *
  * Imagens da Media Library já recebem tratamento automático do WP.
  * A imagem hero-bg é above-the-fold e já tem loading="eager" no markup core/html.
  */
-add_filter( 'wp_content_img_tag', function ( $tag, $context, $attachment_id ) {
-	if ( $attachment_id ) return $tag;
-	if ( strpos( $tag, get_stylesheet_directory_uri() ) === false ) return $tag;
-	if ( strpos( $tag, 'hero-bg' ) !== false ) return $tag;
-	if ( strpos( $tag, 'loading=' ) === false )
-		$tag = str_replace( '<img ', '<img loading="lazy" ', $tag );
-	if ( strpos( $tag, 'decoding=' ) === false )
-		$tag = str_replace( '<img ', '<img decoding="async" ', $tag );
-	return $tag;
-}, 10, 3 );
+add_filter(
+	'wp_content_img_tag',
+	function ( $tag, $context, $attachment_id ) {
+		if ( $attachment_id ) {
+			return $tag;
+		}
+		if ( strpos( $tag, get_stylesheet_directory_uri() ) === false ) {
+			return $tag;
+		}
+		if ( strpos( $tag, 'hero-bg' ) !== false ) {
+			return $tag;
+		}
+		if ( strpos( $tag, 'loading=' ) === false ) {
+			$tag = str_replace( '<img ', '<img loading="lazy" ', $tag );
+		}
+		if ( strpos( $tag, 'decoding=' ) === false ) {
+			$tag = str_replace( '<img ', '<img decoding="async" ', $tag );
+		}
+		return $tag;
+	},
+	10,
+	3
+);
 
 /**
  * Defer em scripts com o data flag — evita render-blocking sem quebrar dependências.
  */
-add_filter( 'script_loader_tag', function ( $tag, $handle ) {
-	if ( wp_scripts()->get_data( $handle, 'defer' ) ) {
-		$tag = str_replace( ' src=', ' defer src=', $tag );
-	}
-	return $tag;
-}, 10, 2 );
+add_filter(
+	'script_loader_tag',
+	function ( $tag, $handle ) {
+		if ( wp_scripts()->get_data( $handle, 'defer' ) ) {
+			$tag = str_replace( ' src=', ' defer src=', $tag );
+		}
+		return $tag;
+	},
+	10,
+	2
+);
 
 /**
  * P0-1 variante A — depriorizar GTag do Site Kit (tracking preservado).
@@ -199,7 +237,7 @@ add_action(
 			return;
 		}
 
-		$handle = 'google_gtagjs';
+		$handle     = 'google_gtagjs';
 		$wp_scripts = wp_scripts();
 		$dep        = $wp_scripts->query( $handle, 'registered' );
 		if ( ! ( $dep instanceof _WP_Dependency ) || ! wp_script_is( $handle, 'enqueued' ) ) {
@@ -281,7 +319,7 @@ add_filter(
  * Fora de propósito (above-fold / FOUC): iawp-style, iawp-hub, iawp-blog,
  * iawp-single, BHB CSS, wp-block-navigation.
  *
- * media=print + onload restaura all; noscript = fallback.
+ * Media=print + onload restaura all; noscript = fallback.
  *
  * Bypass smoke:
  * - ?disable_iawp_jetpack_forms_css_late=1
@@ -289,7 +327,7 @@ add_filter(
  */
 add_filter(
 	'style_loader_tag',
-	static function ( $tag, $handle, $href, $media ) {
+	static function ( $tag, $handle, $href, $_media ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Signature of style_loader_tag.
 		if ( is_admin() ) {
 			return $tag;
 		}
@@ -318,11 +356,14 @@ add_filter(
 		}
 		$tag = $updated;
 
-		if ( is_string( $href ) && $href !== '' && false === strpos( $tag, '<noscript' ) ) {
+		if ( is_string( $href ) && '' !== $href && false === strpos( $tag, '<noscript' ) ) {
+			// Noscript fallback for print/onload late CSS (handle already enqueued).
+			// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
 			$tag .= sprintf(
 				'<noscript><link rel="stylesheet" href="%s" media="all" /></noscript>' . "\n",
 				esc_url( $href )
 			);
+			// phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
 		}
 
 		return $tag;

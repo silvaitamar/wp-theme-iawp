@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset name="IAWP">
+	<description>WordPress Coding Standards for the iawp block theme. Inspired by Carolina advanced-64; WPThemeReview deferred until publish.</description>
+
+	<file>functions.php</file>
+	<file>inc/</file>
+	<file>patterns/</file>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/assets/*</exclude-pattern>
+
+	<arg name="basepath" value="."/>
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="8"/>
+	<arg value="s"/>
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName"/>
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+	</rule>
+
+	<!-- Hub privado: text domain ok; i18n completo fica fora desta leva. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="iawp"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="iawp"/>
+				<element value="IAWP"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

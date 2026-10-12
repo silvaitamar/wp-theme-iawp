@@ -1,0 +1,14 @@
+{
+  "extends": "@wordpress/stylelint-config",
+  "rules": {
+    "at-rule-empty-line-before": null,
+    "comment-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "no-descending-specificity": null,
+    "selector-id-pattern": null,
+    "length-zero-no-unit": null,
+    "function-url-quotes": null
+  }
+}

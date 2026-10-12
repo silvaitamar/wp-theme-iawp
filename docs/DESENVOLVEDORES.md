@@ -54,9 +54,11 @@ iawp/
 └── llms.txt                  # manifesto do hub (conteúdo/GEO), não arquitetura
 ```
 
-**Ausente por desenho (por agora):** `styles/` variations, `languages/`, `phpcs.xml.dist` (Onda 5).
+**Ausente por desenho (por agora):** `styles/` variations, `languages/`, minify `.min.css` (backlog 5C).
 
 **PHP / WPCS (sempre):** prefixo `iawp_`; escape na saída; `ABSPATH` em includes; enqueue só via APIs WP. Consolida: `Studio/.gutenlab/php-standards.md`. Código novo → `inc/`, não inchando `functions.php`.
+
+**Referências de maturidade:** Screenshot `docs/` · [advanced-64](https://github.com/carolinan/fullsiteediting/tree/course/Starter%20themes/advanced-64) (tooling) · skill `wp-block-themes`. Backlog minify/Theme Review: `Studio/.gutenlab/tooling-backlog-iawp-2026-10.md`.
 
 ---
 
@@ -119,6 +121,8 @@ Permitido fora de attrs nativos / `theme.json`: wash/grain/reveal, hero-bg escap
 
 ## 5. Patterns
 
+Inventário completo: [PATTERNS.md](PATTERNS.md) (44 · L0/L1 · gaps de headers).
+
 | Tipo | Exemplos | Uso |
 |------|----------|-----|
 | L0 página | `iawp/page-home`, `page-sobre`, `page-blog`, `page-single`, `page-archive`, `page-404` | Composição da página no BD |
@@ -136,7 +140,35 @@ Permitido fora de attrs nativos / `theme.json`: wash/grain/reveal, hero-bg escap
 
 ---
 
-## 7. Fidelidade e skills
+## 7. Qualidade (Composer / PHPCS / lint)
+
+Stack **moderna** (inspirada no advanced-64; **sem** gulp). Na raiz do tema:
+
+```bash
+# WSL — PHP
+cd /mnt/c/Users/silva/Studio/ia-wordpress/wp-content/themes/iawp
+composer install
+composer standards:check    # phpcs (phpcs.xml.dist — WPCS)
+composer standards:fix      # phpcbf
+composer analyze            # phpstan level 5 · functions.php + inc/ (--memory-limit=1G)
+
+# Node (nvm) — CSS/JS (C-42: preferir install em /tmp + symlink)
+export NVM_DIR=/home/silvaitamar/.nvm; . "$NVM_DIR/nvm.sh"
+# Ex.: npm install em /tmp/iawp-npm && ln -sfn /tmp/iawp-npm/node_modules ./node_modules
+npm install
+npm run lint:css
+npm run lint:js
+```
+
+- Ruleset PHP: **WPCS** apenas. `WPThemeReview` / Theme Check = decisão de publish (hub privado).
+- Stylelint: `.stylelintrc.json` estende `@wordpress/stylelint-config` com overrides pragmáticos (indent 2 espaços do tema; sem reformatar em massa).
+- `vendor/` e `node_modules/` no `.gitignore` (lockfiles versionados).
+- Baseline visual: tag `baseline-visual-0.1.1` — ver `Studio/.gutenlab/baseline-visual-iawp-2026-10.md`.
+- Minify CSS = backlog documentado (5C) — fonte = `.css` legível; não gerar `.min` nesta leva.
+
+---
+
+## 8. Fidelidade e skills
 
 - Proto: `Downloads/iawp-hub-proto/`
 - Design system: vault `04-ia-wordpress/design-system.md`
@@ -145,6 +177,6 @@ Permitido fora de attrs nativos / `theme.json`: wash/grain/reveal, hero-bg escap
 
 ---
 
-## 8. Git
+## 9. Git
 
 Conventional Commits. Commit só com pedido explícito. Receita shell: skill `ambiente-local` C-08.

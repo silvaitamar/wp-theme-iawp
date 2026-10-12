@@ -1,0 +1,26 @@
+{
+  "name": "silvaitamar/iawp",
+  "description": "IA+WP block theme (FSE hub).",
+  "type": "wordpress-theme",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.0"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "wp-coding-standards/wpcs": "^3.1",
+    "phpstan/phpstan": "^1.11",
+    "szepeviktor/phpstan-wordpress": "^1.3"
+  },
+  "scripts": {
+    "standards:check": "@php ./vendor/bin/phpcs",
+    "standards:fix": "@php ./vendor/bin/phpcbf",
+    "analyze": "@php ./vendor/bin/phpstan analyse --memory-limit=1G"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "sort-packages": true
+  }
+}

@@ -6,6 +6,7 @@ Autor: [Itamar Silva](https://itamarsilva.dev.br/).
 | Público | Documento |
 |---------|-----------|
 | Desenvolvedor WordPress | [DESENVOLVEDORES.md](DESENVOLVEDORES.md) |
+| Inventário patterns | [PATTERNS.md](PATTERNS.md) |
 | Editor de conteúdo | [EDITORES.md](EDITORES.md) |
 | Agente de IA | [AGENTES.md](AGENTES.md) |
 | Administração / ops | [ECOSSISTEMA.md](ECOSSISTEMA.md) |

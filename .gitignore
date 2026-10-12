@@ -1,37 +1,9 @@
-# Dependencies / build
-node_modules/
-vendor/
-npm-debug.log*
-yarn-error.log*
-composer.lock
-
-# OS / editor
+/vendor/
+/node_modules
+/node_modules/
+.phpcs-cache
+.phpunit.result.cache
+# Artefatos minify (5C) — fonte = .css/.js human-readable
+*.min.css
+*.min.js
 .DS_Store
-Thumbs.db
-*.swp
-.idea/
-.vscode/
-*.code-workspace
-
-# WordPress noise (if theme is ever scanned from a full install)
-*.log
-*.sql
-*.sqlite
-.ht.sqlite
-
-# Release artifacts
-*.zip
-dist/
-build/
-
-# Secrets / local only
-.env
-.env.*
-!.env.example
-*.pem
-credentials.json
-
-# Proto / internal paths must never be committed as copies with client data
-
-# Agent / local QA probes (Studio eval-file, Playwright) — not product
-scripts/
