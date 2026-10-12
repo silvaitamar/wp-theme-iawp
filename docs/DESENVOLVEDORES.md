@@ -34,7 +34,7 @@ iawp/
 ├── inc/
 │   ├── style-surfaces.php    # Version helper + lista editor styles
 │   ├── setup.php             # theme supports + add_editor_style + BHB canvas
-│   ├── icons.php             # core/icon + inliner legado span→SVG
+│   ├── icons.php             # coleção core/icon iawp/* (+ grain/grad-brand)
 │   ├── assets.php            # enqueue front condicional, footer, perf
 │   ├── blocks.php            # render_block / query filters
 │   ├── head-seo.php          # llms.txt, head cleanup, redirects

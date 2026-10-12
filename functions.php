@@ -5,7 +5,7 @@
  * Loads modules from inc/. Runtime logic lives in those files — keep this thin.
  *
  * FONTES: theme.json fontFace + assets/fonts/ (sem Google Fonts enqueue).
- * Ícones: assets/icons/ → Icons API iawp/*; legado span→SVG em inc/icons.php.
+ * Ícones: assets/icons/ → Icons API iawp/* (core/icon). Grain + #grad-brand em icons.php.
  * SEO meta/OG/JSON-LD: The SEO Framework — tema só cobre head cleanup + llms.txt.
  *
  * @package iawp

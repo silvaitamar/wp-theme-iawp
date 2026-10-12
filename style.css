@@ -84,10 +84,10 @@ h1, h2, h3, h4, h5, h6 { max-width: 100%; overflow-wrap: break-word; }
   border: 0 !important;
 }
 
-/* === ICONS (SVG inline + core/icon) ===
+/* === ICONS (core/icon) ===
    Biblioteca: assets/icons/ → Icons API `iawp/*` (core/icon).
-   Legado: span.icon → SVG via ob_start. Classe de produto `bento-icon`
-   fica no wrapper .wp-block-icon (ou no <svg> legado).
+   Inliner span→SVG removido (Onda 4). Classe de produto `bento-icon`
+   no wrapper .wp-block-icon.
    ============================================================ */
 svg.icon,
 svg.bento-icon,
@@ -101,8 +101,7 @@ svg.bento-icon,
   width: 2.25rem;
   height: 2.25rem;
 }
-/* Margin do bento: attr nativo spacing.margin no core/icon (não CSS).
-   Legado svg.bento-icon (se restar): margin abaixo. */
+/* Margin do bento: attr nativo spacing.margin no core/icon (não CSS). */
 svg.bento-icon {
   margin: 0 0 2rem 0;
 }
