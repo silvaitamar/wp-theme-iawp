@@ -26,7 +26,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"about-bio","textColor":"muted","style":{"typography":{"fontSize":"clamp(1.125rem, 2vw, 1.25rem)","lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="about-bio has-muted-color has-text-color" style="margin-top:0;margin-bottom:0;font-size:clamp(1.125rem, 2vw, 1.25rem);line-height:1.65">Projeto de mídia e educação na convergência entre IA, WordPress moderno e soberania digital. Sem pitch de curso na home — autoridade editorial primeiro.</p>
+<p class="about-bio has-muted-color has-text-color" style="margin-top:0;margin-bottom:0;font-size:clamp(1.125rem, 2vw, 1.25rem);line-height:1.65">Mídia e educação na convergência entre IA, WordPress moderno e soberania digital.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons {"className":"about-actions","style":{"spacing":{"blockGap":"var:preset|spacing|15","margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|40"}}},"layout":{"type":"flex","flexWrap":"wrap"}} -->

@@ -18,7 +18,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"bento-desc","textColor":"muted","fontSize":"md","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="bento-desc has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Único cluster com posts no ar. MCP, WebMCP, Cursor e fluxos AI-native no ecossistema WordPress.</p>
+<p class="bento-desc has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">MCP, WebMCP, Cursor e fluxos AI-native no ecossistema WordPress.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"bento-more","fontFamily":"display","fontSize":"xs","textColor":"primary","style":{"typography":{"fontWeight":"700","letterSpacing":"0.14em","textTransform":"uppercase","lineHeight":"1"},"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|30"}}}} -->
@@ -46,7 +46,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"bento-desc","textColor":"muted","fontSize":"md","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="bento-desc has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Gutenberg, FSE, WP-CLI e Studio — âncoras até o primeiro post de cada cluster.</p>
+<p class="bento-desc has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Gutenberg, FSE, WP-CLI e Studio: o stack moderno na prática.</p>
 <!-- /wp:paragraph --></article>
 <!-- /wp:group -->
 
@@ -58,7 +58,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"bento-desc","textColor":"muted","fontSize":"md","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="bento-desc has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Tema de blocos, tipografia e componentes: design system aplicado ao produto WordPress, não slide deck.</p>
+<p class="bento-desc has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Tema de blocos, tipografia e componentes aplicados ao produto WordPress, não a uma apresentação solta.</p>
 <!-- /wp:paragraph --></article>
 <!-- /wp:group --></div>
 <!-- /wp:group -->

@@ -16,7 +16,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"align":"center","textColor":"muted","fontSize":"xl","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="has-text-align-center has-muted-color has-text-color has-xl-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Mídia, educação e autoridade — não um funil de curso.</p>
+<p class="has-text-align-center has-muted-color has-text-color has-xl-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Mídia e educação sobre IA aplicada ao WordPress moderno.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></header>
 <!-- /wp:group -->

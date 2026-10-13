@@ -27,7 +27,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"about-bio","textColor":"muted","style":{"typography":{"fontSize":"clamp(1.125rem, 2vw, 1.25rem)","lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="about-bio has-muted-color has-text-color" style="margin-top:0;margin-bottom:0;font-size:clamp(1.125rem, 2vw, 1.25rem);line-height:1.65">Itamar Silva — mais de dez anos em WordPress e WooCommerce, com foco em arquitetura, performance, segurança e automação. O hub documenta o que foi testado em laboratório e em produção, com limite honesto do que ainda é ensaio.</p>
+<p class="about-bio has-muted-color has-text-color" style="margin-top:0;margin-bottom:0;font-size:clamp(1.125rem, 2vw, 1.25rem);line-height:1.65">Itamar Silva: mais de dez anos em WordPress e WooCommerce, com foco em arquitetura, performance, segurança e automação. Documenta o que foi testado em laboratório e em produção, com limite honesto do que ainda é ensaio.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:pattern {"slug":"iawp/author-social"} /-->

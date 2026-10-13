@@ -16,14 +16,14 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"align":"center","className":"cta-subheading","textColor":"base","style":{"typography":{"fontSize":"0.75rem","fontWeight":"600","letterSpacing":"0.4em","textTransform":"uppercase","lineHeight":"1.4"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="has-text-align-center cta-subheading has-base-color has-text-color" style="margin-top:0;margin-bottom:0;font-size:0.75rem;font-weight:600;letter-spacing:0.4em;line-height:1.4;text-transform:uppercase">Acompanhe o hub editorial: aviso quando publicarmos conteúdo novo sobre IA, WordPress e soberania digital.</p>
+<p class="has-text-align-center cta-subheading has-base-color has-text-color" style="margin-top:0;margin-bottom:0;font-size:0.75rem;font-weight:600;letter-spacing:0.4em;line-height:1.4;text-transform:uppercase">Aviso no e-mail quando publicarmos artigos novos sobre IA, WordPress e soberania digital.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:jetpack/contact-form {"subject":"Newsletter IA+WP — novo inscrito","customThankyou":"message","customThankyouMessage":"Obrigado! Você receberá aviso quando publicarmos novos artigos.","jetpackCRM":false,"variationName":"default","className":"cta-form","layout":{"type":"flex","flexWrap":"nowrap","orientation":"horizontal","justifyContent":"center","verticalAlignment":"center"}} -->
 <div class="wp-block-jetpack-contact-form cta-form"><!-- wp:jetpack/field-email {"required":true} -->
 <div><!-- wp:jetpack/label /-->
 
-<!-- wp:jetpack/input {"placeholder":"Seu melhor e-mail"} /--></div>
+<!-- wp:jetpack/input {"placeholder":"Seu e-mail"} /--></div>
 <!-- /wp:jetpack/field-email -->
 
 <!-- wp:button {"tagName":"button","type":"submit","lock":{"move":false,"remove":true}} -->

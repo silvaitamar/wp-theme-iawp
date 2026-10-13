@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"article-cta-copy","textColor":"muted","fontSize":"lg","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="article-cta-copy has-muted-color has-text-color has-lg-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Acompanhe o hub editorial: aviso quando publicarmos conteúdo novo sobre IA, WordPress e soberania digital.</p>
+<p class="article-cta-copy has-muted-color has-text-color has-lg-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Aviso no e-mail quando publicarmos artigos novos sobre IA, WordPress e soberania digital.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons {"style":{"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->

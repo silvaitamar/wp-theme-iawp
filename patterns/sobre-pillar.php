@@ -15,6 +15,6 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"sobre-pillar__body","textColor":"muted","fontSize":"md","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="sobre-pillar__body has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">A IA acelera a criação. O WordPress garante que o ativo continue sendo seu — código, conteúdo, infraestrutura e evolução sob controle.</p>
+<p class="sobre-pillar__body has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">A IA acelera a criação. O WordPress garante que o ativo continue sendo seu: código, conteúdo, infraestrutura e evolução sob controle.</p>
 <!-- /wp:paragraph --></article>
 <!-- /wp:group -->

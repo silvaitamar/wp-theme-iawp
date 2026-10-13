@@ -16,7 +16,7 @@
 
 <!-- wp:group {"className":"section-lede","layout":{"type":"default"}} -->
 <div class="wp-block-group section-lede"><!-- wp:paragraph {"textColor":"muted","fontSize":"sm","style":{"typography":{"fontWeight":"600","lineHeight":"1.6"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="has-muted-color has-text-color has-sm-font-size" style="margin-top:0;margin-bottom:0;font-weight:600;line-height:1.6">IA, WordPress e soberania — o que o hub cobre</p>
+<p class="has-muted-color has-text-color has-sm-font-size" style="margin-top:0;margin-bottom:0;font-weight:600;line-height:1.6">IA, WordPress e soberania: o que cobrimos aqui.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->

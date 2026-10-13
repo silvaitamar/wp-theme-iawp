@@ -15,6 +15,6 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"sobre-pillar__body","textColor":"muted","fontSize":"md","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="sobre-pillar__body has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Não é landing de pré-lançamento nem waitlist. A newsletter avisa quando saem novos artigos. Curso e produtos derivados ficam no horizonte — depois da autoridade editorial.</p>
+<p class="sobre-pillar__body has-muted-color has-text-color has-md-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Não abre com oferta nem fila de espera. Publica artigos; a newsletter avisa quando sai conteúdo novo.</p>
 <!-- /wp:paragraph --></article>
 <!-- /wp:group -->

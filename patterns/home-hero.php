@@ -39,7 +39,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"textColor":"muted","fontSize":"lg","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|35"}}}} -->
-<p class="has-muted-color has-text-color has-lg-font-size" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--35);line-height:1.65">Artigos e fluxos reais sobre inteligência artificial, WordPress moderno e soberania digital — para quem constrói e opera na web aberta.</p>
+<p class="has-muted-color has-text-color has-lg-font-size" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--35);line-height:1.65">Artigos e fluxos reais sobre inteligência artificial, WordPress moderno e soberania digital, para quem constrói e opera na web aberta.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons {"style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|48"},"blockGap":"var:preset|spacing|15"}},"layout":{"type":"flex","flexWrap":"wrap"}} -->
@@ -53,7 +53,7 @@
 <!-- /wp:buttons -->
 
 <!-- wp:paragraph {"textColor":"dim","fontFamily":"display","fontSize":"xs","style":{"typography":{"fontWeight":"600","letterSpacing":"0.14em","textTransform":"uppercase","lineHeight":"1"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="has-dim-color has-text-color has-display-font-family has-xs-font-size" style="margin-top:0;margin-bottom:0;font-weight:600;letter-spacing:0.14em;line-height:1;text-transform:uppercase"><span>Artigos em produção</span><span class="hero__meta-dot" aria-hidden="true"></span><span>IA + Agentes</span><span class="hero__meta-dot" aria-hidden="true"></span><span>Soberania do ativo</span></p>
+<p class="has-dim-color has-text-color has-display-font-family has-xs-font-size" style="margin-top:0;margin-bottom:0;font-weight:600;letter-spacing:0.14em;line-height:1;text-transform:uppercase"><span>Em foco</span><span class="hero__meta-dot" aria-hidden="true"></span><span>IA + Agentes</span><span class="hero__meta-dot" aria-hidden="true"></span><span>Soberania do ativo</span></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></section>

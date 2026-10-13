@@ -21,7 +21,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"error-404__lede","textColor":"muted","fontSize":"lg","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|40"}}}} -->
-<p class="error-404__lede has-muted-color has-text-color has-lg-font-size" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--40);line-height:1.65">Essa rota não existe — ou o link estava errado. O hub editorial continua no ar: artigos, clusters e a tese do <span class="brand"><em>IA</em>+WP</span>.</p>
+<p class="error-404__lede has-muted-color has-text-color has-lg-font-size" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--40);line-height:1.65">Essa rota não existe, ou o link estava errado. O site continua no ar: artigos e a tese do <span class="brand"><em>IA</em>+WP</span>.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons {"className":"error-404__actions","style":{"spacing":{"blockGap":"0.75rem","margin":{"top":"0","bottom":"var:preset|spacing|40"}}}} -->

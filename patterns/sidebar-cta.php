@@ -15,14 +15,14 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"sidebar-cta-desc","textColor":"muted","style":{"typography":{"fontSize":"0.9375rem","lineHeight":"1.6"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="sidebar-cta-desc has-muted-color has-text-color" style="margin-top:0;margin-bottom:0;font-size:0.9375rem;line-height:1.6">Sem waitlist. Aviso quando sair conteúdo novo no hub.</p>
+<p class="sidebar-cta-desc has-muted-color has-text-color" style="margin-top:0;margin-bottom:0;font-size:0.9375rem;line-height:1.6">Aviso no e-mail quando publicarmos artigos novos.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:jetpack/contact-form {"subject":"Newsletter IA+WP — novo inscrito (sidebar)","jetpackCRM":false,"variationName":"default","customThankyou":"message","customThankyouMessage":"Obrigado! Voc\u00ea receber\u00e1 aviso quando publicarmos novos artigos.","className":"sidebar-form","layout":{"type":"flex","orientation":"vertical","flexWrap":"nowrap"}} -->
 <div class="wp-block-jetpack-contact-form sidebar-form"><!-- wp:jetpack/field-email {"required":true} -->
 <div><!-- wp:jetpack/label /-->
 
-<!-- wp:jetpack/input {"placeholder":"Seu melhor e-mail"} /--></div>
+<!-- wp:jetpack/input {"placeholder":"Seu e-mail"} /--></div>
 <!-- /wp:jetpack/field-email -->
 
 <!-- wp:button {"tagName":"button","type":"submit","lock":{"move":false,"remove":true}} -->

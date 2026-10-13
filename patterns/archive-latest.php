@@ -9,8 +9,8 @@
  * Inserter: yes
  */
 ?>
-<!-- wp:group {"tagName":"section","align":"full","className":"section section--rule","backgroundColor":"base","ariaLabel":"Artigos do cluster","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"},"blockGap":"0px"}},"layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull section section--rule has-base-background-color has-background" aria-label="Artigos do cluster" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"align":"wide","className":"wrap","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"section","align":"full","className":"section section--rule","backgroundColor":"base","ariaLabel":"Artigos da categoria","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"},"blockGap":"0px"}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull section section--rule has-base-background-color has-background" aria-label="Artigos da categoria" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"align":"wide","className":"wrap","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group alignwide wrap"><!-- wp:group {"className":"posts-hub","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","orientation":"vertical","flexWrap":"nowrap","justifyContent":"stretch"}} -->
 <div class="wp-block-group posts-hub"><!-- wp:pattern {"slug":"iawp/query-featured-archive"} /-->
 

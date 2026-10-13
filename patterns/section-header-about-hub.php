@@ -16,7 +16,7 @@
 
 <!-- wp:group {"className":"section-lede","layout":{"type":"default"}} -->
 <div class="wp-block-group section-lede"><!-- wp:paragraph {"textColor":"muted","fontSize":"sm","style":{"typography":{"fontWeight":"600","lineHeight":"1.6"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="has-muted-color has-text-color has-sm-font-size" style="margin-top:0;margin-bottom:0;font-weight:600;line-height:1.6">Projeto editorial na convergência entre IA, WordPress moderno e soberania digital.</p>
+<p class="has-muted-color has-text-color has-sm-font-size" style="margin-top:0;margin-bottom:0;font-weight:600;line-height:1.6">Artigos e fluxos na convergência entre IA, WordPress moderno e soberania digital.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->

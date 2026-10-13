@@ -16,7 +16,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"align":"center","textColor":"muted","fontSize":"xl","style":{"typography":{"lineHeight":"1.65"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} -->
-<p class="has-text-align-center has-muted-color has-text-color has-xl-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Conteúdo aprofundado sobre inteligência artificial aplicada ao WordPress — para quem quer construir e operar ativos digitais com velocidade e soberania.</p>
+<p class="has-text-align-center has-muted-color has-text-color has-xl-font-size" style="margin-top:0;margin-bottom:0;line-height:1.65">Artigos sobre inteligência artificial aplicada ao WordPress, para quem constrói e opera ativos digitais sem abrir mão do controle.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></header>
 <!-- /wp:group -->
