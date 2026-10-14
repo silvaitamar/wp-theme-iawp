@@ -70,7 +70,8 @@
 				"path": "/"
 			},
 			"options": {
-				"activate": true
+				"activate": true,
+				"targetFolderName": "iawp"
 			},
 			"progress": { "caption": "Instalando tema IA+WP" }
 		},
