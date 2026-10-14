@@ -4,7 +4,7 @@
  * Slug: iawp/blog-latest
  * Categories: posts, featured
  * Keywords: blog, latest, leitura, recomendada
- * Description: Blog index list — label “Leitura recomendada” + posts-hub (featured + 3 cards). Composes query-featured + query-cards-blog (no duplicate posts-hub wrapper pattern).
+ * Description: Blog index list — label “Leitura recomendada” + posts-hub (featured + cards grid). Composes query-featured + query-cards-blog (no duplicate posts-hub wrapper pattern).
  * Viewport Width: 1344
  * Inserter: yes
  */
