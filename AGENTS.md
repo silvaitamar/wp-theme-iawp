@@ -4,9 +4,9 @@ Contrato **curto**. Detalhe obrigatório: [`docs/AGENTES.md`](docs/AGENTES.md). 
 
 ## Fonte da verdade
 
-1. Visual **produção** aprovado (congelar por default). Proto: `Downloads/iawp-hub-proto/`.
-2. Tokens / identidade: vault `04-ia-wordpress/design-system.md` · decisão punk+fashion.
-3. Inventário conversão/maturidade: `Studio/.gutenlab/` (ex. `maturity-iawp-2026-10.md`).
+1. Visual **produção** aprovado (congelar por default). Proto de fidelidade: `iawp-hub-proto` (local do autor).
+2. Tokens / identidade: design system editorial do hub IA+WP (punk + fashion).
+3. Inventário conversão/maturidade: notas GutenLab locais (fora deste repo).
 
 ## Stack
 
@@ -34,5 +34,5 @@ Pattern L0 `iawp/page-home` no `post_content` da página estática + template `p
 
 ## Ambiente
 
-Studio: `Studio/ia-wordpress`. Shell: skill `ambiente-local` (WSL; commit C-08).  
-Prod: wp-remote `ia-wp` — conteúdo = fonte da verdade; tema = deploy seletivo ([docs/ECOSSISTEMA.md](docs/ECOSSISTEMA.md)).
+Dev: WordPress Studio (ou equivalente) com o tema em `wp-content/themes/iawp`.  
+Prod: conteúdo = fonte da verdade; tema = deploy seletivo ([docs/ECOSSISTEMA.md](docs/ECOSSISTEMA.md)).

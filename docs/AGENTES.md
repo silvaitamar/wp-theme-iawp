@@ -14,7 +14,7 @@ Instruções para assistentes (Cursor e similares) que alteram este tema.
 |-------|--------|
 | Site | https://iaewp.com.br — hub editorial IA + WordPress |
 | Tema | Block theme FSE `iawp` |
-| Studio | `Studio/ia-wordpress` |
+| Dev | WordPress Studio (ou equivalente local) |
 | Conteúdo das páginas principais | No **banco** (Home/Sobre via patterns L0) |
 | Tema (código) | Tokens, CSS/JS, patterns, PHP |
 
@@ -39,7 +39,7 @@ Não misturar conteúdo e refactor de tema num único passo opaco.
 1. **Preservar o aspecto visual aprovado em produção** por default. Mudança visual = gate C.5 (proto×front) + OK humano.
 2. **Não editar o core** nem plugins de terceiros. Trabalhar no tema `iawp`.
 3. **`functions.php`** = bootstrap (`require_once` de `inc/*`). Código novo em `inc/` (style-surfaces, setup, icons, assets, blocks, head-seo, social). Não espalhar lógica em patterns PHP além do header do pattern.
-4. **PHP / WPCS (sempre):** WordPress Coding Standards — escape (`esc_*` / `wp_kses_*`), prefixo `iawp_`, `ABSPATH` em includes, sanitize/nonce se houver input. Ver `Studio/.gutenlab/php-standards.md`. Não adiar “para CI/wp.org”. Se existir `phpcs.xml.dist`, rodar nos paths tocados antes do commit PHP.
+4. **PHP / WPCS (sempre):** WordPress Coding Standards — escape (`esc_*` / `wp_kses_*`), prefixo `iawp_`, `ABSPATH` em includes, sanitize/nonce se houver input. Não adiar “para CI/wp.org”. Se existir `phpcs.xml.dist`, rodar nos paths tocados antes do commit PHP.
 5. **`style.css`** = metadados + chrome global. Seções em `assets/blocks/`.
 6. **Tokens** via presets `theme.json`. Não reintroduzir `margin: 0` global em `core/paragraph` (mata blockGap da prosa).
 7. **Classes de pattern em uso** = API pública (`.hero`, `.posts-hub`, `.post-featured`, `.single-prose`, …).
@@ -60,8 +60,8 @@ Não misturar conteúdo e refactor de tema num único passo opaco.
 | `wp-block-themes` | theme.json / FSE |
 | `ambiente-local` | WSL, C-08 commit, C-15/C-16 Studio |
 | `wordpress` | CLI remoto seletivo |
-| `Studio/.gutenlab/` | PROMPT, blocks, maturity, gaps |
-| Vault `04-ia-wordpress/` | design-system, arquitetura, pendências |
+| Inventário GutenLab local | maturity, gaps (fora deste repo) |
+| Notas do hub IA+WP | design-system, arquitetura, pendências (fora deste repo) |
 
 ---
 

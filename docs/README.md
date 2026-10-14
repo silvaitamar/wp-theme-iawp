@@ -14,4 +14,4 @@ Autor: [Itamar Silva](https://itamarsilva.dev.br/).
 
 Contrato curto na raiz do tema: [`../AGENTS.md`](../AGENTS.md) · [`../README.md`](../README.md).
 
-A versão do tema está em `style.css` (`Version`). Maturidade / backlog estrutural: inventário GutenLab `Studio/.gutenlab/maturity-iawp-2026-10.md` (fora deste repo se o tema for publicado sozinho).
+A versão do tema está em `style.css` (`Version`). Maturidade / backlog estrutural: inventário GutenLab local (fora deste repo).

@@ -7,3 +7,5 @@
 *.min.css
 *.min.js
 .DS_Store
+# Probes / one-offs locais (não vão ao repo público)
+/scripts/

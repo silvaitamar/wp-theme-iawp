@@ -17,7 +17,7 @@ Guia para quem mantém o tema **IA+WP** (`iawp`, block theme / FSE).
 | Tipo | Block theme (FSE) |
 | Path | `wp-content/themes/iawp/` |
 | Site prod | https://iaewp.com.br |
-| Studio | `Studio/ia-wordpress` · tipicamente `http://localhost:8886/` |
+| Dev | WordPress Studio (ou equivalente local) |
 | Requires | WP 6.7+ · PHP 8.0+ |
 | Text domain | `iawp` |
 | CTA canônico | Receber novos artigos (nunca Lista VIP / curso) |
@@ -56,9 +56,9 @@ iawp/
 
 **Ausente por desenho (por agora):** `styles/` variations, `languages/`, minify `.min.css` (backlog 5C).
 
-**PHP / WPCS (sempre):** prefixo `iawp_`; escape na saída; `ABSPATH` em includes; enqueue só via APIs WP. Consolida: `Studio/.gutenlab/php-standards.md`. Código novo → `inc/`, não inchando `functions.php`.
+**PHP / WPCS (sempre):** prefixo `iawp_`; escape na saída; `ABSPATH` em includes; enqueue só via APIs WP. Código novo → `inc/`, não inchando `functions.php`.
 
-**Referências de maturidade:** Screenshot `docs/` · [advanced-64](https://github.com/carolinan/fullsiteediting/tree/course/Starter%20themes/advanced-64) (tooling) · skill `wp-block-themes`. Backlog minify/Theme Review: `Studio/.gutenlab/tooling-backlog-iawp-2026-10.md`.
+**Referências de maturidade:** temas FSE de referência com CSS por tipo de bloco · [advanced-64](https://github.com/carolinan/fullsiteediting/tree/course/Starter%20themes/advanced-64) (tooling) · skill `wp-block-themes`. Backlog minify/Theme Review: inventário GutenLab local (fora deste repo).
 
 ---
 
@@ -101,15 +101,15 @@ A Onda 3 pedia **avaliar** onde a API cabe **sem** regressão do mapa condiciona
 | Fonte | O que diz |
 |-------|-----------|
 | `inc/assets.php` (histórico iawp) | Bundle/`render_block` on-demand **já falhou** em FSE: template renderiza **depois** de `wp_head` → `<link>` não entra no head. Por isso o mapa por `queried_object` / conditional tags. |
-| Screenshot `inc/assets/block-styles.php` | Usa `wp_enqueue_block_style` para CSS **amarrado a um tipo de bloco** (`core/image` logo rodapé, `core/embed`, `core/media-text`, GutSlider, Fluent, WPM…) — **não** para folhas de superfície de página (`hub.css` / “toda a home”). |
-| `.gutenlab/PROMPT.md` | Limitação da API: enfileira por **tipo** de bloco, não por instância. Mapear `hub.css` → `core/group` carregaria hub em **qualquer** página com Group. |
-| `.gutenlab/css-delivery.md` | Foco = **1 request** (bundle) / race FSE; é eixo de delivery, não “trocar condicional por block_style”. |
+| Tema FSE de referência (`wp_enqueue_block_style`) | CSS **amarrado a um tipo de bloco** (`core/image`, `core/embed`, `core/media-text`, forms…) — **não** para folhas de superfície de página (`hub.css` / “toda a home”). |
+| API `wp_enqueue_block_style` | Limitação: enfileira por **tipo** de bloco, não por instância. Mapear `hub.css` → `core/group` carregaria hub em **qualquer** página com Group. |
+| Delivery CSS | Foco = **1 request** (bundle) / race FSE; é eixo de delivery, não “trocar condicional por block_style”. |
 
 **Conclusão desta avaliação (superfícies atuais):**
 
 - `hub.css`, `blog.css`, `single.css`, `cta.css`, `legal.css`, `error404.css` são **CSS de superfície/template** (matriz home≠blog: home **não** pode levar `blog.css`). Isso **não** mapeia 1:1 para um `block_type` sem regressão ou sem voltar a detectar seções tarde demais.
 - **Manter** o enqueue condicional para essas folhas.
-- **Candidato futuro** (só se surgir arquivo CSS realmente por bloco, modelo Screenshot): `wp_enqueue_block_style` **em paralelo**, sem substituir o mapa de superfície. Hoje o tema **não tem** esse tipo de folha em `assets/blocks/` (só superfícies).
+- **Candidato futuro** (só se surgir arquivo CSS realmente por bloco): `wp_enqueue_block_style` **em paralelo**, sem substituir o mapa de superfície. Hoje o tema **não tem** esse tipo de folha em `assets/blocks/` (só superfícies).
 
 Não confundir com o late-load de `iawp-cta` / Jetpack via `style_loader_tag` (perf P0) — isso já é on-demand de *quando* o CSS aplica, não troca de API de superfície.
 
@@ -136,7 +136,7 @@ Inventário completo: [PATTERNS.md](PATTERNS.md) (44 · L0/L1 · gaps de headers
 
 ## 6. PHP
 
-`functions.php` = bootstrap (`require_once` de `inc/*`). Módulos: `style-surfaces`, `setup`, `icons`, `assets`, `blocks`, `head-seo`, `social`. Código novo → `inc/`. WPCS sempre (`Studio/.gutenlab/php-standards.md`).
+`functions.php` = bootstrap (`require_once` de `inc/*`). Módulos: `style-surfaces`, `setup`, `icons`, `assets`, `blocks`, `head-seo`, `social`. Código novo → `inc/`. WPCS sempre.
 
 ---
 
@@ -145,16 +145,13 @@ Inventário completo: [PATTERNS.md](PATTERNS.md) (44 · L0/L1 · gaps de headers
 Stack **moderna** (inspirada no advanced-64; **sem** gulp). Na raiz do tema:
 
 ```bash
-# WSL — PHP
-cd /mnt/c/Users/silva/Studio/ia-wordpress/wp-content/themes/iawp
+# Na raiz do tema (PHP)
 composer install
 composer standards:check    # phpcs (phpcs.xml.dist — WPCS)
 composer standards:fix      # phpcbf
 composer analyze            # phpstan level 5 · functions.php + inc/ (--memory-limit=1G)
 
-# Node (nvm) — CSS/JS (C-42: preferir install em /tmp + symlink)
-export NVM_DIR=/home/silvaitamar/.nvm; . "$NVM_DIR/nvm.sh"
-# Ex.: npm install em /tmp/iawp-npm && ln -sfn /tmp/iawp-npm/node_modules ./node_modules
+# Node — CSS/JS
 npm install
 npm run lint:css
 npm run lint:js
@@ -163,16 +160,15 @@ npm run lint:js
 - Ruleset PHP: **WPCS** apenas. `WPThemeReview` / Theme Check = decisão de publish (hub privado).
 - Stylelint: `.stylelintrc.json` estende `@wordpress/stylelint-config` com overrides pragmáticos (indent 2 espaços do tema; sem reformatar em massa).
 - `vendor/` e `node_modules/` no `.gitignore` (lockfiles versionados).
-- Baseline visual: tag `baseline-visual-0.1.1` — ver `Studio/.gutenlab/baseline-visual-iawp-2026-10.md`.
+- Baseline visual: tag `baseline-visual-0.1.1` (inventário GutenLab local, fora deste repo).
 - Minify CSS = backlog documentado (5C) — fonte = `.css` legível; não gerar `.min` nesta leva.
 
 ---
 
 ## 8. Fidelidade e skills
 
-- Proto: `Downloads/iawp-hub-proto/`
-- Design system: vault `04-ia-wordpress/design-system.md`
-- Conversão / gates: skill `gutenlab-conversao-gutenberg` + inventário `Studio/.gutenlab/`
+- Proto de fidelidade: `iawp-hub-proto` (local do autor)
+- Design system / conversão: notas internas do autor (fora deste repo) + skill `gutenlab-conversao-gutenberg` quando no fluxo GutenLab
 - Visual prod aprovado → não “melhorar” visual sem C.5 + OK humano
 
 ---

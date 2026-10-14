@@ -1,0 +1,83 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "IA+WP — tema de blocos (hub editorial)",
+		"description": "Clone de layout do hub IA+WP: tema iawp + Block Header Behavior + Jetpack Forms + Social Sharing Block. Conteúdo editorial de demonstração; form newsletter rende no lab (envio real / conexão WordPress.com fora do escopo).",
+		"author": "silvaitamar",
+		"categories": ["block-theme", "fse", "ai", "wordpress"]
+	},
+	"landingPage": "/",
+	"login": true,
+	"features": {
+		"networking": true
+	},
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "latest"
+	},
+	"siteOptions": {
+		"blogname": "IA+WP",
+		"blogdescription": "Artigos e fluxos reais sobre inteligência artificial, WordPress moderno e soberania digital."
+	},
+	"steps": [
+		{
+			"step": "defineWpConfigConsts",
+			"consts": {
+				"JETPACK_DEV_DEBUG": true
+			},
+			"progress": { "caption": "Jetpack em modo lab (sem conexão)" }
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "jetpack"
+			},
+			"options": { "activate": true },
+			"progress": { "caption": "Instalando Jetpack" }
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "social-sharing-block"
+			},
+			"options": { "activate": true },
+			"progress": { "caption": "Instalando Social Sharing Block" }
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "git:directory",
+				"url": "https://github.com/silvaitamar/block-header-behavior",
+				"ref": "main",
+				"refType": "branch",
+				"path": "/"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "block-header-behavior"
+			},
+			"progress": { "caption": "Instalando Block Header Behavior" }
+		},
+		{
+			"step": "installTheme",
+			"themeData": {
+				"resource": "git:directory",
+				"url": "https://github.com/silvaitamar/wp-theme-iawp",
+				"ref": "main",
+				"refType": "branch",
+				"path": "/"
+			},
+			"options": {
+				"activate": true
+			},
+			"progress": { "caption": "Instalando tema IA+WP" }
+		},
+		{
+			"step": "wp-cli",
+			"command": "wp eval-file wp-content/themes/iawp/playground/setup-demo.php",
+			"progress": { "caption": "Semeando páginas, posts e mídia" }
+		}
+	]
+}

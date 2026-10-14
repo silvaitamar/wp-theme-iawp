@@ -8,8 +8,8 @@ Plugins, ambientes e operação. Sem page builders.
 
 | Ambiente | Path / URL | Papel |
 |----------|------------|--------|
-| Studio (dev) | `Studio/ia-wordpress` · `localhost:8886` (confirmar) | Lab; tema em disco |
-| Produção | `iaewp.com.br` · wp-remote slug `ia-wp` | **Fonte da verdade de conteúdo** |
+| Dev | WordPress Studio (ou equivalente) | Lab; tema em disco |
+| Produção | `iaewp.com.br` | **Fonte da verdade de conteúdo** |
 | Rollback tema | Tema `digital-vanguard` instalado inactive | Emergência visual |
 
 **Proibido:** sync full de BD/uploads Studio → prod; `db import` em massa; full ZIP de tema “no escuro”.
@@ -29,7 +29,7 @@ Plugins, ambientes e operação. Sem page builders.
 | UpdraftPlus | Backup (nunca dump manual se ativo) |
 | Wordfence / Hostinger / Site Kit | Ops — não acoplar layout do tema |
 
-Tema deve degradar sem Jetpack/TSF no lab; em prod o CTA newsletter depende do form Jetpack.
+Em produção o CTA newsletter depende do form Jetpack. O lab Playground instala Jetpack + BHB + Social Sharing Block para reproduzir layout; envio real / conexão WordPress.com não são requisito do demo.
 
 ---
 
@@ -37,11 +37,10 @@ Tema deve degradar sem Jetpack/TSF no lab; em prod o CTA newsletter depende do f
 
 | Onde | Como |
 |------|------|
-| Studio | `studio wp … --path C:\Users\silva\Studio\ia-wordpress` — **um** comando por vez (C-15) |
-| Produção | `wp-remote.sh` / MCP `wp_cli` — mutações com `--write` / `write=true` |
-| Shell host | skill `ambiente-local` (WSL default; commit C-08) |
+| Dev (Studio) | `wp` / CLI do Studio no path do site — um comando por vez se a CLI for instável |
+| Produção | WP-CLI remoto com cuidado em mutações; backup antes de leva |
 
-SQLite Studio quebrado (“without an active database connection”) → C-16 repair com site parado.
+SQLite do Studio “without an active database connection” → reparar com o site parado.
 
 ---
 
@@ -65,8 +64,8 @@ Exemplo já usado: calibração de prosa (`theme.json` + `single.css`) sem ZIP f
 
 ---
 
-## 6. Pendências fora do tema (vault)
+## 6. Pendências fora do tema
 
-Lista canônica: vault `04-ia-wordpress/pendencias.md` — Playground (adiado), push GitHub do tema, i18n, OG de artigos, etc.
+Backlog operacional do hub (Playground, push GitHub, i18n, etc.) vive nas notas internas do autor — não neste repo.
 
-Maturidade estrutural do código: `Studio/.gutenlab/maturity-iawp-2026-10.md` + plano Cursor `melhorias_tema_iawp`.
+Maturidade estrutural do código: inventário GutenLab local (fora deste repo).

@@ -23,12 +23,21 @@ Suite completa em [`docs/`](docs/README.md):
 - Plugins recomendados (wp.org): [Jetpack](https://wordpress.org/plugins/jetpack/) (form da newsletter), [The SEO Framework](https://wordpress.org/plugins/autodescription/)
 - Header overlay: plugin Block Header Behavior (BHB), se usado no ambiente
 
+## Playground
+
+Demo zero-install (tema + BHB + Jetpack Forms + Social Sharing):
+
+[Abrir no WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/silvaitamar/wp-theme-iawp/main/playground/blueprint.json)
+
+Detalhes: [`playground/README.md`](playground/README.md).
+
 ## Instalação (dev)
 
 1. Copiar esta pasta para `wp-content/themes/iawp/`
 2. Ativar o tema
 3. Home: página estática com template **Página sem título** + pattern L0 `iawp/page-home` no conteúdo (não depender de `front-page.html`)
 4. Proto de referência: `iawp-hub-proto` (fidelidade visual); em produção o visual aprovado é a fonte operacional
+5. Dependências de layout: [Block Header Behavior](https://github.com/silvaitamar/block-header-behavior), [Jetpack](https://wordpress.org/plugins/jetpack/) (contact form), [Social Sharing Block](https://wordpress.org/plugins/social-sharing-block/)
 
 ## Estrutura
 

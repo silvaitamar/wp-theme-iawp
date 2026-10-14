@@ -98,7 +98,7 @@ add_action(
  * sem race condition entre render_block e wp_head.
  *
  * Onda 3 (avaliação): superfícies ficam neste mapa. wp_enqueue_block_style
- * no Screenshot = CSS por *tipo de bloco* (embed/image/…), não hub/blog/single.
+ * referência FSE = CSS por *tipo de bloco* (embed/image/…), não hub/blog/single.
  * Ver docs/DESENVOLVEDORES.md §4 — candidato só se surgir folha por bloco.
  *
  * Paridade no editor: iawp_editor_style_files() + add_editor_style (setup.php).
